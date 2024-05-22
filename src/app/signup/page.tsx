@@ -12,7 +12,7 @@ function SignupPage() {
   return (
     <>
       <header className="mt-4">
-        <Link href="/">
+        <Link href="/login">
           <h1 className="text-center text-4xl mb-4 hover:text-gray-500">
             <Controller style={{ fontSize: "50px" }} />
             Gaming Haven
@@ -29,7 +29,7 @@ function SignupPage() {
       </main>
       <footer className="absolute bottom-2 w-full">
         <p className="text-center">
-          <Link href="/">
+          <Link href="/login">
             <span className="font-bold hover:underline">Gaming Haven</span>
           </Link>{" "}
           © 2024 by Ope Omiwade

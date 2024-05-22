@@ -4,13 +4,13 @@ const AuthForm: React.FC<{ params?: Object }> = ({ params }) => {
   return (
     <form className="flex gap-7 flex-col">
       <input
-        className="p-4 rounded-md bg-gray-500 focus:outline-none"
+        className="p-4 rounded-md bg-gray-500 md:w-[500px] focus:outline-none"
         placeholder="Enter your email"
         type="email"
         required
       />
       <input
-        className="p-4 rounded-md bg-gray-500 w-[500px] focus:outline-none"
+        className="p-4 rounded-md bg-gray-500 md:w-[500px] focus:outline-none"
         placeholder="Enter your password"
         type="password"
         required
