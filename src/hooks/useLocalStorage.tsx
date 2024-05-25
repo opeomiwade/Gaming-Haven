@@ -9,27 +9,41 @@ import { useEffect, useState, useCallback } from "react";
  * @returns {Dispatch<SetStateAction<T | undefined>>} setStoredValue - set state dispatch action to update localstorage value
  * @returns {VoidFunction} removeItem - function to remove item from localstorage
  */
-function useLocalStorage<T>(key: string, value?: string) {
+function useLocalStorage<T>(
+  key: string,
+  value?: string
+): [
+  T | undefined,
+  React.Dispatch<React.SetStateAction<T | undefined>>,
+  () => void
+] {
   const [storedValue, setStoredValue] = useState<T | undefined>(() => {
     try {
-      const item = localStorage.getItem(key);
-      return item ? JSON.parse(item) : value;
+      if (typeof window !== "undefined") {
+        const item = localStorage.getItem(key);
+        return item ? JSON.parse(item) : value;
+      }
     } catch (error) {
-      console.log(error);
-      return value;
+      return localStorage.getItem(key) ? localStorage.getItem(key) : value;
     }
+    return value;
   });
 
   const removeItem = useCallback(() => {
     setStoredValue(undefined);
-  }, []);
+    if (typeof window !== "undefined") {
+      localStorage.removeItem(key);
+    }
+  }, [key]);
 
   useEffect(() => {
-    if (value === undefined || storedValue === undefined) {
-      localStorage.removeItem(key); // Remove the item from localStorage if value is undefined
-      return;
+    if (typeof window !== "undefined") {
+      if (storedValue !== undefined) {
+        localStorage.setItem(key, JSON.stringify(value || storedValue)); // Otherwise, store the value in localStorage
+      } else {
+        localStorage.removeItem(key);
+      }
     }
-    localStorage.setItem(key, JSON.stringify(value)); // Otherwise, store the value in localStorage
   }, [key, value, storedValue]);
 
   return [storedValue, setStoredValue, removeItem];
