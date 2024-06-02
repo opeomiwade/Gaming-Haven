@@ -1,5 +1,5 @@
 import Image from "next/image";
-import loginImage from "@/app/assets/kid-gaming.jpeg";
+import loginImage from "@/assets/kid-gaming.jpeg";
 import Controller from "@mui/icons-material/SportsEsports";
 import LoginForm from "@/components/auth/LoginForm";
 

@@ -2,12 +2,21 @@
 import { motion } from "framer-motion";
 import { usePathname } from "next/navigation";
 
-const Button = ({ pending }: { pending: boolean }) => {
+const Button = ({
+  pending,
+  disabled,
+}: {
+  pending: boolean;
+  disabled: boolean;
+}) => {
   const pathName = usePathname();
   return (
     <motion.button
-      className="rounded-lg bg-white p-4 text-black font-bold md:w-[500px]"
-      whileHover={{ scale: 1.1, backgroundColor: "green" }}
+      className={`rounded-lg p-4 text-black font-bold md:w-[500px] ${
+        disabled ? "bg-gray-700" : "bg-white"
+      }`}
+      whileHover={disabled ? {} : { scale: 1.1, backgroundColor: "green" }}
+      disabled={disabled}
       type="submit"
     >
       {pathName && pathName.includes("signup")

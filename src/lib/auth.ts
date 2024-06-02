@@ -1,7 +1,8 @@
 import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 import { auth } from "@/config/firebase";
-import { navigate } from "./actions";
 import supabase from "@/config/supabase";
+import axios from "axios"
+import { useRouter } from "next/navigation";
 
 const provider = new GoogleAuthProvider();
 
@@ -10,9 +11,10 @@ export async function googleSignIn() {
     .then(async (result) => {
       // This gives you a Google Access Token. You can use it to access the Google API.
       const credential = GoogleAuthProvider.credentialFromResult(result);
-      const token = credential?.accessToken;
+      const googleIdToken = credential?.idToken;
       // The signed-in user info.
-      localStorage.setItem("accessToken", token!);
+      localStorage.setItem("accessToken", googleIdToken!);
+      localStorage.setItem("credential", JSON.stringify(credential!));
       const user = result.user;
       // add google user details to database
       const currentTimeStamp = new Date();
@@ -20,22 +22,27 @@ export async function googleSignIn() {
         .from("users")
         .select("*")
         .eq("username", user.displayName);
-      if (!data) {
+      if (data && data?.length < 1) {
         const { error } = await supabase.from("users").insert({
           username: user.displayName,
           email: user.email,
           created_at: currentTimeStamp.toISOString(),
           updated_at: currentTimeStamp.toISOString(),
+          image_url: user.photoURL,
         });
         if (error) {
           console.log(error);
         } else {
-          navigate("");
+          useRouter().push("/");
         }
       }
-      navigate("");
+      useRouter().push("/");
     })
     .catch((error) => {
       console.log(error);
     });
+}
+
+export async function logOut(){
+  await axios.get("http://localhost:8080/users/logout")
 }

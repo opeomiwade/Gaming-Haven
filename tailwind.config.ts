@@ -13,6 +13,9 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      gridTemplateRows: {
+        "10_155px": "repeat(10, 155px)", // Grid template rows for 10 rows of height 155px
+      },
     },
   },
   plugins: [],
