@@ -11,7 +11,6 @@ import { googleSignIn } from "@/lib/auth";
 import { useRouter } from "next/navigation";
 
 const AuthForm = () => {
-  const { pending } = useFormStatus();
   const { push } = useRouter();
   const [state, formAction] = useFormState(loginUser, { message: null });
   const [storedValue, setStoredValue] = useLocalStorage<string>("accessToken");
@@ -57,7 +56,7 @@ const AuthForm = () => {
           type="password"
           onChange={(event) => setPassword(event.currentTarget.value)}
         />
-        <Button pending={pending} disabled={disabled} />
+        <Button disabled={disabled} />
       </form>
       <motion.button
         onClick={googleSignIn}

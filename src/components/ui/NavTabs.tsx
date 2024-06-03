@@ -40,6 +40,7 @@ const Tabs: React.FC<{
             isSelected={selected == tab}
             onSelect={() => setSelected(tab)}
             layoutId={layoutId}
+            key={tab}
           >
             {tab}
           </Tab>

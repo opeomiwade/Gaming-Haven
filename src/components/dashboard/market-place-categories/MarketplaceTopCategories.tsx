@@ -27,7 +27,7 @@ const MarketPlaceTopCategories = () => {
       />
       <ul className="mt-4 space-y-6 h-[60%] overflow-y-auto">
         {products.map((product) => (
-          <MarketPlaceCategoryItem product={product} />
+          <MarketPlaceCategoryItem key={product.productId} product={product} />
         ))}
       </ul>
     </>

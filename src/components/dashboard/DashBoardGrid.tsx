@@ -11,6 +11,7 @@ import ProductList from "./ProductList";
 import { motion } from "framer-motion";
 import OrderTabContent from "./order-cell/OrderTabContent";
 import MarketPlaceTopCategories from "./market-place-categories/MarketplaceTopCategories";
+import Link from "next/link";
 
 const DashBoardGrid: React.FC<{ dashDetails: DashDetails }> = ({
   dashDetails,
@@ -79,13 +80,15 @@ const DashBoardGrid: React.FC<{ dashDetails: DashDetails }> = ({
         <p className="font-bold text-lg">My Orders</p>
         <OrderTabContent dashDetails={dashDetails} />
         <hr className="my-4" />
-        <motion.button
-          whileHover={{ scale: 1.1, backgroundColor: "gray" }}
-          transition={{ type: "spring", stiffness: 500 }}
-          className="text-lg bg-black text-white p-2 rounded-lg w-full"
-        >
-          View All Orders
-        </motion.button>
+        <Link href="orders">
+          <motion.button
+            whileHover={{ scale: 1.1, backgroundColor: "gray" }}
+            transition={{ type: "spring", stiffness: 500 }}
+            className="text-lg bg-black text-white p-2 rounded-lg w-full"
+          >
+            View All Orders
+          </motion.button>
+        </Link>
       </div>
       <div className="bg-zinc-800 col-start-2 row-start-3 row-span-3 col-span-3 rounded-lg p-4">
         <p className="font-bold text-lg">
@@ -94,13 +97,16 @@ const DashBoardGrid: React.FC<{ dashDetails: DashDetails }> = ({
         </p>
         <TradeTabContent dashDetails={dashDetails} />
         <hr className="my-4" />
-        <motion.button
-          whileHover={{ scale: 1.1, backgroundColor: "gray" }}
-          transition={{ type: "spring", stiffness: 500 }}
-          className="text-lg bg-black text-white p-2 rounded-lg w-full"
-        >
-          View All Trades
-        </motion.button>
+        <Link href="/trades">
+          {" "}
+          <motion.button
+            whileHover={{ scale: 1.1, backgroundColor: "gray" }}
+            transition={{ type: "spring", stiffness: 500 }}
+            className="text-lg bg-black text-white p-2 rounded-lg w-full"
+          >
+            View All Trades
+          </motion.button>
+        </Link>
       </div>
       <div className="col-span-3 bg-zinc-800 row-span-3 rounded-lg p-4 flex flex-col">
         <p className="font-bold text-lg">
@@ -126,13 +132,15 @@ const DashBoardGrid: React.FC<{ dashDetails: DashDetails }> = ({
         <hr className="my-4" />
         <ProductList products={dashDetails.listedProducts} />
         <hr className="my-4" />
-        <motion.button
-          whileHover={{ scale: 1.1, backgroundColor: "gray" }}
-          transition={{ type: "spring", stiffness: 500 }}
-          className="text-lg bg-black text-white p-2 rounded-lg w-full"
-        >
-          View All Items
-        </motion.button>
+        <Link href="/store">
+          <motion.button
+            whileHover={{ scale: 1.1, backgroundColor: "gray" }}
+            transition={{ type: "spring", stiffness: 500 }}
+            className="text-lg bg-black text-white p-2 rounded-lg w-full"
+          >
+            View All Items
+          </motion.button>
+        </Link>
       </div>
     </div>
   );

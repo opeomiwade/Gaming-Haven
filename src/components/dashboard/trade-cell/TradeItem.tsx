@@ -14,12 +14,13 @@ const TradeItem: React.FC<{ trade: TradeDetails }> = ({ trade }) => {
         </p>
         <div className="border-green-300 border-2 rounded-lg p-[2px]">
           <img
-            src="https://firebasestorage.googleapis.com/v0/b/instagram-clone-5b47d.appspot.com/o/account%20circle.jpeg?alt=media&token=ec3c29d8-5b89-447b-ac2e-651af9e4e394"
+            src={trade.product1.images[0].imageUrl}
             className="h-[50px] w-[50px] rounded-lg"
           />
         </div>
 
-        <p className="text-white text-xs text-center font-semibold">
+        <p className="text-white text-xs text-center">
+          <span className="font-bold">from: </span>
           {trade.user1.username}
         </p>
       </div>
@@ -30,13 +31,13 @@ const TradeItem: React.FC<{ trade: TradeDetails }> = ({ trade }) => {
         </p>
         <div className="border-green-300 border-2 rounded-lg p-[2px]">
           <img
-            src="https://firebasestorage.googleapis.com/v0/b/instagram-clone-5b47d.appspot.com/o/account%20circle.jpeg?alt=media&token=ec3c29d8-5b89-447b-ac2e-651af9e4e394"
+            src={trade.product2.images[0].imageUrl}
             className="h-[50px] w-[50px] rounded-lg"
           />
         </div>
 
-        <p className="text-white font-semibold text-xs text-center">
-          {trade.user2.username}
+        <p className="text-white text-xs text-center">
+          <span className="font-bold">from: </span> {trade.user2.username}
         </p>
       </div>
     </motion.li>

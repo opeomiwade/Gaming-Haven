@@ -13,7 +13,6 @@ export default function Home() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log("i was here")
     if (!idToken) {
       push("/login");
     } else {

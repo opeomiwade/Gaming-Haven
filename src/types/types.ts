@@ -47,6 +47,11 @@ export type Category = {
   description: string;
 };
 
+export type Image = {
+  imageId: number;
+  imageUrl: string;
+};
+
 export type Product = {
   productId: number;
   condition: string;
@@ -56,6 +61,7 @@ export type Product = {
   soldByUs: boolean;
   productName: string;
   category: Category;
+  images: Image[];
 };
 
 export type TradeDetails = {

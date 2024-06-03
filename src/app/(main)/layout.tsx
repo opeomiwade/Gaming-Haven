@@ -5,6 +5,7 @@ import Sidebar from "@/components/ui/Sidebar";
 import ReduxProviderWrapper from "@/redux/ProviderWrapper";
 import MainHeader from "@/components/ui/MainHeader";
 import QueryClientProviderWrapper from "@/components/client-wrappers/QueryClientProviderWrapper";
+import SellModal from "@/components/modals/SellModal";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,6 +23,7 @@ export default function RootLayout({
         <QueryClientProviderWrapper>
           <ReduxProviderWrapper>
             <div className="flex">
+              <SellModal />
               <MainHeader />
               <Sidebar />
             </div>
