@@ -36,3 +36,8 @@ export async function signupUser(_prevState: any, formData: FormData) {
     return { message: error.response.data, isError: true };
   }
 }
+
+export async function postItem(formData: FormData) {
+  const fd = Object.fromEntries(formData.entries());
+  console.log(fd);
+}

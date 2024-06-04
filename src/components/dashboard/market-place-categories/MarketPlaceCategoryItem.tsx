@@ -13,10 +13,10 @@ const MarketPlaceCategoryItem: React.FC<{ product: Product }> = ({
           className="h-[50px] w-[50px] rounded-lg"
         />
         <div className="flex flex-col gap-2 items-start">
-          <p className="text-white text-xs font-semibold">
+          <p className="text-xs font-semibold">
             {product.productName}
           </p>
-          <p className="text-white text-xs font-semibold">
+          <p className="text-xs font-semibold">
             Condition: {product.condition}
           </p>
         </div>
@@ -25,7 +25,7 @@ const MarketPlaceCategoryItem: React.FC<{ product: Product }> = ({
         <p className="text-sm font-bold text-green-300">£{product.price}</p>
         <motion.button
           whileHover={{ scale: 1.3 }}
-          className="font-bold px-2 bg-black rounded-lg hover:cursor-pointer"
+          className="font-bold px-2 dark:bg-black bg-gray-300 rounded-lg hover:cursor-pointer"
         >
           Buy
         </motion.button>

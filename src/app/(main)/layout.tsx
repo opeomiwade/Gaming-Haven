@@ -5,7 +5,6 @@ import Sidebar from "@/components/ui/Sidebar";
 import ReduxProviderWrapper from "@/redux/ProviderWrapper";
 import MainHeader from "@/components/ui/MainHeader";
 import QueryClientProviderWrapper from "@/components/client-wrappers/QueryClientProviderWrapper";
-import SellModal from "@/components/modals/SellModal";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,12 +17,13 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
-      <body className={`${inter.className}`}>
+    <html lang="en" className="dark">
+      <body
+        className={`${inter.className} dark:bg-black dark:text-white bg-gray-300`}
+      >
         <QueryClientProviderWrapper>
           <ReduxProviderWrapper>
             <div className="flex">
-              <SellModal />
               <MainHeader />
               <Sidebar />
             </div>

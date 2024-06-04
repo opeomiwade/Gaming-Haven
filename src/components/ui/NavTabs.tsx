@@ -17,7 +17,11 @@ export const Tab: React.FC<TabProps> = ({
         />
       )}
       <button
-        className={isSelected ? "text-white" : "text-gray-200 font-light"}
+        className={
+          isSelected
+            ? "dark:text-white text-black"
+            : "dark:text-gray-200 text-gray-500 font-light"
+        }
         onClick={onSelect}
       >
         {children}
@@ -33,7 +37,7 @@ const Tabs: React.FC<{
   layoutId: string;
 }> = ({ tabs, selected, setSelected, layoutId }) => {
   return (
-    <menu className="bg-black px-4 py-2 flex gap-12 justify-center rounded-full mt-2 font-semibold items-center">
+    <menu className="dark:bg-black bg-gray-300 px-4 py-2 flex gap-12 justify-center rounded-full mt-2 font-semibold items-center">
       {tabs.map((tab) => {
         return (
           <Tab

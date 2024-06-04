@@ -17,7 +17,7 @@ const OrderItem: React.FC<{ order: Order }> = ({ order }) => {
       className="flex hover:cursor-pointer gap-4 md:w-full z-20 items-center justify-around p-2"
     >
       <div className="flex flex-col gap-2 text-sm">
-        <p className="text-white">
+        <p>
           Order Id: <span className="font-bold">{order.orderId}</span>
         </p>
         <p>
@@ -26,7 +26,7 @@ const OrderItem: React.FC<{ order: Order }> = ({ order }) => {
             {soldTab ? order.buyer.username : order.seller.username}
           </span>
         </p>
-        <p className="text-gray-300 font-bold">
+        <p className="dark:text-gray-300 text-teal-300 font-bold">
           Bought on:{" "}
           <span className="font-[400] text xs">
             {formatDateTime(order.orderDate)}
@@ -34,7 +34,8 @@ const OrderItem: React.FC<{ order: Order }> = ({ order }) => {
         </p>
       </div>
       <p>
-        {soldTab ? "Income" : "Expense"}: <span className="text-green-300">£{order.totalPrice}</span>
+        {soldTab ? "Income" : "Expense"}:{" "}
+        <span className="text-green-300">£{order.totalPrice}</span>
       </p>
       <ArrowForwardIosIcon />
     </motion.li>

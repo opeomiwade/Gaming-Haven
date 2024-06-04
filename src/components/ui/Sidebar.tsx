@@ -8,14 +8,12 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import CollapseIcon from "@mui/icons-material/KeyboardDoubleArrowLeftSharp";
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { signOut } from "firebase/auth";
-import { auth } from "@/config/firebase";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import classes from "@/CSS/navbar.module.css";
 import { useRouter } from "next/navigation";
 
 const Sidebar = () => {
-  const {push} = useRouter()
+  const { push } = useRouter();
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const [_storedValue, _setStoredValue, removeItem] =
     useLocalStorage("accessToken");
@@ -38,8 +36,8 @@ const Sidebar = () => {
   });
 
   async function logOut() {
-    removeItem()
-    push("/login")
+    removeItem();
+    push("/login");
   }
 
   return (
@@ -51,7 +49,7 @@ const Sidebar = () => {
       className={
         bottomSidebar
           ? classes["bottom-navbar"]
-          : "w-fit flex flex-col h-full bg-zinc-800 rounded-r-md shadow-xl justify-between fixed"
+          : "w-fit flex flex-col h-full rounded-r-md shadow-xl justify-between fixed dark:bg-zinc-800 dark:text-white bg-white text-black"
       }
     >
       <div

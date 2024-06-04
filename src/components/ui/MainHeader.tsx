@@ -10,10 +10,12 @@ import { getUserDetails } from "@/lib/http";
 import { useDispatch } from "react-redux";
 import { currentUserActions } from "@/redux/store/redux-store";
 import useLocalStorage from "@/hooks/useLocalStorage";
+import SellModal from "@/components/modals/SellModal";
+import ThemeToggle from "./ThemeToggle";
 
 function MainHeader() {
   const dispatch = useDispatch();
-  const [idToken, _setIdToken, removeItem] =
+  const [idToken, _setIdToken, _removeItem] =
     useLocalStorage<string>("accessToken");
   const [mediumScreen, setMediumScreen] = useState<boolean>();
 
@@ -42,46 +44,57 @@ function MainHeader() {
     resizeObserver.observe(document.documentElement);
   }, []);
 
-  return (
-    <header
-      className={`flex justify-around ${
-        mediumScreen ? "items-center p-4" : "ml-[230px]"
-      } mt-4 w-full`}
-    >
-      <div className="flex w-[60%] gap-8">
-        <form className="bg-zinc-800 w-[80%] p-2 rounded-full flex justify-between">
-          <input
-            className="focus:outline-none bg-zinc-800 w-full"
-            placeholder="Search for gaming items"
-          />
-          <button type="submit">
-            <SearchSharpIcon />
-          </button>
-        </form>
-        <motion.button
-          whileHover={{ scale: 1.1 }}
-          className="bg-zinc-800 rounded-md p-2 md:w-[10%] hover:text-black"
-        >
-          Sell
-        </motion.button>
-      </div>
+  const [open, setOpen] = useState<boolean>(false);
 
-      <div className="flex w-fit gap-6">
-        <motion.button whileHover={{ scale: 1.5 }}>
-          <SwapHorizSharpIcon />
-        </motion.button>
-        <motion.button whileHover={{ scale: 1.5 }}>
-          <ShoppingCartSharpIcon />
-        </motion.button>
-        <div className="flex gap-2 items-center">
-          <img
-            src={currentUser.imageUrl || defaultImageUrl}
-            className="rounded-full h-[40px] w-[40px] hover:cursor-pointer"
-          />{" "}
-          <p>Welcome {currentUser.username}!</p>
+  function closeModal() {
+    setOpen(false);
+  }
+
+  return (
+    <>
+      <SellModal open={open} closeModal={closeModal} />
+      <header
+        className={`flex justify-around ${
+          mediumScreen ? "items-center p-4" : "ml-[230px]"
+        } mt-4 w-full`}
+      >
+        <div className="flex w-[60%] gap-8">
+          <form className="dark:bg-zinc-800 bg-white w-[80%] p-2 rounded-full flex justify-between">
+            <input
+              className="focus:outline-none dark:bg-zinc-800 w-full"
+              placeholder="Search for gaming items"
+            />
+            <button type="submit">
+              <SearchSharpIcon />
+            </button>
+          </form>
+          <motion.button
+            whileHover={{ scale: 1.1 }}
+            className="dark:bg-zinc-800 bg-white rounded-md p-2 md:w-[10%] hover:text-black"
+            onClick={() => setOpen(true)}
+          >
+            Sell
+          </motion.button>
         </div>
-      </div>
-    </header>
+
+        <div className="flex w-fit gap-6 items-center">
+          <ThemeToggle />
+          <motion.button whileHover={{ scale: 1.5 }}>
+            <SwapHorizSharpIcon />
+          </motion.button>
+          <motion.button whileHover={{ scale: 1.5 }}>
+            <ShoppingCartSharpIcon />
+          </motion.button>
+          <div className="flex gap-2 items-center">
+            <img
+              src={currentUser.imageUrl || defaultImageUrl}
+              className="rounded-full h-[40px] w-[40px] hover:cursor-pointer"
+            />{" "}
+            <p>Welcome {currentUser.username}!</p>
+          </div>
+        </div>
+      </header>
+    </>
   );
 }
 
