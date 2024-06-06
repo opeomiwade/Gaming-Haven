@@ -7,7 +7,7 @@ import BookmarkOutlined from "@mui/icons-material/BookmarkOutlined";
 import StoreIcon from "@mui/icons-material/Store";
 import { DashDetails } from "@/types/types";
 import TradeTabContent from "./trade-cell/TradeTabContent";
-import ProductList from "./ProductList";
+import Listings from "./Listings";
 import { motion } from "framer-motion";
 import OrderTabContent from "./order-cell/OrderTabContent";
 import MarketPlaceTopCategories from "./market-place-categories/MarketplaceTopCategories";
@@ -35,7 +35,7 @@ const DashBoardGrid: React.FC<{ dashDetails: DashDetails }> = ({
           <div className="dark:bg-black rounded-full w-fit h-git p-2">
             <TradeIcon style={{ fontSize: "30px" }} />
           </div>
-          <p className="font-bold">Total Trades</p>
+          <p className="font-bold text-center">Total Trades</p>
           <p className="text-white-300 text-lg">
             {dashDetails &&
               dashDetails.sentTrades.length + dashDetails.receivedTrades.length}
@@ -45,22 +45,28 @@ const DashBoardGrid: React.FC<{ dashDetails: DashDetails }> = ({
           <div className="dark:bg-black rounded-full w-fit h-git p-2">
             <MoneyIcon style={{ fontSize: "30px" }} />
           </div>
-          <p className="font-bold">Total Income</p>
-          <p className="text-green-300">£{dashDetails?.totalIncome}</p>
+          <p className="font-bold text-center">Total Income</p>
+          <p className="text-green-500 font-semibold">
+            £{dashDetails?.totalIncome}
+          </p>
         </div>
         <div className="dark:bg-zinc-800 bg-white rounded-lg p-4 flex flex-col items-center">
           <div className="dark:bg-black rounded-full w-fit h-git p-2">
             <ArrowUpwardIcon style={{ fontSize: "30px" }} />
           </div>
-          <p className="font-bold">Total Expenses</p>
-          <p className="text-green-300">£{dashDetails?.totalExpenses}</p>
+          <p className="font-bold text-center">Total Expenses</p>
+          <p className="text-green-500 font-semibold">
+            £{dashDetails?.totalExpenses}
+          </p>
         </div>
         <div className="dark:bg-zinc-800 bg-white rounded-lg p-4 flex flex-col items-center">
           <div className="dark:bg-black rounded-full w-fit h-git p-2">
             <ArrowDownwardIcon style={{ fontSize: "30px" }} />
           </div>
-          <p className="font-bold">Net Income</p>
-          <p className="text-green-300">£{dashDetails?.netIncome}</p>
+          <p className="font-bold text-center">Net Income</p>
+          <p className="text-green-500 font-semibold">
+            £{dashDetails?.netIncome}
+          </p>
         </div>
       </div>
       <div className="rounded-lg dark:bg-zinc-800 bg-white col-start-1 row-span-3 p-4">
@@ -111,10 +117,10 @@ const DashBoardGrid: React.FC<{ dashDetails: DashDetails }> = ({
       <div className="col-span-3 dark:bg-zinc-800 bg-white row-span-3 rounded-lg p-4 flex flex-col">
         <p className="font-bold text-lg">
           <BookmarkOutlined />
-          Saved Items
+          Saved Listings
         </p>
         <hr className="my-4" />
-        <ProductList products={dashDetails.savedItems} />
+        <Listings listings={dashDetails.savedListings} />
         <hr className="my-4" />
         <motion.button
           whileHover={{ scale: 1.1, backgroundColor: "gray" }}
@@ -130,7 +136,7 @@ const DashBoardGrid: React.FC<{ dashDetails: DashDetails }> = ({
           My Store
         </p>
         <hr className="my-4" />
-        <ProductList products={dashDetails.listedProducts} />
+        <Listings listings={dashDetails.listedProducts} />
         <hr className="my-4" />
         <Link href="/store">
           <motion.button

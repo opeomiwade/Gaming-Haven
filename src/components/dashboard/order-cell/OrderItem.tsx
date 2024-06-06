@@ -35,7 +35,7 @@ const OrderItem: React.FC<{ order: Order }> = ({ order }) => {
       </div>
       <p>
         {soldTab ? "Income" : "Expense"}:{" "}
-        <span className="text-green-300">£{order.totalPrice}</span>
+        <span className="text-green-500">£{order.totalPrice}</span>
       </p>
       <ArrowForwardIosIcon />
     </motion.li>

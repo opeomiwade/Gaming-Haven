@@ -3,6 +3,14 @@ import { motion } from "framer-motion";
 import TradeIcon from "@mui/icons-material/SwapHoriz";
 
 const TradeItem: React.FC<{ trade: TradeDetails }> = ({ trade }) => {
+  if(trade.listing1.images.length == 0){
+    console.log(trade.listing1.listingId)
+  }
+
+  if(trade.listing2.images.length == 0){
+    console.log(trade.listing2)
+  }
+ 
   return (
     <motion.li
       whileHover={{ scale: 1.1 }}
@@ -10,11 +18,11 @@ const TradeItem: React.FC<{ trade: TradeDetails }> = ({ trade }) => {
     >
       <div className="flex flex-col items-center gap-2 w-fit">
         <p className="text-xs max-w-[100px] truncate dark:text-green-300 text-teal-300 font-semibold">
-          {trade.product1.productName}
+          {trade.listing1.listedProduct.productName}
         </p>
         <div className="dark:border-green-300 border-black border-2 rounded-lg p-[2px]">
           <img
-            src={trade.product1.images[0].imageUrl}
+            src={trade.listing1.images[0].imageUrl}
             className="h-[50px] w-[50px] rounded-lg"
           />
         </div>
@@ -27,11 +35,11 @@ const TradeItem: React.FC<{ trade: TradeDetails }> = ({ trade }) => {
       <TradeIcon style={{ fontSize: "50px" }} />
       <div className="flex flex-col items-center gap-2 w-fit">
         <p className="text-xs max-w-[100px] truncate dark:text-green-300 text-teal-300 font-semibold">
-          {trade.product2.productName}
+          {trade.listing2.listedProduct.productName}
         </p>
         <div className="dark:border-green-300 border-black border-2 rounded-lg p-[2px]">
           <img
-            src={trade.product2.images[0].imageUrl}
+            src={trade.listing2.images[0].imageUrl}
             className="h-[50px] w-[50px] rounded-lg"
           />
         </div>

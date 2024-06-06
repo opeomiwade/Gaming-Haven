@@ -1,5 +1,7 @@
 "use server";
 import axios from "axios";
+import axiosInstance from "./axiosInstance";
+import { revalidatePath } from "next/cache";
 
 /**
  * @param {FormData} formData - The FormData object containing login details.
@@ -37,7 +39,18 @@ export async function signupUser(_prevState: any, formData: FormData) {
   }
 }
 
-export async function postItem(formData: FormData) {
-  const fd = Object.fromEntries(formData.entries());
-  console.log(fd);
+export async function postItem(formData: FormData, accessToken: string) {
+  let fd = Object.fromEntries(formData.entries());
+  fd = { ...fd, imageUrls: JSON.parse(fd.images as string) };
+  try {
+    const response = await axiosInstance.post("/listings/add", fd, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    console.log(response.data);
+    return { ...response.data };
+  } catch (error) {
+    return { error, isError: true };
+  }
 }

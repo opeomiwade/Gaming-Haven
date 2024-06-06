@@ -1,18 +1,24 @@
 import Tabs from "@/components/ui/NavTabs";
 import axiosInstance from "@/lib/axiosInstance";
-import { Product } from "@/types/types";
+import { Listing } from "@/types/types";
 import { useEffect, useState } from "react";
 import MarketPlaceCategoryItem from "../market-place-categories/MarketPlaceCategoryItem";
 
 const MarketPlaceTopCategories = () => {
   const [selected, setSelected] = useState<string>("Consoles");
-  const [products, setProducts] = useState<Product[]>([]);
+  const [listings, setListings] = useState<Listing[]>([]);
 
   useEffect(() => {
     axiosInstance
-      .get(`/products/category/${selected.toLowerCase()}`)
+      .get(`/listings/category/${selected.toLowerCase()}`, {
+        headers: {
+          Authorization: `Bearer ${JSON.parse(
+            localStorage.getItem("accessToken")!
+          )}`,
+        },
+      })
       .then((response) => {
-        setProducts(response.data);
+        setListings(response.data);
       })
       .catch((error) => console.log(error));
   }, [selected]);
@@ -26,8 +32,8 @@ const MarketPlaceTopCategories = () => {
         setSelected={setSelected}
       />
       <ul className="mt-4 space-y-6 h-[60%] overflow-y-auto">
-        {products.map((product) => (
-          <MarketPlaceCategoryItem key={product.productId} product={product} />
+        {listings.map((listing) => (
+          <MarketPlaceCategoryItem key={listing.listingId} listing={listing} />
         ))}
       </ul>
     </>

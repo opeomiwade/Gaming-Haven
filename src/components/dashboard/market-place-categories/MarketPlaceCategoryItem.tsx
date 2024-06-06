@@ -1,28 +1,28 @@
-import { Product } from "@/types/types";
+import { Listing } from "@/types/types";
 import { motion } from "framer-motion";
 
-const MarketPlaceCategoryItem: React.FC<{ product: Product }> = ({
-  product,
+const MarketPlaceCategoryItem: React.FC<{ listing: Listing }> = ({
+  listing,
 }) => {
   return (
     <li className="flex justify-between rounded-md hover:cursor-pointer mx-6">
       <div className="flex gap-4 items-center">
         <img
-          src={product.images[0].imageUrl}
-          alt={product.productName}
+          src={listing.images[0].imageUrl}
+          alt={listing.listedProduct.productName}
           className="h-[50px] w-[50px] rounded-lg"
         />
         <div className="flex flex-col gap-2 items-start">
           <p className="text-xs font-semibold">
-            {product.productName}
+            {listing.listedProduct.productName}
           </p>
           <p className="text-xs font-semibold">
-            Condition: {product.condition}
+            Condition: {listing.condition}
           </p>
         </div>
       </div>
       <div className="flex flex-col gap-4">
-        <p className="text-sm font-bold text-green-300">£{product.price}</p>
+        <p className="text-sm font-bold text-green-500">£{listing.price}</p>
         <motion.button
           whileHover={{ scale: 1.3 }}
           className="font-bold px-2 dark:bg-black bg-gray-300 rounded-lg hover:cursor-pointer"

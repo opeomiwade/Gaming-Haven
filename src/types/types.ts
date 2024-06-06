@@ -23,7 +23,7 @@ export interface MyJwtPayload extends JwtPayload {
 export type DashDetails = {
   receivedOrders: [];
   placedOrders: [];
-  savedItems: [];
+  savedListings: [];
   listedProducts: [];
   sentTrades: [];
   receivedTrades: [];
@@ -54,22 +54,29 @@ export type Image = {
 
 export type Product = {
   productId: number;
-  condition: string;
-  description: string;
   manufacturer: string;
-  price: number;
-  soldByUs: boolean;
   productName: string;
   category: Category;
-  images: Image[];
 };
+
+export type Listing = {
+  listingId:number,
+  description: string,
+  price: number,
+  condition: string,
+  status: string,
+  user: User
+  images: Image[]
+  createdAt: Date;
+  listedProduct: Product
+}
 
 export type TradeDetails = {
   id: number;
   user1: User;
   user2: User;
-  product1: Product;
-  product2: Product;
+  listing1: Listing;
+  listing2: Listing;
   tradeStatus: string;
   createdAt: Date;
 };
@@ -82,4 +89,9 @@ export type Order = {
   totalPrice: number;
   username: number;
   products: Product[];
+};
+
+export type UploadedImage = {
+  dataUrl: string;
+  id: string;
 };
