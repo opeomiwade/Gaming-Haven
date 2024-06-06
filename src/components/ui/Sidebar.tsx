@@ -48,7 +48,7 @@ const Sidebar = () => {
       transition={{ duration: 0.2 }}
       className={
         bottomSidebar
-          ? classes["bottom-navbar"]
+          ? `${classes["bottom-navbar"]} dark:bg-zinc-800 dark:text-white bg-white text-black`
           : "w-fit flex flex-col h-full rounded-r-md shadow-xl justify-between fixed dark:bg-zinc-800 dark:text-white bg-white text-black"
       }
     >

@@ -22,6 +22,7 @@ const SellModal: React.FC<{ open: boolean; closeModal: () => void }> = ({
   const formRef = useRef<HTMLFormElement>();
   const [idToken, _setIdToken, removeItem] =
     useLocalStorage<string>("accessToken");
+  const [error, setError] = useState<boolean>(false);
 
   const username = useSelector(
     (state: { currentUser: { user: currentUserState } }) =>
@@ -39,12 +40,11 @@ const SellModal: React.FC<{ open: boolean; closeModal: () => void }> = ({
   async function submitHandler(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-    const response = await postItem(formData, idToken!);
-    console.log(response);
+    const response = await postItem(formData, idToken!)
     inputRef.current!.value = "";
     formRef.current?.reset();
     setImages([]);
-    setImageUrls([])
+    setImageUrls([]);
     closeModal();
   }
 
@@ -184,6 +184,9 @@ const SellModal: React.FC<{ open: boolean; closeModal: () => void }> = ({
         >
           Post
         </motion.button>
+        {error && (
+          <p className="text-red-500 font-bold text-center">An error occured</p>
+        )}
         <input
           type="file"
           hidden

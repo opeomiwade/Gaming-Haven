@@ -12,12 +12,34 @@ import { motion } from "framer-motion";
 import OrderTabContent from "./order-cell/OrderTabContent";
 import MarketPlaceTopCategories from "./market-place-categories/MarketplaceTopCategories";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 const DashBoardGrid: React.FC<{ dashDetails: DashDetails }> = ({
   dashDetails,
 }) => {
+  const [smallScreen, setSmallScreen] = useState<boolean>();
+
+  useEffect(() => {
+    const resizeObserver = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        if (entry.contentRect.width < 768) {
+          setSmallScreen(true);
+        } else {
+          setSmallScreen(false);
+        }
+      }
+    });
+    resizeObserver.observe(document.documentElement);
+    return () => {
+      resizeObserver.disconnect();
+    };
+  });
   return (
-    <div className="flex flex-col justify-between lg:grid grid-cols-[4fr_1fr_1fr_1fr_1fr] grid-rows-10_155px h-full gap-4 pr-6">
+    <div
+      className={`flex flex-col justify-between lg:grid grid-cols-[4fr_1fr_1fr_1fr_1fr] grid-rows-10_155px h-full gap-4 pr-6 ${
+        smallScreen ? "pb-[90px]" : ""
+      }`}
+    >
       <div className="bg-white dark:bg-zinc-800 rounded-lg shadow-xl p-4 space-y-4">
         <h3 className="font-bold">Overview of Gaming MarketPlace</h3>
         <div className="flex gap-10 w-fit">
@@ -42,7 +64,7 @@ const DashBoardGrid: React.FC<{ dashDetails: DashDetails }> = ({
           </p>
         </div>
         <div className="dark:bg-zinc-800 bg-white rounded-lg p-4 flex flex-col items-center">
-          <div className="dark:bg-black rounded-full w-fit h-git p-2">
+          <div className="dark:bg-black rounded-full w-fit h-fit p-2">
             <MoneyIcon style={{ fontSize: "30px" }} />
           </div>
           <p className="font-bold text-center">Total Income</p>
@@ -51,7 +73,7 @@ const DashBoardGrid: React.FC<{ dashDetails: DashDetails }> = ({
           </p>
         </div>
         <div className="dark:bg-zinc-800 bg-white rounded-lg p-4 flex flex-col items-center">
-          <div className="dark:bg-black rounded-full w-fit h-git p-2">
+          <div className="dark:bg-black rounded-full w-fit h-fit p-2">
             <ArrowUpwardIcon style={{ fontSize: "30px" }} />
           </div>
           <p className="font-bold text-center">Total Expenses</p>
@@ -60,7 +82,7 @@ const DashBoardGrid: React.FC<{ dashDetails: DashDetails }> = ({
           </p>
         </div>
         <div className="dark:bg-zinc-800 bg-white rounded-lg p-4 flex flex-col items-center">
-          <div className="dark:bg-black rounded-full w-fit h-git p-2">
+          <div className="dark:bg-black rounded-full w-fit h-fit p-2">
             <ArrowDownwardIcon style={{ fontSize: "30px" }} />
           </div>
           <p className="font-bold text-center">Net Income</p>
@@ -69,7 +91,11 @@ const DashBoardGrid: React.FC<{ dashDetails: DashDetails }> = ({
           </p>
         </div>
       </div>
-      <div className="rounded-lg dark:bg-zinc-800 bg-white col-start-1 row-span-3 p-4">
+      <div
+        className={`rounded-lg dark:bg-zinc-800 bg-white col-start-1 row-span-3 p-4 ${
+          smallScreen ? "h-[600px]" : ""
+        }`}
+      >
         <p className="font-bold text-lg">Top MarketPlace Gaming Categories</p>
         <hr className="my-4" />
         <MarketPlaceTopCategories />
@@ -96,7 +122,11 @@ const DashBoardGrid: React.FC<{ dashDetails: DashDetails }> = ({
           </motion.button>
         </Link>
       </div>
-      <div className="dark:bg-zinc-800 bg-white col-start-2 row-start-3 row-span-3 col-span-3 rounded-lg p-4">
+      <div
+        className={`dark:bg-zinc-800 bg-white col-start-2 row-start-3 row-span-3 col-span-3 rounded-lg p-4 ${
+          smallScreen ? "h-[400px]" : ""
+        }`}
+      >
         <p className="font-bold text-lg">
           <TradeIcon />
           Trades
@@ -114,7 +144,11 @@ const DashBoardGrid: React.FC<{ dashDetails: DashDetails }> = ({
           </motion.button>
         </Link>
       </div>
-      <div className="col-span-3 dark:bg-zinc-800 bg-white row-span-3 rounded-lg p-4 flex flex-col">
+      <div
+        className={`col-span-3 dark:bg-zinc-800 bg-white row-span-3 rounded-lg p-4 flex flex-col ${
+          smallScreen ? "h-[400px]" : ""
+        }`}
+      >
         <p className="font-bold text-lg">
           <BookmarkOutlined />
           Saved Listings
@@ -130,7 +164,11 @@ const DashBoardGrid: React.FC<{ dashDetails: DashDetails }> = ({
           View All Items
         </motion.button>
       </div>
-      <div className="dark:bg-zinc-800 bg-white rounded-lg col-start-1 row-span-4 p-4">
+      <div
+        className={`dark:bg-zinc-800 bg-white rounded-lg col-start-1 row-span-3 p-4 ${
+          smallScreen ? "h-[600px]" : ""
+        }`}
+      >
         <p className="font-bold text-lg">
           <StoreIcon />
           My Store
