@@ -4,7 +4,7 @@ import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import MoneyIcon from "@mui/icons-material/Money";
 import TradeIcon from "@mui/icons-material/SwapHoriz";
 import BookmarkOutlined from "@mui/icons-material/BookmarkOutlined";
-import StoreIcon from "@mui/icons-material/Store";
+import { FaBagShopping } from "react-icons/fa6";
 import { DashDetails } from "@/types/types";
 import TradeTabContent from "./trade-cell/TradeTabContent";
 import Listings from "./Listings";
@@ -169,13 +169,13 @@ const DashBoardGrid: React.FC<{ dashDetails: DashDetails }> = ({
         }`}
       >
         <p className="font-bold text-lg">
-          <StoreIcon />
+          <FaBagShopping />
           My Store
         </p>
         <hr className="my-4" />
         <Listings listings={dashDetails.listedProducts} />
         <hr className="my-4" />
-        <Link href="/my-store">
+        <Link href={"/my-store"}>
           <motion.button
             whileHover={{ scale: 1.1, backgroundColor: "gray" }}
             transition={{ type: "spring", stiffness: 500 }}

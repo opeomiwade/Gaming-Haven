@@ -56,7 +56,7 @@ function MainHeader() {
       <header
         className={`flex justify-around ${
           mediumScreen ? "items-center p-4" : ""
-        } mt-4 w-full`}
+        } m-4 w-full`}
       >
         <div className="flex w-[60%] gap-8">
           <form className="dark:bg-zinc-800 bg-white w-[80%] p-2 rounded-full flex justify-between">

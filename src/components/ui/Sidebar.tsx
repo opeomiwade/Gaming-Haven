@@ -62,7 +62,7 @@ const Sidebar = () => {
         <Link href="/">
           <motion.h1
             whileHover={{ scale: 1.1 }}
-            className="text-center text-2xl hover:text-black hover:cursor-pointer font-extrabold"
+            className="text-center text-2xl dark:hover:text-black hover:cursor-pointer hover:text-gray-300 font-extrabold"
           >
             <Controller style={{ fontSize: "50px" }} />
             {isExpanded && <p>Gaming Haven</p>}
@@ -70,35 +70,43 @@ const Sidebar = () => {
         </Link>
 
         {!bottomSidebar && <hr className="w-full my-4" />}
-        <Link
-          href="/dashboard"
-          className="flex items-center gap-4 text-lg font-bold hover:text-black"
-        >
-          <DashboardIcon style={{ fontSize: "40px" }} />
-          {isExpanded && <p>Dashboard</p>}
+        <Link href="/dashboard">
+          <motion.button
+            whileHover={{ scale: 1.2 }}
+            className="flex items-center gap-4 text-lg font-bold dark:hover:text-black hover:text-gray-300"
+          >
+            <DashboardIcon style={{ fontSize: "40px" }} />
+            {isExpanded && <p>Dashboard</p>}
+          </motion.button>
         </Link>
 
-        <Link
-          href="/marketplace"
-          className="flex items-center gap-4 text-lg font-bold hover:text-black"
-        >
-          <PeopleIcon style={{ fontSize: "40px" }} />
-          {isExpanded && <p>MarketPlace</p>}
+        <Link href="/marketplace">
+          <motion.button
+            whileHover={{ scale: 1.2 }}
+            className="flex items-center gap-4 text-lg font-bold dark:hover:text-black hover:text-gray-300"
+          >
+            <PeopleIcon style={{ fontSize: "40px" }} />
+            {isExpanded && <p>MarketPlace</p>}
+          </motion.button>
         </Link>
-        <Link
-          href="/"
-          className="flex items-center gap-4 text-lg font-bold hover:text-black"
-        >
-          <MailIcon style={{ fontSize: "40px" }} />
-          {isExpanded && <p>Inbox</p>}
+        <Link href="/">
+          <motion.button
+            whileHover={{ scale: 1.2 }}
+            className="flex items-center gap-4 text-lg font-bold dark:hover:text-black hover:text-gray-300"
+          >
+            <MailIcon style={{ fontSize: "40px" }} />
+            {isExpanded && <p>Inbox</p>}
+          </motion.button>
         </Link>
         {bottomSidebar && (
-          <button
-            onClick={logOut}
-            className="flex items-center gap-4 text-lg hover:text-red-500 font-bold"
-          >
-            <LogoutIcon style={{ fontSize: "50px" }} />
-            {isExpanded && <p>Log out</p>}
+          <button onClick={logOut}>
+            <motion.button
+              whileHover={{ scale: 1.2 }}
+              className="flex items-center gap-4 text-lg hover:text-red-500 font-bold"
+            >
+              <LogoutIcon style={{ fontSize: "50px" }} />
+              {isExpanded && <p>Log out</p>}
+            </motion.button>
           </button>
         )}
       </div>
@@ -108,7 +116,7 @@ const Sidebar = () => {
             onClick={() => {
               setIsExpanded(!isExpanded);
             }}
-            className="flex items-center gap-4 text-lg hover:text-black font-bold w-full"
+            className="flex items-center gap-4 text-lg dark:hover:text-black font-bold w-full hover:text-gray-300"
           >
             <motion.div
               animate={{ rotate: isExpanded ? 0 : 180 }}

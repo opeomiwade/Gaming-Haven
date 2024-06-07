@@ -3,6 +3,7 @@ import { MyJwtPayload } from "@/types/types";
 import { jwtDecode } from "jwt-decode";
 import { QueryClient } from "@tanstack/react-query";
 import axiosInstance from "./axiosInstance";
+import { useEffect } from "react";
 
 export async function getDashDetails() {
   const { data } = await axiosInstance.get("/users/dashboard-details", {
@@ -20,6 +21,18 @@ export async function getUserDetails(idToken: string) {
   const { data } = await axios.get(
     `http://localhost:8080/users/user/${decodedToken.email}`
   );
+  return data;
+}
+
+export async function getUserListings() {
+  const { data } = await axiosInstance.get("/listings/user-listings", {
+    headers: {
+      Authorization: `Bearer ${JSON.parse(
+        localStorage.getItem("accessToken")!
+      )}`,
+    },
+  });
+  console.log(data);
   return data;
 }
 
