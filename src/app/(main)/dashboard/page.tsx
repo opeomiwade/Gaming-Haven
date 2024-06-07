@@ -27,14 +27,12 @@ function DashboardPage() {
   }, []);
 
   return (
-    <main
-      className={`space-y-8 flex flex-col flex-grow ${
-        mediumScreen ? "pl-6" : "ml-[230px]"
-      }`}
-    >
-      <h1 className="font-bold text-2xl mt-4">Gaming Haven DashBoard</h1>
+    <main className={`flex flex-col `}>
+      <h1 className="font-bold text-2xl mt-4 px-6">
+        My Gaming Haven DashBoard
+      </h1>
       {isFetching ? (
-        <div className="h-screen items-center w-full">
+        <div className="flex justify-center h-screen items-center p-6 w-full">
           <CircularProgress />
         </div>
       ) : (

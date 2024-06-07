@@ -36,7 +36,7 @@ const DashBoardGrid: React.FC<{ dashDetails: DashDetails }> = ({
   });
   return (
     <div
-      className={`flex flex-col justify-between lg:grid grid-cols-[4fr_1fr_1fr_1fr_1fr] grid-rows-10_155px h-full gap-4 pr-6 ${
+      className={`flex flex-col justify-between lg:grid grid-cols-[4fr_1fr_1fr_1fr_1fr] grid-rows-10_155px h-full gap-4 p-6  ${
         smallScreen ? "pb-[90px]" : ""
       }`}
     >
@@ -124,7 +124,7 @@ const DashBoardGrid: React.FC<{ dashDetails: DashDetails }> = ({
       </div>
       <div
         className={`dark:bg-zinc-800 bg-white col-start-2 row-start-3 row-span-3 col-span-3 rounded-lg p-4 ${
-          smallScreen ? "h-[400px]" : ""
+          smallScreen ? "h-[500px]" : ""
         }`}
       >
         <p className="font-bold text-lg">
@@ -134,7 +134,6 @@ const DashBoardGrid: React.FC<{ dashDetails: DashDetails }> = ({
         <TradeTabContent dashDetails={dashDetails} />
         <hr className="my-4" />
         <Link href="/trades">
-          {" "}
           <motion.button
             whileHover={{ scale: 1.1, backgroundColor: "gray" }}
             transition={{ type: "spring", stiffness: 500 }}
@@ -176,7 +175,7 @@ const DashBoardGrid: React.FC<{ dashDetails: DashDetails }> = ({
         <hr className="my-4" />
         <Listings listings={dashDetails.listedProducts} />
         <hr className="my-4" />
-        <Link href="/store">
+        <Link href="/my-store">
           <motion.button
             whileHover={{ scale: 1.1, backgroundColor: "gray" }}
             transition={{ type: "spring", stiffness: 500 }}

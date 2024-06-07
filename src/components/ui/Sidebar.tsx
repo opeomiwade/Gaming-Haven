@@ -43,13 +43,13 @@ const Sidebar = () => {
   return (
     <motion.aside
       animate={{
-        width: !bottomSidebar ? (isExpanded ? "fit-content" : "80px") : "",
+        width: !bottomSidebar ? (isExpanded ? "250px" : "80px") : "",
       }}
       transition={{ duration: 0.2 }}
       className={
         bottomSidebar
           ? `${classes["bottom-navbar"]} dark:bg-zinc-800 dark:text-white bg-white text-black`
-          : "w-fit flex flex-col h-full rounded-r-md shadow-xl justify-between fixed dark:bg-zinc-800 dark:text-white bg-white text-black"
+          : "w-fit overflow-y-auto top-0 left-0 flex flex-col h-screen rounded-r-md shadow-xl justify-between sticky dark:bg-zinc-800 dark:text-white bg-white text-black"
       }
     >
       <div

@@ -1,6 +1,9 @@
-const Order = () => {
-    return <h1>My orders</h1>
-}
+import Image from "next/image";
 
+const StorePage = () => {
+  return <main>
+    <Image/>
+  </main>
+};
 
-export default Order
+export default StorePage;

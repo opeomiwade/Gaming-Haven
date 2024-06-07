@@ -23,11 +23,13 @@ export default function RootLayout({
       >
         <QueryClientProviderWrapper>
           <ReduxProviderWrapper>
-            <div className="flex">
-              <MainHeader />
+            <div className="flex gap-4">
               <Sidebar />
+              <div className="w-full">
+                <MainHeader />
+                {children}
+              </div>
             </div>
-            {children}
           </ReduxProviderWrapper>
         </QueryClientProviderWrapper>
       </body>

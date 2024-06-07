@@ -55,7 +55,7 @@ function MainHeader() {
       <SellModal open={open} closeModal={closeModal} />
       <header
         className={`flex justify-around ${
-          mediumScreen ? "items-center p-4" : "ml-[230px]"
+          mediumScreen ? "items-center p-4" : ""
         } mt-4 w-full`}
       >
         <div className="flex w-[60%] gap-8">

@@ -1,7 +1,7 @@
 import { Listing } from "@/types/types";
 import { motion } from "framer-motion";
 
-const ProductItem: React.FC<{ listing: Listing }> = ({ listing }) => {
+const ListingItem: React.FC<{ listing: Listing }> = ({ listing }) => {
   return (
     <motion.li
       whileHover={{ scale: 1.1 }}
@@ -21,4 +21,4 @@ const ProductItem: React.FC<{ listing: Listing }> = ({ listing }) => {
   );
 };
 
-export default ProductItem;
+export default ListingItem;
