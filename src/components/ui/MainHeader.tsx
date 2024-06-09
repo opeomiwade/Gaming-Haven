@@ -1,7 +1,6 @@
 "use client";
-import SearchSharpIcon from "@mui/icons-material/SearchSharp";
-import ShoppingCartSharpIcon from "@mui/icons-material/ShoppingCartSharp";
-import SwapHorizSharpIcon from "@mui/icons-material/SwapHorizSharp";
+import { FaShoppingCart } from "react-icons/fa";
+import { IoMdSwap } from "react-icons/io";
 import { motion } from "framer-motion";
 import { useSelector } from "react-redux";
 import { currentUserState } from "@/types/types";
@@ -12,6 +11,8 @@ import { currentUserActions } from "@/redux/store/redux-store";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import SellModal from "@/components/modals/SellModal";
 import ThemeToggle from "./ThemeToggle";
+import { FaMagnifyingGlass } from "react-icons/fa6";
+
 
 function MainHeader() {
   const dispatch = useDispatch();
@@ -54,23 +55,23 @@ function MainHeader() {
     <>
       <SellModal open={open} closeModal={closeModal} />
       <header
-        className={`flex justify-around ${
+        className={`flex justify-around gap-4 p-4 ${
           mediumScreen ? "items-center p-4" : ""
-        } m-4 w-full`}
+        } w-full sticky top-0 z-20 opacity-100 dark:bg-black bg-white`}
       >
         <div className="flex w-[60%] gap-8">
-          <form className="dark:bg-zinc-800 bg-white w-[80%] p-2 rounded-full flex justify-between">
+          <form className="dark:bg-zinc-800 bg-gray-200 w-[80%] p-2 rounded-full flex justify-between">
             <input
-              className="focus:outline-none dark:bg-zinc-800 w-full"
+              className="focus:outline-none dark:bg-zinc-800 bg-gray-200 w-full"
               placeholder="Search for gaming items"
             />
             <button type="submit">
-              <SearchSharpIcon />
+              <FaMagnifyingGlass />
             </button>
           </form>
           <motion.button
             whileHover={{ scale: 1.1 }}
-            className="dark:bg-zinc-800 bg-white rounded-md p-2 md:w-[10%] hover:text-black"
+            className="dark:bg-zinc-800 bg-gray-200 rounded-md p-2 md:w-[10%] hover:text-black"
             onClick={() => setOpen(true)}
           >
             Sell
@@ -80,10 +81,10 @@ function MainHeader() {
         <div className="flex w-fit gap-6 items-center">
           <ThemeToggle />
           <motion.button whileHover={{ scale: 1.5 }}>
-            <SwapHorizSharpIcon />
+            <IoMdSwap size={30} />
           </motion.button>
           <motion.button whileHover={{ scale: 1.5 }}>
-            <ShoppingCartSharpIcon />
+            <FaShoppingCart size={25} />
           </motion.button>
           <div className="flex gap-2 items-center">
             <img

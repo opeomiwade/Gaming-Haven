@@ -5,12 +5,13 @@ import MailIcon from "@mui/icons-material/Mail";
 import Controller from "@mui/icons-material/SportsEsports";
 import Link from "next/link";
 import LogoutIcon from "@mui/icons-material/Logout";
-import CollapseIcon from "@mui/icons-material/KeyboardDoubleArrowLeftSharp";
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import classes from "@/CSS/navbar.module.css";
 import { useRouter } from "next/navigation";
+import { MdOutlineKeyboardDoubleArrowRight as CollapseIcon } from "react-icons/md";
+
 
 const Sidebar = () => {
   const { push } = useRouter();
@@ -49,7 +50,7 @@ const Sidebar = () => {
       className={
         bottomSidebar
           ? `${classes["bottom-navbar"]} dark:bg-zinc-800 dark:text-white bg-white text-black`
-          : "w-fit overflow-y-auto top-0 left-0 flex flex-col h-screen rounded-r-md shadow-xl justify-between sticky dark:bg-zinc-800 dark:text-white bg-white text-black"
+          : "w-fit overflow-y-auto top-0 left-0 flex flex-col h-screen rounded-r-md shadow-2xl z-20 justify-between sticky dark:bg-zinc-800 dark:text-white bg-white text-black"
       }
     >
       <div
@@ -119,10 +120,10 @@ const Sidebar = () => {
             className="flex items-center gap-4 text-lg dark:hover:text-black font-bold w-full hover:text-gray-300"
           >
             <motion.div
-              animate={{ rotate: isExpanded ? 0 : 180 }}
+              animate={{ rotate: isExpanded ? 180 : 0 }}
               transition={{ duration: 0.5 }}
             >
-              <CollapseIcon style={{ fontSize: "55px" }} />
+              <CollapseIcon size={55} />
             </motion.div>
             {isExpanded && <p>Collapse</p>}
           </button>

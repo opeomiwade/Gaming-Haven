@@ -1,14 +1,13 @@
 "use client";
 import Button from "../ui/FormButton";
 import Link from "next/link";
-import { useFormStatus, useFormState } from "react-dom";
+import { useFormState } from "react-dom";
 import { signupUser } from "@/lib/actions";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { Ref, useEffect, useRef, useState } from "react";
 import { redirect } from "next/navigation";
 
 const SignupForm = () => {
-  const { pending } = useFormStatus();
   const [state, formAction] = useFormState(signupUser, { message: null });
   const [storedValue, setStoredValue] = useLocalStorage<string>("accessToken");
   const [password, setPassword] = useState<string>("");
@@ -47,21 +46,21 @@ const SignupForm = () => {
       <form className="flex gap-7 flex-col" action={formAction}>
         <input
           name="username"
-          className="p-4 rounded-md bg-gray-500 md:w-[500px] focus:outline-none"
+          className="p-4 rounded-md dark:bg-gray-500 bg-gray-300 md:w-[500px] focus:outline-none"
           placeholder="Enter your username"
           type="name"
           required
         />
         <input
           name="email"
-          className="p-4 rounded-md bg-gray-500 md:w-[500px] focus:outline-none"
+          className="p-4 rounded-md dark:bg-gray-500 bg-gray-300 md:w-[500px] focus:outline-none"
           placeholder="Enter your email"
           type="email"
           required
         />
         <input
           name="password"
-          className="p-4 rounded-md bg-gray-500 md:w-[500px] focus:outline-none"
+          className="p-4 rounded-md dark:bg-gray-500 bg-gray-300 md:w-[500px] focus:outline-none"
           placeholder="Enter your password"
           type="password"
           required
@@ -70,7 +69,7 @@ const SignupForm = () => {
         />
         <input
           name="confirm-password"
-          className="p-4 rounded-md bg-gray-500 md:w-[500px] focus:outline-none"
+          className="p-4 rounded-md dark:bg-gray-500 bg-gray-300 md:w-[500px] focus:outline-none"
           placeholder="Please confirm your password"
           type="password"
           required
@@ -78,7 +77,6 @@ const SignupForm = () => {
           value={confirmPassword}
         />
         <Button
-          pending={pending}
           disabled={password.trim().length < 1 || password !== confirmPassword}
         />
         <Link href="/login">

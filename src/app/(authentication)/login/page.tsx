@@ -7,8 +7,7 @@ export default function LoginPage() {
   return (
     <main className="flex h-screen">
       <div
-        className="h-screen justify-center items-center p-4 hidden md:flex"
-        style={{ backgroundColor: "gray" }}
+        className="h-screen justify-center items-center p-4 hidden md:flex bg-gray-400 dark:bg-zinc-500"
       >
         <Image
           src={loginImage}

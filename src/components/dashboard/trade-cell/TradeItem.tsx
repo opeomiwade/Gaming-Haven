@@ -1,16 +1,16 @@
 import { TradeDetails } from "@/types/types";
 import { motion } from "framer-motion";
-import TradeIcon from "@mui/icons-material/SwapHoriz";
+import { IoMdSwap } from "react-icons/io";
 
 const TradeItem: React.FC<{ trade: TradeDetails }> = ({ trade }) => {
-  if(trade.listing1.images.length == 0){
-    console.log(trade.listing1.listingId)
+  if (trade.listing1.images.length == 0) {
+    console.log(trade.listing1.listingId);
   }
 
-  if(trade.listing2.images.length == 0){
-    console.log(trade.listing2)
+  if (trade.listing2.images.length == 0) {
+    console.log(trade.listing2);
   }
- 
+
   return (
     <motion.li
       whileHover={{ scale: 1.1 }}
@@ -32,7 +32,7 @@ const TradeItem: React.FC<{ trade: TradeDetails }> = ({ trade }) => {
           {trade.user1.username}
         </p>
       </div>
-      <TradeIcon style={{ fontSize: "50px" }} />
+      <IoMdSwap size={40} />
       <div className="flex flex-col items-center gap-2 w-fit">
         <p className="text-xs max-w-[100px] truncate dark:text-green-300 text-teal-300 font-semibold">
           {trade.listing2.listedProduct.productName}

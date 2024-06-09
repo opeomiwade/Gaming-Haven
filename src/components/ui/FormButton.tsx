@@ -9,9 +9,9 @@ const Button = ({ disabled }: { disabled: boolean }) => {
   return (
     <motion.button
       className={`rounded-lg p-4 text-black font-bold md:w-[500px] ${
-        disabled ? "bg-gray-700" : "bg-white"
+        disabled ? "bg-blue-300" : "dark:bg-white bg-blue-400"
       }`}
-      whileHover={disabled ? {} : { scale: 1.1, backgroundColor: "green" }}
+      whileHover={disabled ? {} : { scale: 1.1 }}
       disabled={disabled}
       type="submit"
     >

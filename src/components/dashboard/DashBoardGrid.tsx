@@ -1,8 +1,8 @@
-import PaymentSharpIcon from "@mui/icons-material/PaymentSharp";
-import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
-import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
-import MoneyIcon from "@mui/icons-material/Money";
-import TradeIcon from "@mui/icons-material/SwapHoriz";
+import { CiCreditCard1 } from "react-icons/ci";
+import { FaArrowDown } from "react-icons/fa6";
+import { FaArrowUp } from "react-icons/fa6";
+import { FaMoneyBill } from "react-icons/fa";
+import { IoMdSwap } from "react-icons/io";
 import BookmarkOutlined from "@mui/icons-material/BookmarkOutlined";
 import { FaBagShopping } from "react-icons/fa6";
 import { DashDetails } from "@/types/types";
@@ -40,11 +40,11 @@ const DashBoardGrid: React.FC<{ dashDetails: DashDetails }> = ({
         smallScreen ? "pb-[90px]" : ""
       }`}
     >
-      <div className="bg-white dark:bg-zinc-800 rounded-lg shadow-xl p-4 space-y-4">
+      <div className="bg-white dark:bg-zinc-800 rounded-lg shadow-xl dark:shadow-none shadow-gray-400 p-4">
         <h3 className="font-bold">Overview of Gaming MarketPlace</h3>
-        <div className="flex gap-10 w-fit">
-          <div className="dark:bg-black rouned-lg p-2 w-fit rounded-lg">
-            <PaymentSharpIcon style={{ fontSize: "50px" }} />
+        <div className="flex items-center gap-10 w-fit">
+          <div className="dark:bg-black rouned-lg w-fit rounded-lg">
+            <CiCreditCard1 size={100} />
           </div>
           <div className="flex flex-col">
             <p className="text-md">Total Sales</p>
@@ -53,9 +53,9 @@ const DashBoardGrid: React.FC<{ dashDetails: DashDetails }> = ({
         </div>
       </div>
       <div className="rounded-lg col-span-3 row-span-2 grid grid-cols-2 grid-rows-2 gap-4">
-        <div className="dark:bg-zinc-800 bg-white rounded-lg p-4 flex flex-col items-center">
+        <div className="dark:bg-zinc-800 bg-white rounded-lg p-4 flex flex-col items-center shadow-xl dark:shadow-none shadow-gray-400">
           <div className="dark:bg-black rounded-full w-fit h-git p-2">
-            <TradeIcon style={{ fontSize: "30px" }} />
+            <IoMdSwap size={30} />
           </div>
           <p className="font-bold text-center">Total Trades</p>
           <p className="text-white-300 text-lg">
@@ -63,27 +63,27 @@ const DashBoardGrid: React.FC<{ dashDetails: DashDetails }> = ({
               dashDetails.sentTrades.length + dashDetails.receivedTrades.length}
           </p>
         </div>
-        <div className="dark:bg-zinc-800 bg-white rounded-lg p-4 flex flex-col items-center">
+        <div className="dark:bg-zinc-800 bg-white rounded-lg p-4 flex flex-col items-center shadow-xl dark:shadow-none shadow-gray-400">
           <div className="dark:bg-black rounded-full w-fit h-fit p-2">
-            <MoneyIcon style={{ fontSize: "30px" }} />
+            <FaMoneyBill size={30} />
           </div>
           <p className="font-bold text-center">Total Income</p>
           <p className="text-green-500 font-semibold">
             £{dashDetails?.totalIncome}
           </p>
         </div>
-        <div className="dark:bg-zinc-800 bg-white rounded-lg p-4 flex flex-col items-center">
+        <div className="dark:bg-zinc-800 bg-white rounded-lg p-4 flex flex-col items-center shadow-xl dark:shadow-none shadow-gray-400">
           <div className="dark:bg-black rounded-full w-fit h-fit p-2">
-            <ArrowUpwardIcon style={{ fontSize: "30px" }} />
+            <FaArrowUp size={30} />
           </div>
           <p className="font-bold text-center">Total Expenses</p>
           <p className="text-green-500 font-semibold">
             £{dashDetails?.totalExpenses}
           </p>
         </div>
-        <div className="dark:bg-zinc-800 bg-white rounded-lg p-4 flex flex-col items-center">
+        <div className="dark:bg-zinc-800 bg-white rounded-lg p-4 flex flex-col items-center shadow-xl dark:shadow-none shadow-gray-400">
           <div className="dark:bg-black rounded-full w-fit h-fit p-2">
-            <ArrowDownwardIcon style={{ fontSize: "30px" }} />
+            <FaArrowDown size={30} />
           </div>
           <p className="font-bold text-center">Net Income</p>
           <p className="text-green-500 font-semibold">
@@ -94,7 +94,7 @@ const DashBoardGrid: React.FC<{ dashDetails: DashDetails }> = ({
       <div
         className={`rounded-lg dark:bg-zinc-800 bg-white col-start-1 row-span-3 p-4 ${
           smallScreen ? "h-[600px]" : ""
-        }`}
+        } shadow-xl dark:shadow-none shadow-gray-400`}
       >
         <p className="font-bold text-lg">Top MarketPlace Gaming Categories</p>
         <hr className="my-4" />
@@ -108,7 +108,7 @@ const DashBoardGrid: React.FC<{ dashDetails: DashDetails }> = ({
           Explore All
         </motion.button>
       </div>
-      <div className="dark:bg-zinc-800 bg-white col-start-1 rounded-lg row-span-3 p-4">
+      <div className="dark:bg-zinc-800 bg-white col-start-1 rounded-lg row-span-3 p-4 shadow-xl dark:shadow-none shadow-gray-400">
         <p className="font-bold text-lg">My Orders</p>
         <OrderTabContent dashDetails={dashDetails} />
         <hr className="my-4" />
@@ -125,10 +125,10 @@ const DashBoardGrid: React.FC<{ dashDetails: DashDetails }> = ({
       <div
         className={`dark:bg-zinc-800 bg-white col-start-2 row-start-3 row-span-3 col-span-3 rounded-lg p-4 ${
           smallScreen ? "h-[500px]" : ""
-        }`}
+        } shadow-xl dark:shadow-none shadow-gray-400`}
       >
-        <p className="font-bold text-lg">
-          <TradeIcon />
+        <p className="flex gap-2 items-center font-bold text-lg">
+          <IoMdSwap size={25} />
           Trades
         </p>
         <TradeTabContent dashDetails={dashDetails} />
@@ -146,7 +146,7 @@ const DashBoardGrid: React.FC<{ dashDetails: DashDetails }> = ({
       <div
         className={`col-span-3 dark:bg-zinc-800 bg-white row-span-3 rounded-lg p-4 flex flex-col ${
           smallScreen ? "h-[400px]" : ""
-        }`}
+        } shadow-xl dark:shadow-none shadow-gray-400`}
       >
         <p className="font-bold text-lg">
           <BookmarkOutlined />
@@ -166,9 +166,9 @@ const DashBoardGrid: React.FC<{ dashDetails: DashDetails }> = ({
       <div
         className={`dark:bg-zinc-800 bg-white rounded-lg col-start-1 row-span-3 p-4 ${
           smallScreen ? "h-[600px]" : ""
-        }`}
+        } shadow-xl dark:shadow-none shadow-gray-400`}
       >
-        <p className="font-bold text-lg">
+        <p className="flex gap-2 items-center font-bold text-lg">
           <FaBagShopping />
           My Store
         </p>

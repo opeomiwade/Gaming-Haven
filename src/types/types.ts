@@ -43,7 +43,7 @@ export type User = {
 
 export type Category = {
   id: number;
-  category: string;
+  name: string;
   description: string;
 };
 
@@ -65,7 +65,7 @@ export type Listing = {
   price: number,
   condition: string,
   status: string,
-  user: User
+  seller: User
   images: Image[]
   createdAt: Date;
   listedProduct: Product

@@ -20,7 +20,7 @@ function SignupPage() {
         </Link>
       </header>
       <main className="m-4">
-        <div className="shadow-2xl rounded-lg p-4 border-2 border-gray-500 md:w-fit mx-auto mt-8">
+        <div className="shadow-2xl rounded-lg p-4 md:w-fit mx-auto mt-8 dark:border-gray-500 dark:border-2">
           <h2 className="text-center text-xl m-4">
             Fill in all details to sign up
           </h2>

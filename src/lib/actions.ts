@@ -54,3 +54,23 @@ export async function postItem(formData: FormData, accessToken: string) {
     return { error, isError: true };
   }
 }
+
+export async function getListing(id: number) {
+  try {
+    const { data } = await axiosInstance.get(`/listings/${id}`);
+    return data;
+  } catch (error) {
+    return { message: "An error occured", error };
+  }
+}
+
+export async function getListingByCategory(category: string) {
+  try {
+    const response = await axiosInstance.get(
+      `/listings/category/${category.toLowerCase()}`
+    );
+    return response.data;
+  } catch (error) {
+    return { message: "An error occured", error };
+  }
+}

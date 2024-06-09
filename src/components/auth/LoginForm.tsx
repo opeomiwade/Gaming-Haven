@@ -42,7 +42,7 @@ const AuthForm = () => {
         <input
           name="email"
           id="email"
-          className="p-4 rounded-md bg-gray-500 md:w-[500px] focus:outline-none"
+          className="p-4 rounded-md dark:bg-gray-500 bg-gray-300 md:w-[500px] focus:outline-none"
           placeholder="Enter your email"
           type="email"
           value={email}
@@ -51,7 +51,7 @@ const AuthForm = () => {
         <input
           name="password"
           id="password"
-          className="p-4 rounded-md bg-gray-500 md:w-[500px] focus:outline-none"
+          className="p-4 rounded-md dark:bg-gray-500 bg-gray-300 md:w-[500px] focus:outline-none"
           placeholder="Enter your password"
           type="password"
           onChange={(event) => setPassword(event.currentTarget.value)}
@@ -62,7 +62,7 @@ const AuthForm = () => {
         onClick={googleSignIn}
         whileHover={{ scale: 1.1 }}
         type="button"
-        className="bg-white text-black font-bold p-4 rounded-lg w-full flex items-center gap-2 justify-center my-4 hover:bg-blue-400"
+        className="dark:bg-white border-2 dark:border-0 text-black font-bold p-4 rounded-lg w-full flex items-center gap-2 justify-center my-4 hover:bg-blue-400"
       >
         <GoogleIcon />
         Sign in with google

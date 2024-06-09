@@ -5,6 +5,7 @@ import Sidebar from "@/components/ui/Sidebar";
 import ReduxProviderWrapper from "@/redux/ProviderWrapper";
 import MainHeader from "@/components/ui/MainHeader";
 import QueryClientProviderWrapper from "@/components/client-wrappers/QueryClientProviderWrapper";
+import { Toaster } from "react-hot-toast";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,13 +18,14 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en">
       <body
-        className={`${inter.className} dark:bg-black dark:text-white bg-gray-300`}
+        className={`${inter.className} dark:bg-black dark:text-white bg-white`}
       >
         <QueryClientProviderWrapper>
           <ReduxProviderWrapper>
-            <div className="flex gap-4">
+            <Toaster />
+            <div className="flex">
               <Sidebar />
               <div className="w-full">
                 <MainHeader />
