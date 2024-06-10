@@ -1,6 +1,5 @@
 "use client";
-import { FaBagShopping } from "react-icons/fa6";
-import Header from "@/components/store/Header";
+import { MdOutlineStore } from "react-icons/md";
 import { getUserListings } from "@/lib/http";
 import { useQuery } from "@tanstack/react-query";
 import { CircularProgress } from "@mui/material";
@@ -15,8 +14,8 @@ const StorePage = () => {
 
   return (
     <main className="flex flex-col">
-      <h1 className="text-3xl font-bold px-6 flex gap-2">
-        <FaBagShopping />
+      <h1 className="text-3xl font-bold px-6 flex gap-2 items-center">
+        <MdOutlineStore size={45} />
         My Store
       </h1>
       {isFetching ? (
@@ -24,14 +23,11 @@ const StorePage = () => {
           <CircularProgress />
         </div>
       ) : (
-        <>
-          {/* <Header /> */}
-          <div className="grid sm:grid-cols-1 grid-cols-2 md:grid-cols-3 w-full p-6 gap-10 h-full">
-            {listings.map((listing: Listing) => {
-              return <StoreItem key={listing.listingId} listing={listing} />;
-            })}
-          </div>
-        </>
+        <div className="grid sm:grid-cols-1 grid-cols-2 md:grid-cols-3 w-full p-6 gap-10 h-full">
+          {listings.map((listing: Listing) => {
+            return <StoreItem key={listing.listingId} listing={listing} />;
+          })}
+        </div>
       )}
     </main>
   );

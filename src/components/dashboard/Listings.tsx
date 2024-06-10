@@ -4,11 +4,11 @@ import Link from "next/link";
 
 const Listings: React.FC<{ listings: Listing[] }> = ({ listings }) => {
   return (
-    <ul className="space-y-6 overflow-y-auto max-h-[70%]">
+    <ul className="space-y-6 overflow-y-auto max-h-[70%] overflow-x-hidden">
       {listings.map((listing) => {
         return (
-          <Link href={`/my-store/${listing.listingId}`}>
-            <ListingItem key={listing.listingId} listing={listing} />
+          <Link key={listing.listingId} href={`/listings/${listing.listingId}`}>
+            <ListingItem listing={listing} />
           </Link>
         );
       })}

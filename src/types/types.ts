@@ -20,17 +20,29 @@ export interface MyJwtPayload extends JwtPayload {
   email: string;
 }
 
+export type Offer = {
+  id: number;
+  sender: User;
+  recipient: User;
+  offer: number;
+  status: string;
+  listing: Listing;
+  createdAt: string;
+};
+
 export type DashDetails = {
-  receivedOrders: [];
-  placedOrders: [];
-  savedListings: [];
-  listedProducts: [];
-  sentTrades: [];
+  receivedOrders: Order[];
+  placedOrders: Order[];
+  savedListings: Listing[];
+  listedProducts: Listing[];
+  sentTrades: TradeDetails[];
   receivedTrades: [];
   totalIncome: number;
   totalExpenses: number;
   totalSales: number;
   netIncome: number;
+  sentOffers: Offer[];
+  receivedOffers: Offer[];
 };
 
 export type User = {
@@ -38,7 +50,7 @@ export type User = {
   email: string;
   imageUrl: string;
   username: string;
-  createdAt: Date;
+  createdAt: string;
 };
 
 export type Category = {
@@ -60,16 +72,16 @@ export type Product = {
 };
 
 export type Listing = {
-  listingId:number,
-  description: string,
-  price: number,
-  condition: string,
-  status: string,
-  seller: User
-  images: Image[]
-  createdAt: Date;
-  listedProduct: Product
-}
+  listingId: number;
+  description: string;
+  price: number;
+  condition: string;
+  status: string;
+  seller: User;
+  images: Image[];
+  createdAt: string;
+  listedProduct: Product;
+};
 
 export type TradeDetails = {
   id: number;
@@ -78,7 +90,7 @@ export type TradeDetails = {
   listing1: Listing;
   listing2: Listing;
   tradeStatus: string;
-  createdAt: Date;
+  createdAt: string;
 };
 
 export type Order = {

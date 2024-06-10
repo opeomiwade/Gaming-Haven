@@ -6,12 +6,17 @@ import { Listing } from "@/types/types";
 import { GoDotFill } from "react-icons/go";
 import formatDateTime from "@/utils/formatDate";
 import Seller from "@/components/store-item-page/SellerFooter";
-import Button from "@/components/store-item-page/Button";
-import { MdDelete } from "react-icons/md";
+import Actions from "@/components/store-item-page/StoreItemActions";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 
 const StoreItem: React.FC<{ params: any }> = async ({ params }) => {
-  const listing = (await getListing(params.listingId)) as Listing;
+  const listing = (await getListing(params.listingId).catch((error) => {
+    if (error.statusCode === 404) {
+      notFound();
+    }
+  })) as Listing;
+
   const similarItems = (await getListingByCategory(
     listing.listedProduct.category.name
   )) as Listing[];
@@ -55,13 +60,7 @@ const StoreItem: React.FC<{ params: any }> = async ({ params }) => {
             <p className="text-gray-400 font-semibold text-xs">
               Listed {formatDateTime(listing.createdAt)}
             </p>
-            <Button className="dark:bg-zinc-800 bg-black p-2 rounded-md text-white font-semibold">
-              Edit
-            </Button>
-            <Button className="flex hover:bg-red-500 hover:border-0 items-center gap-2 justify-center border-2 rounded-md border-black dark:border-white p-2 font-bold">
-              <MdDelete size={25} />
-              Delete Listing
-            </Button>
+            <Actions seller={listing.seller} />
             <Seller listing={listing} />
           </div>
         </section>
@@ -74,17 +73,19 @@ const StoreItem: React.FC<{ params: any }> = async ({ params }) => {
                 return (
                   <Link
                     href={`/listings/${item.listingId}`}
-                    key={listing.listingId}
+                    key={item.listingId}
                     className="flex flex-col justify-center relative h-full p-2 rounded-md gap-2"
                   >
                     <Image
                       src={item.images[0].imageUrl}
                       alt={item.listedProduct.productName}
-                      height={500}
-                      width={500}
+                      height={300}
+                      width={300}
                     />
                     <p className="text-sm">{item.listedProduct.productName}</p>
-                    <p className="font-semibold text-left text-green-500">£{listing.price}</p>
+                    <p className="font-semibold text-left text-green-500">
+                      £{listing.price}
+                    </p>
                   </Link>
                 );
               })}

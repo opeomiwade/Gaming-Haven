@@ -1,7 +1,23 @@
 "use server";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import axiosInstance from "./axiosInstance";
 import { revalidatePath } from "next/cache";
+
+class CustomError extends Error {
+  statusCode: number;
+  constructor({
+    message,
+    statusCode,
+  }: {
+    message: string;
+    statusCode: number;
+  }) {
+    super(message);
+    this.name = "CustomError";
+    this.message = message;
+    this.statusCode = statusCode;
+  }
+}
 
 /**
  * @param {FormData} formData - The FormData object containing login details.
@@ -59,8 +75,11 @@ export async function getListing(id: number) {
   try {
     const { data } = await axiosInstance.get(`/listings/${id}`);
     return data;
-  } catch (error) {
-    return { message: "An error occured", error };
+  } catch (error: any) {
+    throw new CustomError({
+      message: error.response.data,
+      statusCode: error.response.status,
+    });
   }
 }
 
@@ -70,7 +89,11 @@ export async function getListingByCategory(category: string) {
       `/listings/category/${category.toLowerCase()}`
     );
     return response.data;
-  } catch (error) {
-    return { message: "An error occured", error };
+  } catch (error: any) {
+    return {
+      message: "An error occured",
+      error: error.response.data,
+      statusCode: error.response.status,
+    };
   }
 }

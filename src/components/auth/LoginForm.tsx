@@ -1,7 +1,7 @@
 "use client";
 import Button from "../ui/FormButton";
 import Link from "next/link";
-import { useFormStatus, useFormState } from "react-dom";
+import { useFormState } from "react-dom";
 import loginUser from "@/lib/actions";
 import { useEffect, useState } from "react";
 import useLocalStorage from "@/hooks/useLocalStorage";

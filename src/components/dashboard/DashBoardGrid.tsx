@@ -4,7 +4,7 @@ import { FaArrowUp } from "react-icons/fa6";
 import { FaMoneyBill } from "react-icons/fa";
 import { IoMdSwap } from "react-icons/io";
 import BookmarkOutlined from "@mui/icons-material/BookmarkOutlined";
-import { FaBagShopping } from "react-icons/fa6";
+import { MdOutlineStore } from "react-icons/md";
 import { DashDetails } from "@/types/types";
 import TradeTabContent from "./trade-cell/TradeTabContent";
 import Listings from "./Listings";
@@ -12,7 +12,9 @@ import { motion } from "framer-motion";
 import OrderTabContent from "./order-cell/OrderTabContent";
 import MarketPlaceTopCategories from "./market-place-categories/MarketplaceTopCategories";
 import Link from "next/link";
+import { GiCash } from "react-icons/gi";
 import { useEffect, useState } from "react";
+import CashOffersTabContent from "./cash-offers-cell/CashOfferTabContent";
 
 const DashBoardGrid: React.FC<{ dashDetails: DashDetails }> = ({
   dashDetails,
@@ -129,7 +131,7 @@ const DashBoardGrid: React.FC<{ dashDetails: DashDetails }> = ({
       >
         <p className="flex gap-2 items-center font-bold text-lg">
           <IoMdSwap size={25} />
-          Trades
+          Trade Offers
         </p>
         <TradeTabContent dashDetails={dashDetails} />
         <hr className="my-4" />
@@ -144,7 +146,17 @@ const DashBoardGrid: React.FC<{ dashDetails: DashDetails }> = ({
         </Link>
       </div>
       <div
-        className={`col-span-3 dark:bg-zinc-800 bg-white row-span-3 rounded-lg p-4 flex flex-col ${
+        className={`dark:bg-zinc-800 bg-white rounded-lg p-4 col-start-2 col-span-3 row-span-3 ${
+          smallScreen ? "h-[500px]" : ""
+        } shadow-xl dark:shadow-none shadow-gray-400`}
+      >
+        <p className="flex gap-2 font-bold text-lg">
+          <GiCash size={25} /> Cash Offers
+        </p>
+        <CashOffersTabContent dashDetails={dashDetails} />
+      </div>
+      <div
+        className={`col-start-2 col-span-3 dark:bg-zinc-800 bg-white row-span-3 rounded-lg p-4 flex flex-col ${
           smallScreen ? "h-[400px]" : ""
         } shadow-xl dark:shadow-none shadow-gray-400`}
       >
@@ -155,21 +167,14 @@ const DashBoardGrid: React.FC<{ dashDetails: DashDetails }> = ({
         <hr className="my-4" />
         <Listings listings={dashDetails.savedListings} />
         <hr className="my-4" />
-        <motion.button
-          whileHover={{ scale: 1.1, backgroundColor: "gray" }}
-          transition={{ type: "spring", stiffness: 500 }}
-          className="text-lg dark:bg-black bg-gray-300 p-2 rounded-lg w-full"
-        >
-          View All Items
-        </motion.button>
       </div>
       <div
-        className={`dark:bg-zinc-800 bg-white rounded-lg col-start-1 row-span-3 p-4 ${
+        className={`dark:bg-zinc-800 bg-white rounded-lg col-start-1 row-start-8 row-span-3 p-4 ${
           smallScreen ? "h-[600px]" : ""
         } shadow-xl dark:shadow-none shadow-gray-400`}
       >
         <p className="flex gap-2 items-center font-bold text-lg">
-          <FaBagShopping />
+          <MdOutlineStore size={30} />
           My Store
         </p>
         <hr className="my-4" />
