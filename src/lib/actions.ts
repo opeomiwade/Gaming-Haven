@@ -97,3 +97,25 @@ export async function getListingByCategory(category: string) {
     };
   }
 }
+
+export async function getPurchases(accessToken: string) {
+  try {
+    const response = await axiosInstance.get("/users/user/purchases", {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    return response.data;
+  } catch (error: any) {}
+}
+
+export async function getSales(accessToken: string) {
+  try {
+    const response = await axiosInstance.get("/users/user/sales", {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    return response.data;
+  } catch (error: any) {}
+}

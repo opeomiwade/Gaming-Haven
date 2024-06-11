@@ -1,5 +1,5 @@
 const Order = () => {
-  return <h1>My orders</h1>;
+  return <h1>My Trades</h1>;
 };
 
 export default Order;

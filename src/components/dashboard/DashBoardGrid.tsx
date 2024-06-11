@@ -113,16 +113,6 @@ const DashBoardGrid: React.FC<{ dashDetails: DashDetails }> = ({
       <div className="dark:bg-zinc-800 bg-white col-start-1 rounded-lg row-span-3 p-4 shadow-xl dark:shadow-none shadow-gray-400">
         <p className="font-bold text-lg">My Orders</p>
         <OrderTabContent dashDetails={dashDetails} />
-        <hr className="my-4" />
-        <Link href="orders">
-          <motion.button
-            whileHover={{ scale: 1.1, backgroundColor: "gray" }}
-            transition={{ type: "spring", stiffness: 500 }}
-            className="text-lg dark:bg-black bg-gray-300 p-2 rounded-lg w-full"
-          >
-            View All Orders
-          </motion.button>
-        </Link>
       </div>
       <div
         className={`dark:bg-zinc-800 bg-white col-start-2 row-start-3 row-span-3 col-span-3 rounded-lg p-4 ${

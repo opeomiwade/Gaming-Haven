@@ -2,7 +2,7 @@
 import { User, currentUserState } from "@/types/types";
 import React from "react";
 import { useSelector } from "react-redux";
-import Button from "@/components/store-item-page/Button";
+import Button from "@/components/listing-item-page/Button";
 import { MdDelete } from "react-icons/md";
 
 const Actions: React.FC<{ seller: User }> = ({ seller }) => {
@@ -39,7 +39,6 @@ const Actions: React.FC<{ seller: User }> = ({ seller }) => {
           </Button>
           <Button
             className="flex hover:bg-gray-300 hover:border-0 items-center gap-2 justify-center border-2 rounded-md border-black dark:border-white p-2 font-bold"
-            ƒ
           >
             Offer Trade
           </Button>

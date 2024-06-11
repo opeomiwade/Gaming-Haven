@@ -16,7 +16,7 @@ const ListingItem: React.FC<{ listing: Listing }> = ({ listing }) => {
         <p className="font-normal">{listing.listedProduct.productName}</p>
         <p className="text-xs font-semibold">Condition: {listing.condition}</p>
       </div>
-      <p className="text-green-500">£{listing.price}</p>
+      <p className="text-green-500">£{listing.price.toFixed(2)}</p>
     </motion.li>
   );
 };

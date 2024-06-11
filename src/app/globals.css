@@ -3,5 +3,22 @@
 @tailwind utilities;
 
 .no-scrollbar::-webkit-scrollbar {
-    display: none; /* Hide scrollbar for Chrome, Safari and Opera */
+  display: none; /* Hide scrollbar for Chrome, Safari and Opera */
+}
+
+.loading {
+  text-align: center;
+  animation: loading 1.2s ease-in-out infinite;
+}
+
+@keyframes loading {
+  0% {
+    color: rgb(209 213 219);
   }
+  50% {
+    color: rgb(156 163 175);
+  }
+  100% {
+    color: rgb(75 85 99);
+  }
+}

@@ -97,10 +97,10 @@ export type Order = {
   orderId: number;
   buyer: User;
   seller: User;
-  orderDate: Date;
+  orderDate: string;
   totalPrice: number;
   username: number;
-  products: Product[];
+  listing: Listing[];
 };
 
 export type UploadedImage = {

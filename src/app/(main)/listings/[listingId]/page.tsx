@@ -5,8 +5,8 @@ import Image from "next/image";
 import { Listing } from "@/types/types";
 import { GoDotFill } from "react-icons/go";
 import formatDateTime from "@/utils/formatDate";
-import Seller from "@/components/store-item-page/SellerFooter";
-import Actions from "@/components/store-item-page/StoreItemActions";
+import Seller from "@/components/listing-item-page/SellerFooter";
+import Actions from "@/components/listing-item-page/ListingItemActions";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 

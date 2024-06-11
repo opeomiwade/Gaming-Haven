@@ -1,5 +1,5 @@
-function formatDateTime(date: Date) {
-  date = new Date(date);
+function formatDateTime(dateString: string) {
+  let date = new Date(dateString);
   // Extract the day, month, year, hour, and minute
   const day = date.getDate();
   const month = date.getMonth() + 1; // Months are zero-indexed
