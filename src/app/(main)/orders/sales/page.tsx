@@ -2,29 +2,34 @@
 import React from "react";
 import { getSales } from "@/lib/actions";
 import SalesTableRow from "@/components/order-page/SalesTableRow";
-import { Order } from "@/types/types";
+import { Listing } from "@/types/types";
 import SalesTableHeader from "@/components/order-page/SalesTableHeader";
 import { useQuery } from "@tanstack/react-query";
 import useLocalStorage from "@/hooks/useLocalStorage";
+import { IoReceiptOutline as ReceiptLogo } from "react-icons/io5";
 
 const PurchasesPage = () => {
   const [idToken] = useLocalStorage<string>("accessToken");
-  const { data: purchases, isFetching } = useQuery<Order[]>({
-    queryKey: ["purchases"],
+  const { data: sales, isFetching } = useQuery<Listing[]>({
+    queryKey: ["sales"],
     queryFn: () => getSales(idToken!),
-    staleTime: 60000
+    staleTime: 60000,
   });
 
   return (
     <main className="h-screen w-full">
-      <h1 className="font-bold text-3xl px-6">Sales</h1>
+      <div className="flex items-center p-4 gap-2">
+        <ReceiptLogo size={40} />
+        <h1 className="font-bold text-3xl">Sales</h1>
+      </div>
+
       <SalesTableHeader />
       <ul className="w-full p-4">
         {isFetching ? (
           <p className="text-center text-black loading">Loading....</p>
         ) : (
-          purchases?.map((purchase) => (
-            <SalesTableRow key={purchase.orderId} order={purchase} />
+          sales?.map((sale) => (
+            <SalesTableRow key={sale.listingId} sale={sale} />
           ))
         )}
       </ul>

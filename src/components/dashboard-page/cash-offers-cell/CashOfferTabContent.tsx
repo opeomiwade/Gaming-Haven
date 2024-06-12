@@ -16,9 +16,17 @@ const CashOffersTabContent: React.FC<{ dashDetails: DashDetails }> = ({
         layoutId="active-tab-trades"
       />
       <hr className="my-4" />
-      {selected === "Sent" && <OffersList offers={dashDetails.sentOffers} />}
+      {selected === "Sent" && (
+        <OffersList
+          offers={dashDetails.sentOffers}
+          emptyPlaceHolderText="You have made no offers"
+        />
+      )}
       {selected === "Received" && (
-        <OffersList offers={dashDetails.receivedOffers} />
+        <OffersList
+          offers={dashDetails.receivedOffers}
+          emptyPlaceHolderText="You have received no offers"
+        />
       )}
     </>
   );

@@ -11,7 +11,7 @@ import useLocalStorage from "@/hooks/useLocalStorage";
 import classes from "@/CSS/navbar.module.css";
 import { useRouter } from "next/navigation";
 import { MdOutlineKeyboardDoubleArrowRight as CollapseIcon } from "react-icons/md";
-
+import { usePathname } from "next/navigation";
 
 const Sidebar = () => {
   const { push } = useRouter();
@@ -19,6 +19,8 @@ const Sidebar = () => {
   const [_storedValue, _setStoredValue, removeItem] =
     useLocalStorage("accessToken");
   const [bottomSidebar, setBottom] = useState<boolean>();
+  const path = usePathname();
+  console.log(path)
 
   useEffect(() => {
     const resizeObserver = new ResizeObserver((entries) => {
@@ -63,7 +65,7 @@ const Sidebar = () => {
         <Link href="/">
           <motion.h1
             whileHover={{ scale: 1.1 }}
-            className="text-center text-2xl dark:hover:text-black hover:cursor-pointer hover:text-gray-300 font-extrabold"
+            className={`text-center text-2xl dark:hover:text-black hover:cursor-pointer hover:text-gray-300 font-extrabold`}
           >
             <Controller style={{ fontSize: "50px" }} />
             {isExpanded && <p>Gaming Haven</p>}
@@ -74,7 +76,7 @@ const Sidebar = () => {
         <Link href="/dashboard">
           <motion.button
             whileHover={{ scale: 1.2 }}
-            className="flex items-center gap-4 text-lg font-bold dark:hover:text-black hover:text-gray-300"
+            className={`flex items-center gap-4 text-lg font-bold dark:hover:text-black hover:text-gray-300 ${path.toLowerCase().includes("dashboard") ? "text-gray-300 dark:" : ""}`}
           >
             <DashboardIcon style={{ fontSize: "40px" }} />
             {isExpanded && <p>Dashboard</p>}
@@ -84,7 +86,7 @@ const Sidebar = () => {
         <Link href="/marketplace">
           <motion.button
             whileHover={{ scale: 1.2 }}
-            className="flex items-center gap-4 text-lg font-bold dark:hover:text-black hover:text-gray-300"
+            className={`flex items-center gap-4 text-lg font-bold dark:hover:text-black hover:text-gray-300 ${path.toLowerCase().includes("marketplace") ? "text-gray-300" : ""}`}
           >
             <PeopleIcon style={{ fontSize: "40px" }} />
             {isExpanded && <p>MarketPlace</p>}
@@ -93,7 +95,7 @@ const Sidebar = () => {
         <Link href="/">
           <motion.button
             whileHover={{ scale: 1.2 }}
-            className="flex items-center gap-4 text-lg font-bold dark:hover:text-black hover:text-gray-300"
+            className={`flex items-center gap-4 text-lg font-bold dark:hover:text-black hover:text-gray-300 ${path.toLowerCase().includes("inbox") ? "text-gray-300" : ""}`}
           >
             <MailIcon style={{ fontSize: "40px" }} />
             {isExpanded && <p>Inbox</p>}

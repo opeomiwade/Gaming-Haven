@@ -1,5 +1,5 @@
 "use client";
-import DashBoardGrid from "@/components/dashboard/DashBoardGrid";
+import DashBoardGrid from "@/components/dashboard-page/DashBoardGrid";
 import { getDashDetails } from "@/lib/http";
 import { CircularProgress } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";

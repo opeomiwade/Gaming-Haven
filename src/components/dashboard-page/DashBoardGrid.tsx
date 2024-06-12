@@ -15,6 +15,7 @@ import Link from "next/link";
 import { GiCash } from "react-icons/gi";
 import { useEffect, useState } from "react";
 import CashOffersTabContent from "./cash-offers-cell/CashOfferTabContent";
+import EmptyPlaceHolder from "../ui/EmptyPlaceHolder";
 
 const DashBoardGrid: React.FC<{ dashDetails: DashDetails }> = ({
   dashDetails,
@@ -36,6 +37,7 @@ const DashBoardGrid: React.FC<{ dashDetails: DashDetails }> = ({
       resizeObserver.disconnect();
     };
   });
+
   return (
     <div
       className={`flex flex-col justify-between lg:grid grid-cols-[4fr_1fr_1fr_1fr_1fr] grid-rows-10_155px h-full gap-4 p-6  ${
@@ -50,7 +52,9 @@ const DashBoardGrid: React.FC<{ dashDetails: DashDetails }> = ({
           </div>
           <div className="flex flex-col">
             <p className="text-md">Total Sales</p>
-            <p className="text-2xl font-bold ">£{dashDetails?.totalSales}</p>
+            <p className="text-2xl font-bold ">
+              £{dashDetails?.marketplaceTotalSales}
+            </p>
           </div>
         </div>
       </div>
@@ -101,16 +105,18 @@ const DashBoardGrid: React.FC<{ dashDetails: DashDetails }> = ({
         <p className="font-bold text-lg">Top MarketPlace Gaming Categories</p>
         <hr className="my-4" />
         <MarketPlaceTopCategories />
-        <hr className="my-4" />
-        <motion.button
-          whileHover={{ scale: 1.1, backgroundColor: "gray" }}
-          transition={{ type: "spring", stiffness: 500 }}
-          className="text-lg dark:bg-black bg-gray-300 p-2 rounded-lg w-full"
-        >
-          Explore All
-        </motion.button>
+        <div className="relative bottom-2">
+          <hr className="my-4" />
+          <motion.button
+            whileHover={{ scale: 1.1, backgroundColor: "gray" }}
+            transition={{ type: "spring", stiffness: 500 }}
+            className="text-lg dark:bg-black bg-gray-300 p-2 rounded-lg w-full"
+          >
+            Explore All
+          </motion.button>
+        </div>
       </div>
-      <div className="dark:bg-zinc-800 bg-white col-start-1 rounded-lg row-span-3 p-4 shadow-xl dark:shadow-none shadow-gray-400">
+      <div className="dark:bg-zinc-800 bg-white col-start-1 rounded-lg row-span-3 p-4 shadow-xl dark:shadow-none shadow-gray-400 flex flex-col">
         <p className="font-bold text-lg">My Orders</p>
         <OrderTabContent dashDetails={dashDetails} />
       </div>
@@ -124,16 +130,6 @@ const DashBoardGrid: React.FC<{ dashDetails: DashDetails }> = ({
           Trade Offers
         </p>
         <TradeTabContent dashDetails={dashDetails} />
-        <hr className="my-4" />
-        <Link href="/trades">
-          <motion.button
-            whileHover={{ scale: 1.1, backgroundColor: "gray" }}
-            transition={{ type: "spring", stiffness: 500 }}
-            className="text-lg dark:bg-black bg-gray-300 p-2 rounded-lg w-full"
-          >
-            View All Trades
-          </motion.button>
-        </Link>
       </div>
       <div
         className={`dark:bg-zinc-800 bg-white rounded-lg p-4 col-start-2 col-span-3 row-span-3 ${
@@ -154,9 +150,16 @@ const DashBoardGrid: React.FC<{ dashDetails: DashDetails }> = ({
           <BookmarkOutlined />
           Saved Listings
         </p>
-        <hr className="my-4" />
-        <Listings listings={dashDetails.savedListings} />
-        <hr className="my-4" />
+
+        {dashDetails.savedListings.length > 0 ? (
+          <>
+            <hr className="my-4" />
+            <Listings listings={dashDetails.savedListings} />
+            <hr className="my-4" />
+          </>
+        ) : (
+          <EmptyPlaceHolder buttonText="Browse Marketplace" href="/" />
+        )}
       </div>
       <div
         className={`dark:bg-zinc-800 bg-white rounded-lg col-start-1 row-start-8 row-span-3 p-4 ${
@@ -167,18 +170,26 @@ const DashBoardGrid: React.FC<{ dashDetails: DashDetails }> = ({
           <MdOutlineStore size={30} />
           My Store
         </p>
-        <hr className="my-4" />
-        <Listings listings={dashDetails.listedProducts} />
-        <hr className="my-4" />
-        <Link href={"/my-store"}>
-          <motion.button
-            whileHover={{ scale: 1.1, backgroundColor: "gray" }}
-            transition={{ type: "spring", stiffness: 500 }}
-            className="text-lg dark:bg-black bg-gray-300 p-2 rounded-lg w-full"
-          >
-            View All Items
-          </motion.button>
-        </Link>
+        {dashDetails.listedProducts.length > 0 ? (
+          <>
+            <hr className="my-4" />
+            <Listings listings={dashDetails.listedProducts} />{" "}
+            <div className="relative bottom-0">
+              <hr className="my-4" />
+              <Link href={"/my-store"}>
+                <motion.button
+                  whileHover={{ scale: 1.1, backgroundColor: "gray" }}
+                  transition={{ type: "spring", stiffness: 500 }}
+                  className="text-lg dark:bg-black bg-gray-300 p-2 rounded-lg w-full"
+                >
+                  View All Items
+                </motion.button>
+              </Link>
+            </div>
+          </>
+        ) : (
+          <EmptyPlaceHolder buttonText="List an Item" />
+        )}
       </div>
     </div>
   );

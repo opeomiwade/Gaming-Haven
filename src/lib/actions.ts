@@ -36,7 +36,8 @@ export default async function loginUser(
     return { ...response.data };
   } catch (error: any) {
     return {
-      message: error.response.data || "An error occcured",
+      message: error.response.data,
+      statusCode: error.response.status,
       isError: true,
     };
   }
@@ -66,8 +67,11 @@ export async function postItem(formData: FormData, accessToken: string) {
     });
     console.log(response.data);
     return response.data;
-  } catch (error) {
-    return { error, isError: true };
+  } catch (error: any) {
+    throw new CustomError({
+      message: error.response.data,
+      statusCode: error.response.status,
+    });
   }
 }
 
@@ -90,11 +94,10 @@ export async function getListingByCategory(category: string) {
     );
     return response.data;
   } catch (error: any) {
-    return {
-      message: "An error occured",
-      error: error.response.data,
+    throw new CustomError({
+      message: error.response.data,
       statusCode: error.response.status,
-    };
+    });
   }
 }
 
@@ -106,12 +109,29 @@ export async function getPurchases(accessToken: string) {
       },
     });
     return response.data;
-  } catch (error: any) {}
+  } catch (error: any) {
+    throw new CustomError({
+      message: error.response.data,
+      statusCode: error.response.status,
+    });
+  }
+}
+
+export async function getOrderItems(orderId: number) {
+  try {
+    const response = await axiosInstance.get(`/orders/${orderId}/items`);
+    return response.data;
+  } catch (error: any) {
+    throw new CustomError({
+      message: error.response.data,
+      statusCode: error.response.status,
+    });
+  }
 }
 
 export async function getSales(accessToken: string) {
   try {
-    const response = await axiosInstance.get("/users/user/sales", {
+    const response = await axiosInstance.get("/listings/user/sold-listings", {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },

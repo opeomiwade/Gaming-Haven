@@ -4,7 +4,7 @@ import { getUserListings } from "@/lib/http";
 import { useQuery } from "@tanstack/react-query";
 import { CircularProgress } from "@mui/material";
 import { Listing } from "@/types/types";
-import StoreItem from "@/components/store/StoreItem";
+import StoreItem from "@/components/store-page/StoreItem";
 
 const StorePage = () => {
   const { data: listings, isFetching } = useQuery({

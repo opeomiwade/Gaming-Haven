@@ -13,6 +13,7 @@ import { useRouter } from "next/navigation";
 const AuthForm = () => {
   const { push } = useRouter();
   const [state, formAction] = useFormState(loginUser, { message: null });
+  console.log(state)
   const [storedValue, setStoredValue] = useLocalStorage<string>("accessToken");
   const [password, setPassword] = useState<string>("");
   const [email, setEmail] = useState<string>("");
@@ -73,7 +74,7 @@ const AuthForm = () => {
         </p>
       </Link>
       {state.message && state.isError && (
-        <p className="text-red-500 font-bold text-center">{state.message}</p>
+        <p className="text-red-500 font-bold text-center my-4">{state.message}</p>
       )}
     </div>
   );

@@ -2,7 +2,7 @@ import Tabs from "@/components/ui/NavTabs";
 import axiosInstance from "@/lib/axiosInstance";
 import { Listing } from "@/types/types";
 import { useEffect, useState } from "react";
-import MarketPlaceCategoryItem from "../market-place-categories/MarketPlaceCategoryItem";
+import MarketPlaceCategoryItem from "./MarketPlaceCategoryItem";
 
 const MarketPlaceTopCategories = () => {
   const [selected, setSelected] = useState<string>("Consoles");

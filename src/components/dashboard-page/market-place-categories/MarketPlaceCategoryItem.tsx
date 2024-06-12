@@ -21,8 +21,8 @@ const MarketPlaceCategoryItem: React.FC<{ listing: Listing }> = ({
           </p>
         </div>
       </div>
-      <div className="flex flex-col gap-4">
-        <p className="text-sm font-bold text-green-500">£{listing.price}</p>
+      <div className="flex flex-col gap-2 w-[10%] items-center">
+        <p className="text-sm font-bold text-green-500">£{listing.price.toFixed(2)}</p>
         <motion.button
           whileHover={{ scale: 1.3 }}
           className="font-bold px-2 dark:bg-black bg-gray-300 rounded-lg hover:cursor-pointer"

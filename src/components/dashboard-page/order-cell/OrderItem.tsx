@@ -1,17 +1,10 @@
-import { Order, currentUserState } from "@/types/types";
+import { Order } from "@/types/types";
 import { motion } from "framer-motion";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import formatDateTime from "@/utils/formatDate";
-import { useSelector } from "react-redux";
 import Link from "next/link";
 
 const OrderItem: React.FC<{ order: Order }> = ({ order }) => {
-  const currentUsername = useSelector(
-    (state: { currentUser: { user: currentUserState } }) =>
-      state.currentUser.user.username
-  );
-
-  const soldTab = currentUsername === order.seller.username;
   return (
     <Link href={`/orders/${order.orderId}`}>
       <motion.li
@@ -23,10 +16,8 @@ const OrderItem: React.FC<{ order: Order }> = ({ order }) => {
             Order Id: <span className="font-bold">{order.orderId}</span>
           </p>
           <p>
-            {soldTab ? "Bought by" : "Sold By"}:{" "}
-            <span className="font-bold">
-              {soldTab ? order.buyer.username : order.seller.username}
-            </span>
+            Total:{" "}
+            <span className="font-bold">£{order.totalPrice.toFixed(2)}</span>
           </p>
           <p className="dark:text-gray-300 text-teal-300 font-bold">
             Bought on:{" "}

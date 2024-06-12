@@ -1,4 +1,5 @@
 import { JwtPayload } from "jwt-decode";
+import { List } from "postcss/lib/list";
 
 export type TabProps = {
   isSelected: boolean;
@@ -31,15 +32,15 @@ export type Offer = {
 };
 
 export type DashDetails = {
-  receivedOrders: Order[];
-  placedOrders: Order[];
+  soldListings: Listing[];
+  orders: Order[];
   savedListings: Listing[];
   listedProducts: Listing[];
   sentTrades: TradeDetails[];
   receivedTrades: [];
   totalIncome: number;
   totalExpenses: number;
-  totalSales: number;
+  marketplaceTotalSales: number;
   netIncome: number;
   sentOffers: Offer[];
   receivedOffers: Offer[];
@@ -80,7 +81,9 @@ export type Listing = {
   seller: User;
   images: Image[];
   createdAt: string;
+  updatedAt: string;
   listedProduct: Product;
+  order: Order;
 };
 
 export type TradeDetails = {
@@ -96,11 +99,8 @@ export type TradeDetails = {
 export type Order = {
   orderId: number;
   buyer: User;
-  seller: User;
   orderDate: string;
   totalPrice: number;
-  username: number;
-  listing: Listing[];
 };
 
 export type UploadedImage = {
