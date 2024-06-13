@@ -16,11 +16,14 @@ import { GiCash } from "react-icons/gi";
 import { useEffect, useState } from "react";
 import CashOffersTabContent from "./cash-offers-cell/CashOfferTabContent";
 import EmptyPlaceHolder from "../ui/EmptyPlaceHolder";
+import { useContext } from "react";
+import ModalContext from "@/context/ModalContext";
 
 const DashBoardGrid: React.FC<{ dashDetails: DashDetails }> = ({
   dashDetails,
 }) => {
   const [smallScreen, setSmallScreen] = useState<boolean>();
+  const { openSellModal } = useContext(ModalContext);
 
   useEffect(() => {
     const resizeObserver = new ResizeObserver((entries) => {
@@ -188,7 +191,10 @@ const DashBoardGrid: React.FC<{ dashDetails: DashDetails }> = ({
             </div>
           </>
         ) : (
-          <EmptyPlaceHolder buttonText="List an Item" />
+          <EmptyPlaceHolder
+            buttonText="List an Item"
+            clickHandler={openSellModal}
+          />
         )}
       </div>
     </div>

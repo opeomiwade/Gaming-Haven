@@ -1,7 +1,7 @@
 "use client";
 import classes from "@/CSS/modal.module.css";
 import { motion } from "framer-motion";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useContext } from "react";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import Close from "@mui/icons-material/Close";
 import CancelIcon from "@mui/icons-material/Cancel";
@@ -11,18 +11,17 @@ import { useSelector } from "react-redux";
 import generateDataUrl from "@/utils/imageDataUrl";
 import { uploadImage } from "@/utils/imageDataUrl";
 import useLocalStorage from "@/hooks/useLocalStorage";
+import ModalContext from "@/context/ModalContext";
 
-const SellModal: React.FC<{ open: boolean; closeModal: () => void }> = ({
-  open,
-  closeModal,
-}) => {
+const SellModal = () => {
   const [images, setImages] = useState<UploadedImage[]>([]);
   const [imageUrls, setImageUrls] = useState<string[]>([]);
   const inputRef = useRef<HTMLInputElement>();
   const formRef = useRef<HTMLFormElement>();
-  const [idToken, _setIdToken, removeItem] =
+  const [idToken, _setIdToken, _removeItem] =
     useLocalStorage<string>("accessToken");
   const [error, setError] = useState<boolean>(false);
+  const { open, closeSellModal } = useContext(ModalContext);
 
   const username = useSelector(
     (state: { currentUser: { user: currentUserState } }) =>
@@ -40,12 +39,14 @@ const SellModal: React.FC<{ open: boolean; closeModal: () => void }> = ({
   async function submitHandler(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-    const response = await postItem(formData, idToken!)
+    await postItem(formData, idToken!).catch((error) =>
+      setError(error.message)
+    );
     inputRef.current!.value = "";
     formRef.current?.reset();
     setImages([]);
     setImageUrls([]);
-    closeModal();
+    closeSellModal();
   }
 
   function removeImage(event: React.MouseEvent<HTMLDivElement>) {
@@ -72,7 +73,7 @@ const SellModal: React.FC<{ open: boolean; closeModal: () => void }> = ({
               setImages([]);
               inputRef.current!.value = "";
               formRef.current?.reset();
-              closeModal();
+              closeSellModal();
             }}
           >
             <Close style={{ fontSize: "40px" }} />
