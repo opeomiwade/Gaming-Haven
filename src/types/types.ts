@@ -1,5 +1,4 @@
 import { JwtPayload } from "jwt-decode";
-import { List } from "postcss/lib/list";
 
 export type TabProps = {
   isSelected: boolean;

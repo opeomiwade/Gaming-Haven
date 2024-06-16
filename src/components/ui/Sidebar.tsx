@@ -20,7 +20,6 @@ const Sidebar = () => {
     useLocalStorage("accessToken");
   const [bottomSidebar, setBottom] = useState<boolean>();
   const path = usePathname();
-  console.log(path)
 
   useEffect(() => {
     const resizeObserver = new ResizeObserver((entries) => {

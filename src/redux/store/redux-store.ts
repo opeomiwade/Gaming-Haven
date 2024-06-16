@@ -8,6 +8,10 @@ const currentUserSlice = createSlice({
     setCurrentUser(state, action) {
       state.user = action.payload;
     },
+
+    updateUserData(state, action) {
+      state.user = { ...state.user, ...action.payload };
+    },
   },
 });
 

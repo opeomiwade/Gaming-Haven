@@ -29,8 +29,9 @@ const SellModal = () => {
   );
 
   function inputChangeHandler(event: React.ChangeEvent<HTMLInputElement>) {
-    generateDataUrl(event, setImages);
-    uploadImage(event.target.files![0], username).then((imageUrl) =>
+    generateDataUrl(event, setImages, null);
+    const path = `${username}/products/`
+    uploadImage(event.target.files![0], path).then((imageUrl) =>
       setImageUrls((prevImages) => [...prevImages, imageUrl!])
     );
     inputRef.current!.value = "";

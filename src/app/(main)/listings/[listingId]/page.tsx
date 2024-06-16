@@ -65,7 +65,7 @@ const StoreItem: React.FC<{ params: any }> = async ({ params }) => {
           </div>
         </section>
         <section className="flex flex-col gap-2 w-full h-full">
-          <h3 className="font-bold text-xl">You might also like</h3>
+          <h3 className="font-bold text-xl">Similar Items</h3>
           <div className="grid grid-cols-5 gap-6 h-full">
             {similarItems
               .filter((item) => item.listingId !== listing.listingId)

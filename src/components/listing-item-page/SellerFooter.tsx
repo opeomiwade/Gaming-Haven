@@ -1,9 +1,9 @@
 "use client";
 import { Listing } from "@/types/types";
+import { defaultImageUrl } from "@/utils/imageDataUrl";
+
 
 const Seller: React.FC<{ listing: Listing }> = ({ listing }) => {
-  const defaultImageUrl =
-    "https://firebasestorage.googleapis.com/v0/b/instagram-clone-5b47d.appspot.com/o/account%20circle.jpeg?alt=media&token=ec3c29d8-5b89-447b-ac2e-651af9e4e394";
   return (
     <>
       <hr className="w-full" />
