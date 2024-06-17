@@ -1,36 +1,40 @@
 "use client";
 import classes from "@/CSS/modal.module.css";
 import { motion } from "framer-motion";
-import React, { useState, useRef, useContext } from "react";
+import React, { useState, useRef } from "react";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import Close from "@mui/icons-material/Close";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { postItem } from "@/lib/actions";
 import { UploadedImage, currentUserState } from "@/types/types";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import generateDataUrl from "@/utils/imageDataUrl";
 import { uploadImage } from "@/utils/imageDataUrl";
 import useLocalStorage from "@/hooks/useLocalStorage";
-import ModalContext from "@/context/ModalContext";
+import { sellModalActions } from "@/redux/store/redux-store";
 
 const SellModal = () => {
   const [images, setImages] = useState<UploadedImage[]>([]);
   const [imageUrls, setImageUrls] = useState<string[]>([]);
   const inputRef = useRef<HTMLInputElement>();
   const formRef = useRef<HTMLFormElement>();
+  const dispatch = useDispatch();
   const [idToken, _setIdToken, _removeItem] =
     useLocalStorage<string>("accessToken");
   const [error, setError] = useState<boolean>(false);
-  const { open, closeSellModal } = useContext(ModalContext);
 
   const username = useSelector(
     (state: { currentUser: { user: currentUserState } }) =>
       state.currentUser.user.username
   );
 
+  const open = useSelector(
+    (state: { sellModal: { open: boolean } }) => state.sellModal.open
+  );
+
   function inputChangeHandler(event: React.ChangeEvent<HTMLInputElement>) {
     generateDataUrl(event, setImages, null);
-    const path = `${username}/products/`
+    const path = `${username}/products/`;
     uploadImage(event.target.files![0], path).then((imageUrl) =>
       setImageUrls((prevImages) => [...prevImages, imageUrl!])
     );
@@ -47,7 +51,7 @@ const SellModal = () => {
     formRef.current?.reset();
     setImages([]);
     setImageUrls([]);
-    closeSellModal();
+    dispatch(sellModalActions.closeModal());
   }
 
   function removeImage(event: React.MouseEvent<HTMLDivElement>) {
@@ -74,7 +78,7 @@ const SellModal = () => {
               setImages([]);
               inputRef.current!.value = "";
               formRef.current?.reset();
-              closeSellModal();
+              dispatch(sellModalActions.closeModal());
             }}
           >
             <Close style={{ fontSize: "40px" }} />

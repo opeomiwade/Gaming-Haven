@@ -15,9 +15,27 @@ const currentUserSlice = createSlice({
   },
 });
 
+const sellModalSlice = createSlice({
+  name: "sell-modal",
+  initialState: { open: false },
+  reducers: {
+    openModal(state) {
+      state.open = true;
+    },
+
+    closeModal(state) {
+      state.open = false;
+    },
+  },
+});
+
 const store = configureStore({
-  reducer: { currentUser: currentUserSlice.reducer },
+  reducer: {
+    currentUser: currentUserSlice.reducer,
+    sellModal: sellModalSlice.reducer,
+  },
 });
 
 export default store;
 export const currentUserActions = currentUserSlice.actions;
+export const sellModalActions = sellModalSlice.actions;

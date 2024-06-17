@@ -3,7 +3,6 @@ import { MyJwtPayload } from "@/types/types";
 import { jwtDecode } from "jwt-decode";
 import { QueryClient } from "@tanstack/react-query";
 import axiosInstance from "./axiosInstance";
-import { useEffect } from "react";
 
 export async function getDashDetails() {
   const { data } = await axiosInstance.get("/users/dashboard-details", {
@@ -34,6 +33,38 @@ export async function getUserListings() {
   });
   console.log(data);
   return data;
+}
+
+export async function removeSavedListing(listingId: number) {
+  try {
+    const { data } = await axiosInstance.delete("/users/remove-saved-listing", {
+      headers: {
+        Authorization: `Bearer ${JSON.parse(
+          localStorage.getItem("accessToken")!
+        )}`,
+      },
+      params: { listingId },
+    });
+    return data;
+  } catch (error: any) {}
+}
+
+export async function addSavedListing(listingId: number) {
+  try {
+    const { data } = await axiosInstance.post(
+      "/users/add-saved-listing",
+      null,
+      {
+        headers: {
+          Authorization: `Bearer ${JSON.parse(
+            localStorage.getItem("accessToken")!
+          )}`,
+        },
+        params: { listingId },
+      }
+    );
+    return data;
+  } catch (error: any) {}
 }
 
 const queryClient = new QueryClient();

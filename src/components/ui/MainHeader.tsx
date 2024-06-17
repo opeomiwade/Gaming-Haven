@@ -11,17 +11,15 @@ import { currentUserActions } from "@/redux/store/redux-store";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import ThemeToggle from "./ThemeToggle";
 import { FaMagnifyingGlass } from "react-icons/fa6";
-import ModalContext from "@/context/ModalContext";
-import { useContext } from "react";
 import ProfileModal from "../modals/ProfileModal";
 import { defaultImageUrl } from "@/utils/imageDataUrl";
+import { sellModalActions } from "@/redux/store/redux-store";
 
 function MainHeader() {
   const dispatch = useDispatch();
   const [idToken, _setIdToken, _removeItem] =
     useLocalStorage<string>("accessToken");
   const [mediumScreen, setMediumScreen] = useState<boolean>();
-  const { openSellModal } = useContext(ModalContext);
   const [open, setOpen] = useState<boolean>(false);
 
   const currentUser = useSelector(
@@ -71,7 +69,7 @@ function MainHeader() {
           <motion.button
             whileHover={{ scale: 1.1 }}
             className="dark:bg-zinc-800 bg-gray-200 rounded-md p-2 md:w-[10%] hover:text-black"
-            onClick={() => openSellModal()}
+            onClick={() => dispatch(sellModalActions.openModal())}
           >
             Sell
           </motion.button>

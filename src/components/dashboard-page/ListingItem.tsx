@@ -1,6 +1,7 @@
 import { Listing } from "@/types/types";
 import { motion } from "framer-motion";
 
+
 const ListingItem: React.FC<{ listing: Listing }> = ({ listing }) => {
   return (
     <motion.li

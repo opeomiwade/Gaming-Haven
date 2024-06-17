@@ -16,14 +16,15 @@ import { GiCash } from "react-icons/gi";
 import { useEffect, useState } from "react";
 import CashOffersTabContent from "./cash-offers-cell/CashOfferTabContent";
 import EmptyPlaceHolder from "../ui/EmptyPlaceHolder";
-import { useContext } from "react";
-import ModalContext from "@/context/ModalContext";
+import SavedListings from "./saved-listing-cell/SavedListings";
+import { useDispatch } from "react-redux";
+import { sellModalActions } from "@/redux/store/redux-store";
 
 const DashBoardGrid: React.FC<{ dashDetails: DashDetails }> = ({
   dashDetails,
 }) => {
   const [smallScreen, setSmallScreen] = useState<boolean>();
-  const { openSellModal } = useContext(ModalContext);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const resizeObserver = new ResizeObserver((entries) => {
@@ -157,11 +158,13 @@ const DashBoardGrid: React.FC<{ dashDetails: DashDetails }> = ({
         {dashDetails.savedListings.length > 0 ? (
           <>
             <hr className="my-4" />
-            <Listings listings={dashDetails.savedListings} />
-            <hr className="my-4" />
+            <SavedListings listings={dashDetails.savedListings} />
           </>
         ) : (
-          <EmptyPlaceHolder buttonText="Browse Marketplace" href="/" />
+          <EmptyPlaceHolder
+            buttonText="Browse Marketplace"
+            href="/marketplace"
+          />
         )}
       </div>
       <div
@@ -193,7 +196,7 @@ const DashBoardGrid: React.FC<{ dashDetails: DashDetails }> = ({
         ) : (
           <EmptyPlaceHolder
             buttonText="List an Item"
-            clickHandler={openSellModal}
+            clickHandler={() => dispatch(sellModalActions.openModal())}
           />
         )}
       </div>

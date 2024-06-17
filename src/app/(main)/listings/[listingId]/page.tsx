@@ -60,7 +60,7 @@ const StoreItem: React.FC<{ params: any }> = async ({ params }) => {
             <p className="text-gray-400 font-semibold text-xs">
               Listed {formatDateTime(listing.createdAt)}
             </p>
-            <Actions seller={listing.seller} />
+            <Actions seller={listing.seller} category={listing.listedProduct.category} />
             <Seller listing={listing} />
           </div>
         </section>

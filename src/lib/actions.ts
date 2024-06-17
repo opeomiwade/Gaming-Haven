@@ -1,5 +1,5 @@
 "use server";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import axiosInstance from "./axiosInstance";
 import { revalidatePath } from "next/cache";
 
@@ -110,6 +110,7 @@ export async function getPurchases(accessToken: string) {
     });
     return response.data;
   } catch (error: any) {
+    console.log(error.response.data);
     throw new CustomError({
       message: error.response.data,
       statusCode: error.response.status,
@@ -129,7 +130,7 @@ export async function getOrderItems(orderId: number) {
   }
 }
 
-export async function getSales(accessToken: string) {
+export async function getUserSales(accessToken: string) {
   try {
     const response = await axiosInstance.get("/listings/user/sold-listings", {
       headers: {
@@ -137,5 +138,22 @@ export async function getSales(accessToken: string) {
       },
     });
     return response.data;
-  } catch (error: any) {}
+  } catch (error: any) {
+    throw new CustomError({
+      message: error.response.data,
+      statusCode: error.response.status,
+    });
+  }
+}
+
+export async function getManufacturers() {
+  try {
+    const response = await axiosInstance.get("/products/manufacturers");
+    return response.data;
+  } catch (error: any) {
+    throw new CustomError({
+      message: error.response.data,
+      statusCode: error.response.status,
+    });
+  }
 }

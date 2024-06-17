@@ -51,7 +51,7 @@ const Sidebar = () => {
       className={
         bottomSidebar
           ? `${classes["bottom-navbar"]} dark:bg-zinc-800 dark:text-white bg-white text-black`
-          : "w-fit overflow-y-auto top-0 left-0 flex flex-col h-screen rounded-r-md shadow-2xl z-20 justify-between sticky dark:bg-zinc-800 dark:text-white bg-white text-black"
+          : "w-fit overflow-y-auto top-0 left-0 flex flex-col h-screen rounded-r-md shadow-xl z-20 justify-between sticky dark:bg-zinc-800 dark:text-white bg-white text-black"
       }
     >
       <div
@@ -75,7 +75,11 @@ const Sidebar = () => {
         <Link href="/dashboard">
           <motion.button
             whileHover={{ scale: 1.2 }}
-            className={`flex items-center gap-4 text-lg font-bold dark:hover:text-black hover:text-gray-300 ${path.toLowerCase().includes("dashboard") ? "text-gray-300 dark:" : ""}`}
+            className={`flex items-center gap-4 text-lg font-bold dark:hover:text-black hover:text-gray-300 ${
+              path.toLowerCase().includes("dashboard")
+                ? "text-gray-300 dark:"
+                : ""
+            }`}
           >
             <DashboardIcon style={{ fontSize: "40px" }} />
             {isExpanded && <p>Dashboard</p>}
@@ -85,7 +89,9 @@ const Sidebar = () => {
         <Link href="/marketplace">
           <motion.button
             whileHover={{ scale: 1.2 }}
-            className={`flex items-center gap-4 text-lg font-bold dark:hover:text-black hover:text-gray-300 ${path.toLowerCase().includes("marketplace") ? "text-gray-300" : ""}`}
+            className={`flex items-center gap-4 text-lg font-bold dark:hover:text-black hover:text-gray-300 ${
+              path.toLowerCase().includes("marketplace") ? "text-gray-300" : ""
+            }`}
           >
             <PeopleIcon style={{ fontSize: "40px" }} />
             {isExpanded && <p>MarketPlace</p>}
@@ -94,22 +100,23 @@ const Sidebar = () => {
         <Link href="/">
           <motion.button
             whileHover={{ scale: 1.2 }}
-            className={`flex items-center gap-4 text-lg font-bold dark:hover:text-black hover:text-gray-300 ${path.toLowerCase().includes("inbox") ? "text-gray-300" : ""}`}
+            className={`flex items-center gap-4 text-lg font-bold dark:hover:text-black hover:text-gray-300 ${
+              path.toLowerCase().includes("inbox") ? "text-gray-300" : ""
+            }`}
           >
             <MailIcon style={{ fontSize: "40px" }} />
             {isExpanded && <p>Inbox</p>}
           </motion.button>
         </Link>
         {bottomSidebar && (
-          <button onClick={logOut}>
-            <motion.button
-              whileHover={{ scale: 1.2 }}
-              className="flex items-center gap-4 text-lg hover:text-red-500 font-bold"
-            >
-              <LogoutIcon style={{ fontSize: "50px" }} />
-              {isExpanded && <p>Log out</p>}
-            </motion.button>
-          </button>
+          <motion.button
+            onClick={logOut}
+            whileHover={{ scale: 1.2 }}
+            className="flex items-center gap-4 text-lg hover:text-red-500 font-bold"
+          >
+            <LogoutIcon style={{ fontSize: "50px" }} />
+            {isExpanded && <p>Log out</p>}
+          </motion.button>
         )}
       </div>
       {!bottomSidebar && (

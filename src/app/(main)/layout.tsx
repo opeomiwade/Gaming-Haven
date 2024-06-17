@@ -4,8 +4,8 @@ import ReduxProviderWrapper from "@/redux/ProviderWrapper";
 import MainHeader from "@/components/ui/MainHeader";
 import QueryClientProviderWrapper from "@/components/client-wrappers/QueryClientProviderWrapper";
 import { Toaster } from "react-hot-toast";
-import { ModalContextProvider } from "@/context/ModalContext";
 import SellModal from "@/components/modals/SellModal";
+import { ListingContextProvider } from "@/context/ListingContext";
 
 export default function RootLayout({
   children,
@@ -17,11 +17,11 @@ export default function RootLayout({
         <div className="flex">
           <Sidebar />
           <div className="w-full">
-            <ModalContextProvider>
+            <ListingContextProvider>
               <SellModal />
               <MainHeader />
               {children}
-            </ModalContextProvider>
+            </ListingContextProvider>
           </div>
         </div>
       </ReduxProviderWrapper>

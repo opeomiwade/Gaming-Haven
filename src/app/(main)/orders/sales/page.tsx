@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { getSales } from "@/lib/actions";
+import { getUserSales } from "@/lib/actions";
 import SalesTableRow from "@/components/order-page/SalesTableRow";
 import { Listing } from "@/types/types";
 import SalesTableHeader from "@/components/order-page/SalesTableHeader";
@@ -12,7 +12,7 @@ const PurchasesPage = () => {
   const [idToken] = useLocalStorage<string>("accessToken");
   const { data: sales, isFetching } = useQuery<Listing[]>({
     queryKey: ["sales"],
-    queryFn: () => getSales(idToken!),
+    queryFn: () => getUserSales(idToken!),
     staleTime: 60000,
   });
 

@@ -2,7 +2,6 @@ import { Listing } from "@/types/types";
 import Image from "next/image";
 import Button from "./StoreItemButton";
 import formatDateTime from "@/utils/formatDate";
-import Carousel from "./Carousel";
 
 const StoreItem: React.FC<{ listing: Listing }> = ({ listing }) => {
   return (
@@ -15,7 +14,6 @@ const StoreItem: React.FC<{ listing: Listing }> = ({ listing }) => {
             className="rounded-t-md"
             alt={listing.listedProduct.productName}
           />
-          {/* <Carousel images={listing.images}/> */}
           {listing.status === "sold" && (
             <>
               <div className="absolute inset-0 bg-gray-700 opacity-50 rounded-t-md"></div>
