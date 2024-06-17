@@ -1,7 +1,7 @@
 import FilterButton from "../ui/FilterButton";
 import { getManufacturers } from "@/lib/actions";
 import { useEffect, useState } from "react";
-import SortButton from "../ui/SortOptions";
+import SortButton from "../ui/SortButton";
 
 const FilterComponent = () => {
   const [manufacturers, setManufacturers] = useState<string[]>([]);
