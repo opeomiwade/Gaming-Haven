@@ -56,7 +56,13 @@ export async function signupUser(_prevState: any, formData: FormData) {
   }
 }
 
-export async function postItem(formData: FormData, accessToken: string) {
+export async function postItem({
+  formData,
+  accessToken,
+}: {
+  formData: FormData;
+  accessToken: string;
+}) {
   let fd = Object.fromEntries(formData.entries());
   fd = { ...fd, imageUrls: JSON.parse(fd.images as string) };
   try {

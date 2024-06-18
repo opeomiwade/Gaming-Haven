@@ -11,7 +11,7 @@ const MarketListing: React.FC<{
 }> = ({ listing }) => {
   const ctx = useContext(ListingContext);
   return (
-    <div key={listing.listingId} className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2">
       <ListingImage images={listing.images} listingId={listing.listingId} />
       <div className="w-full flex justify-between">
         <p className="text-sm">{listing.listedProduct.productName}</p>

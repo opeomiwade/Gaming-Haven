@@ -6,6 +6,7 @@ import QueryClientProviderWrapper from "@/components/client-wrappers/QueryClient
 import { Toaster } from "react-hot-toast";
 import SellModal from "@/components/modals/SellModal";
 import { ListingContextProvider } from "@/context/ListingContext";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 export default function RootLayout({
   children,
@@ -25,6 +26,7 @@ export default function RootLayout({
           </div>
         </div>
       </ReduxProviderWrapper>
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProviderWrapper>
   );
 }

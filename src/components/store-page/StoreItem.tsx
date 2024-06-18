@@ -5,8 +5,8 @@ import formatDateTime from "@/utils/formatDate";
 
 const StoreItem: React.FC<{ listing: Listing }> = ({ listing }) => {
   return (
-    <article className="flex flex-col gap-2 rounded-lg shadow-xl dark:bg-zinc-800 bg-white h-[400px] dark:shadow-none shadow-gray-200">
-      <header className="h-[70%] w-full flex flex-col gap-2">
+    <article className="flex flex-col gap-2 rounded-lg shadow-xl dark:bg-zinc-800 bg-white h-[450px] dark:shadow-none shadow-gray-200">
+      <header className="h-[90%] w-full flex flex-col gap-2">
         <div className="relative h-full">
           <Image
             src={listing.images[0].imageUrl}

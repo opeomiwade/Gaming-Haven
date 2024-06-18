@@ -15,7 +15,7 @@ const SortButton = () => {
         </div>
       </button>{" "}
       {clicked && (
-        <div className="absolute top-[100%] bg-white w-[200px] p-2 rounded-lg border-[1px] flex flex-col gap-2 z-20 shadow-lg right-10">
+        <div className="absolute top-[100%] bg-white dark:bg-zinc-800 w-[200px] p-2 rounded-lg border-[1px] flex flex-col gap-2 z-20 shadow-lg right-10">
           <div className="flex items-center gap-4">
             <input
               type="checkbox"

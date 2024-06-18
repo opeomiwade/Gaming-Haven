@@ -83,6 +83,7 @@ const ProfileModal: React.FC<{ open: boolean; closeModal: () => void }> = ({
             inputRef.current!.value = "";
             inputRef.current?.click();
           }}
+          className="w-full mx-auto"
         >
           <img
             className="rounded-full w-[70px] h-[70px] mx-auto my-2"

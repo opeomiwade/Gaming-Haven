@@ -33,6 +33,7 @@ const MarketPlaceGrid = () => {
       ctx.setSavedListings(dashDetails.savedListings);
     }
   }, [dashDetails]);
+
   if (isError) {
     return (
       <div className="flex flex-col gap-4 h-screen items-center justify-center">
@@ -54,9 +55,9 @@ const MarketPlaceGrid = () => {
             <CircularProgress />
           </div>
         ) : (
-          <div className="grid grid-cols-5 h-full w-full p-2 gap-5">
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 h-full w-full p-2 gap-5 ">
             {listings?.map((listing) => {
-              return <MarketListing listing={listing} />;
+              return <MarketListing key={listing.listingId} listing={listing} />;
             })}
           </div>
         )}

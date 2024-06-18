@@ -1,13 +1,13 @@
 import { GoChevronDown } from "react-icons/go";
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 const FilterButton: React.FC<{
   children: React.ReactNode;
   options?: string[];
 }> = ({ children, options }) => {
   const [isClicked, setClicked] = useState<boolean>(false);
-
+  const checkboxRef = useRef<HTMLInputElement>();
   return (
     <div className="relative">
       <button
@@ -32,7 +32,13 @@ const FilterButton: React.FC<{
                     type="checkbox"
                     name={option}
                     value={option}
+                    ref={checkboxRef as React.Ref<HTMLInputElement>}
                     id={option}
+                    onChange={() => {
+                      if (checkboxRef.current?.checked) {
+                      } else {
+                      }
+                    }}
                     className="hover:cursor-pointer"
                   />
                   <label htmlFor="new">{option}</label>

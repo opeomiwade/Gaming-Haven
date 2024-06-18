@@ -12,6 +12,8 @@ import generateDataUrl from "@/utils/imageDataUrl";
 import { uploadImage } from "@/utils/imageDataUrl";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { sellModalActions } from "@/redux/store/redux-store";
+import { useMutation } from "@tanstack/react-query";
+import queryClient from "@/lib/http";
 
 const SellModal = () => {
   const [images, setImages] = useState<UploadedImage[]>([]);
@@ -21,12 +23,23 @@ const SellModal = () => {
   const dispatch = useDispatch();
   const [idToken, _setIdToken, _removeItem] =
     useLocalStorage<string>("accessToken");
-  const [error, setError] = useState<boolean>(false);
-
   const username = useSelector(
     (state: { currentUser: { user: currentUserState } }) =>
       state.currentUser.user.username
   );
+
+  const { mutate, error, isError, isPending, isSuccess } = useMutation({
+    mutationFn: postItem,
+    mutationKey: ["listing", "new", username],
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["listings"] });
+      inputRef.current!.value = "";
+      formRef.current?.reset();
+      setImages([]);
+      setImageUrls([]);
+      dispatch(sellModalActions.closeModal());
+    },
+  });
 
   const open = useSelector(
     (state: { sellModal: { open: boolean } }) => state.sellModal.open
@@ -44,14 +57,7 @@ const SellModal = () => {
   async function submitHandler(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-    await postItem(formData, idToken!).catch((error) =>
-      setError(error.message)
-    );
-    inputRef.current!.value = "";
-    formRef.current?.reset();
-    setImages([]);
-    setImageUrls([]);
-    dispatch(sellModalActions.closeModal());
+    mutate({ formData, accessToken: idToken! });
   }
 
   function removeImage(event: React.MouseEvent<HTMLDivElement>) {
@@ -145,7 +151,6 @@ const SellModal = () => {
               <option value="controllers">Controller</option>
               <option value="headphones">Headphones</option>
               <option value="pcs">PCs</option>
-              <option value="games">Games</option>
               <option value="keyboards">Keyboard</option>
               <option value="mouse">Mouse</option>
             </select>
@@ -182,17 +187,19 @@ const SellModal = () => {
             </div>
           </section>
         </div>
+        {isError && error && (
+          <p className="text-red-500 text-center text-lg">
+            An error occured. Please try again
+          </p>
+        )}
         <motion.button
           whileHover={{ scale: 1.1 }}
           transition={{ stiffness: 500, type: "spring" }}
           type="submit"
           className="text-sm dark:bg-black bg-gray-300 dark:text-white rounded-lg font-bold p-2 w-[50%] focus:outline-none hover:cursor-pointer hover:bg-gray-500"
         >
-          Post
+          {isPending ? "Posting....." : "Post"}
         </motion.button>
-        {error && (
-          <p className="text-red-500 font-bold text-center">An error occured</p>
-        )}
         <input
           type="file"
           hidden
