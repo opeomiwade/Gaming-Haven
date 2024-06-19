@@ -1,4 +1,4 @@
-import { getListing, getListingByCategory } from "@/lib/actions";
+import { getListing, filterListings } from "@/lib/actions";
 import { CircularProgress } from "@mui/material";
 import { Suspense } from "react";
 import Image from "next/image";
@@ -17,9 +17,10 @@ const StoreItem: React.FC<{ params: any }> = async ({ params }) => {
     }
   })) as Listing;
 
-  const similarItems = (await getListingByCategory(
+  const similarItems = (await filterListings(
     listing.listedProduct.category.name
   )) as Listing[];
+  
   return (
     <Suspense
       fallback={

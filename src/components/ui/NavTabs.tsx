@@ -1,6 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
-import { TabProps } from "@/types/types";
+import { TabProps, FilterQueryParams } from "@/types/types";
 
 export const Tab: React.FC<TabProps> = ({
   isSelected,
@@ -32,17 +32,22 @@ export const Tab: React.FC<TabProps> = ({
 
 const Tabs: React.FC<{
   tabs: string[];
-  selected: string;
-  setSelected: React.Dispatch<React.SetStateAction<string>>;
+  filters: FilterQueryParams;
+  setFilters: React.Dispatch<React.SetStateAction<FilterQueryParams>>;
   layoutId: string;
-}> = ({ tabs, selected, setSelected, layoutId }) => {
+}> = ({ tabs, filters, setFilters, layoutId }) => {
+  console.log(filters);
   return (
     <menu className="dark:bg-black bg-gray-300 px-4 py-2 flex gap-12 justify-center rounded-full mt-2 font-semibold items-center">
       {tabs.map((tab) => {
         return (
           <Tab
-            isSelected={selected == tab}
-            onSelect={() => setSelected(tab)}
+            isSelected={filters && filters.categoryName == tab}
+            onSelect={() =>
+              setFilters((prevFilters) => {
+                return { ...prevFilters, categoryName: tab };
+              })
+            }
             layoutId={layoutId}
             key={tab}
           >

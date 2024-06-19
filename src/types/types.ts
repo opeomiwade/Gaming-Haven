@@ -53,6 +53,16 @@ export type User = {
   createdAt: string;
 };
 
+export type FilterQueryParams = {
+  categoryName?: string;
+  manufacturers?: string[];
+  condition?: string;
+  minPrice?: number;
+  maxPrice?: number;
+  sortBy?: string;
+  increasing?: boolean;
+};
+
 export type Category = {
   id: number;
   name: string;

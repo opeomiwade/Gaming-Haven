@@ -86,7 +86,7 @@ const Sidebar = () => {
           </motion.button>
         </Link>
 
-        <Link href="/marketplace">
+        <Link href="/marketplace/consoles">
           <motion.button
             whileHover={{ scale: 1.2 }}
             className={`flex items-center gap-4 text-lg font-bold dark:hover:text-black hover:text-gray-300 ${

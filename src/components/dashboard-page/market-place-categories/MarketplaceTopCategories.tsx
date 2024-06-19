@@ -1,35 +1,30 @@
 import Tabs from "@/components/ui/NavTabs";
-import axiosInstance from "@/lib/axiosInstance";
-import { Listing } from "@/types/types";
+import { Listing, FilterQueryParams } from "@/types/types";
 import { useEffect, useState } from "react";
 import MarketPlaceCategoryItem from "./MarketPlaceCategoryItem";
+import { filterListings } from "@/lib/actions";
 
 const MarketPlaceTopCategories = () => {
-  const [selected, setSelected] = useState<string>("Consoles");
+  const [filters, setFilters] = useState<FilterQueryParams>({
+    categoryName: "Consoles",
+  });
   const [listings, setListings] = useState<Listing[]>([]);
 
   useEffect(() => {
-    axiosInstance
-      .get(`/listings/category/${selected.toLowerCase()}`, {
-        headers: {
-          Authorization: `Bearer ${JSON.parse(
-            localStorage.getItem("accessToken")!
-          )}`,
-        },
-      })
+    filterListings(filters)
       .then((response) => {
-        setListings(response.data);
+        setListings(response);
       })
       .catch((error) => console.log(error));
-  }, [selected]);
+  }, [filters]);
 
   return (
     <>
       <Tabs
-        layoutId="active-tab-market-place-cat"
+        layoutId="active-tab-marketplace-cat"
         tabs={["Consoles", "Controllers", "Headphones"]}
-        selected={selected}
-        setSelected={setSelected}
+        filters={filters}
+        setFilters={setFilters}
       />
       <ul className="mt-4 space-y-6 h-[60%] overflow-y-auto">
         {listings.map((listing) => (

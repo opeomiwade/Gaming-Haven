@@ -1,27 +1,60 @@
 import FilterButton from "../ui/FilterButton";
 import { getManufacturers } from "@/lib/actions";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import SortButton from "../ui/SortButton";
+import FilterTag from "../ui/FilterTag";
+import ListingContext from "@/context/ListingContext";
 
 const FilterComponent = () => {
   const [manufacturers, setManufacturers] = useState<string[]>([]);
+  const { filters } = useContext(ListingContext);
 
   useEffect(() => {
     getManufacturers().then((response) => setManufacturers(response));
   }, []);
 
   return (
-    <>
-      <p className="font-bold text-2xl">Filter</p>
-      <div className="flex gap-2 p-4 justify-between">
+    <div className="flex flex-col gap-4">
+      <div className="flex gap-2 justify-between">
         <section className="flex gap-2">
-          <FilterButton options={manufacturers}>Manufacturer</FilterButton>
-          <FilterButton options={["New", "Used"]}>Condition</FilterButton>
+          <FilterButton filterOptions={manufacturers}>
+            Manufacturers
+          </FilterButton>
+          <FilterButton filterOptions={["New", "Used"]}>Condition</FilterButton>
           <FilterButton>Price</FilterButton>
         </section>
-        <SortButton/>
+        <SortButton />
       </div>
-    </>
+      <div className="flex gap-4 my-4">
+        {Object.entries(filters).map(([key, value]) => {
+          if (key == "manufacturers") {
+            const manufacturers = value as string[];
+            return manufacturers.map((manufacturer) => (
+              <FilterTag
+                key={manufacturer}
+                filterValue={manufacturer}
+                filterKey={key}
+              />
+            ));
+          } else if (
+            value !== undefined &&
+            value.toString().trim().length > 0 &&
+            value != 1 &&
+            key !== "sortBy" &&
+            key !== "increasing" &&
+            key != "categoryName"
+          ) {
+            return (
+              <FilterTag
+                key={value as string}
+                filterValue={value}
+                filterKey={key}
+              />
+            );
+          }
+        })}
+      </div>
+    </div>
   );
 };
 

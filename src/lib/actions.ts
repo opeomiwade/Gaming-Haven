@@ -2,6 +2,7 @@
 import axios from "axios";
 import axiosInstance from "./axiosInstance";
 import { revalidatePath } from "next/cache";
+import { FilterQueryParams } from "@/types/types";
 
 class CustomError extends Error {
   statusCode: number;
@@ -36,8 +37,8 @@ export default async function loginUser(
     return { ...response.data };
   } catch (error: any) {
     return {
-      message: error.response.data,
-      statusCode: error.response.status,
+      message: error.response.data || "Internal Server error",
+      statusCode: error.response.status || 500,
       isError: true,
     };
   }
@@ -93,11 +94,16 @@ export async function getListing(id: number) {
   }
 }
 
-export async function getListingByCategory(category: string) {
+export async function filterListings(filters: FilterQueryParams) {
+  // make manufacturers a comma separated list so java backend can process request
+  const filtersParams = {
+    ...filters,
+    manufacturers: filters.manufacturers && filters.manufacturers!.join(","),
+  };
   try {
-    const response = await axiosInstance.get(
-      `/listings/category/${category.toLowerCase()}`
-    );
+    const response = await axiosInstance.get(`/listings/filter`, {
+      params: { ...filtersParams },
+    });
     return response.data;
   } catch (error: any) {
     throw new CustomError({

@@ -1,8 +1,8 @@
 "use client";
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useContext } from "react";
 import toTitleCase from "@/utils/toTitleCase";
 import { useQuery } from "@tanstack/react-query";
-import { getListingByCategory } from "@/lib/actions";
+import { filterListings } from "@/lib/actions";
 import { CircularProgress } from "@mui/material";
 import { DashDetails, Listing } from "@/types/types";
 import queryClient from "@/lib/http";
@@ -12,18 +12,19 @@ import FilterComponent from "./FilterComponent";
 import MarketListing from "./MarketListing";
 
 const MarketPlaceGrid = () => {
-  const [selected, setSelected] = useState<string>("consoles");
+  const ctx = useContext(ListingContext);
+
   const {
     data: listings,
     isFetching,
     isError,
     error,
   } = useQuery<Listing[]>({
-    queryKey: ["listings", selected],
-    queryFn: () => getListingByCategory(selected),
-    staleTime: 60000,
+    queryKey: ["listings", ctx.filters],
+    queryFn: () => filterListings(ctx.filters),
+    staleTime: 5000,
   });
-  const ctx = useContext(ListingContext);
+  
   const dashDetails = queryClient.getQueryData<DashDetails>([
     "dashboard-details",
   ]);
@@ -45,9 +46,13 @@ const MarketPlaceGrid = () => {
 
   return (
     <div className="flex flex-col gap-4">
-      <CategoryHeader setSelected={setSelected} selected={selected} />
+      <CategoryHeader />
       <section className="p-4 h-full flex flex-col">
-        <h1 className="text-3xl font-bold">{toTitleCase(selected)}</h1>
+        <h1 className="text-3xl font-bold">
+          {ctx.filters.categoryName == "pcs"
+            ? ctx.filters.categoryName.toUpperCase()
+            : toTitleCase(ctx.filters.categoryName!)}
+        </h1>
         <hr className="w-full my-4" />
         <FilterComponent />
         {isFetching ? (
@@ -57,7 +62,9 @@ const MarketPlaceGrid = () => {
         ) : (
           <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 h-full w-full p-2 gap-5 ">
             {listings?.map((listing) => {
-              return <MarketListing key={listing.listingId} listing={listing} />;
+              return (
+                <MarketListing key={listing.listingId} listing={listing} />
+              );
             })}
           </div>
         )}
