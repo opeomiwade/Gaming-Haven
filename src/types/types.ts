@@ -56,7 +56,7 @@ export type User = {
 export type FilterQueryParams = {
   categoryName?: string;
   manufacturers?: string[];
-  condition?: string;
+  condition?: string[];
   minPrice?: number;
   maxPrice?: number;
   sortBy?: string;

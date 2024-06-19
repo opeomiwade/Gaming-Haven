@@ -27,14 +27,10 @@ const FilterComponent = () => {
       </div>
       <div className="flex gap-4 my-4">
         {Object.entries(filters).map(([key, value]) => {
-          if (key == "manufacturers") {
-            const manufacturers = value as string[];
-            return manufacturers.map((manufacturer) => (
-              <FilterTag
-                key={manufacturer}
-                filterValue={manufacturer}
-                filterKey={key}
-              />
+          if (key == "manufacturers" || key == "condition") {
+            const values = value as string[];
+            return values.map((value) => (
+              <FilterTag key={value} filterValue={value} filterKey={key} />
             ));
           } else if (
             value !== undefined &&

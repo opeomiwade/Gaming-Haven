@@ -99,6 +99,7 @@ export async function filterListings(filters: FilterQueryParams) {
   const filtersParams = {
     ...filters,
     manufacturers: filters.manufacturers && filters.manufacturers!.join(","),
+    condition: filters.condition && filters.condition.join(","),
   };
   try {
     const response = await axiosInstance.get(`/listings/filter`, {

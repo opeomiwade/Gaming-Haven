@@ -20,15 +20,18 @@ const CheckBoxInput: React.FC<{
   const [checked, setChecked] = useState<boolean>(() => {
     if (sortChecked) {
       return sortChecked;
-    }
-    return (
-      filterKey in filters &&
-      listings!.some((listing) =>
-        filters.manufacturers!.includes(
-          listing.listedProduct.manufacturer.toLowerCase()
+    } else if (filterKey == "manufacturers") {
+      return (
+        filterKey in filters &&
+        listings!.some((listing) =>
+          filters.manufacturers!.includes(
+            listing.listedProduct.manufacturer.toLowerCase()
+          )
         )
-      )
-    );
+      );
+    } else {
+      return filterKey in filters;
+    }
   });
 
   useEffect(() => {

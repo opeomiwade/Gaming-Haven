@@ -24,7 +24,7 @@ const MarketPlaceGrid = () => {
     queryFn: () => filterListings(ctx.filters),
     staleTime: 5000,
   });
-  
+
   const dashDetails = queryClient.getQueryData<DashDetails>([
     "dashboard-details",
   ]);
@@ -59,6 +59,8 @@ const MarketPlaceGrid = () => {
           <div className="flex justify-center">
             <CircularProgress />
           </div>
+        ) : typeof listings == "string" ? (
+          <p className="text-center font-bold">{listings}</p>
         ) : (
           <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 h-full w-full p-2 gap-5 ">
             {listings?.map((listing) => {

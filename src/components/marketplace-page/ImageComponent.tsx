@@ -9,10 +9,11 @@ const ListingImage: React.FC<{ images: Image[]; listingId: number }> = ({
   const [imageHover, setHover] = useState<boolean>(false);
   if (images.length < 2) {
     return (
-      <img
-        src={images[0].imageUrl}
-        className="h-[200px] w-full hover:cursor-pointer"
-      />
+      <Link href={`/listings/${listingId}`}>
+        <div className="w-full h-full hover:cursor-pointer">
+          <img src={images[0].imageUrl} className="h-[200px] w-full " />
+        </div>
+      </Link>
     );
   }
 

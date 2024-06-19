@@ -17,10 +17,10 @@ const StoreItem: React.FC<{ params: any }> = async ({ params }) => {
     }
   })) as Listing;
 
-  const similarItems = (await filterListings(
-    listing.listedProduct.category.name
-  )) as Listing[];
-  
+  const similarItems = (await filterListings({
+    categoryName: listing.listedProduct.category.name,
+  })) as Listing[];
+
   return (
     <Suspense
       fallback={
@@ -33,7 +33,7 @@ const StoreItem: React.FC<{ params: any }> = async ({ params }) => {
         {listing.listedProduct.productName}
       </h1>
       <main className="flex flex-col gap-2 p-6">
-        <section className="flex gap-2 w-full h-full">
+        <section className="flex gap-4 w-full h-full">
           <div className="w-[50%] p-6">
             <ul className="flex flex-col gap-2 h-screen">
               {listing.images.map((image) => {
@@ -49,7 +49,7 @@ const StoreItem: React.FC<{ params: any }> = async ({ params }) => {
               })}
             </ul>
           </div>
-          <div className="flex flex-col font-light gap-4 p-6 sticky top-[150px] h-full">
+          <div className="flex flex-col font-light gap-4 p-6 sticky top-[150px] h-full w-[40%]">
             <h2 className="font-bold text-lg">£{listing.price}</h2>
             <p className="flex items-center gap-2">
               {listing.condition} <GoDotFill size={8} />{" "}
@@ -61,7 +61,10 @@ const StoreItem: React.FC<{ params: any }> = async ({ params }) => {
             <p className="text-gray-400 font-semibold text-xs">
               Listed {formatDateTime(listing.createdAt)}
             </p>
-            <Actions seller={listing.seller} category={listing.listedProduct.category} />
+            <Actions
+              seller={listing.seller}
+              category={listing.listedProduct.category}
+            />
             <Seller listing={listing} />
           </div>
         </section>

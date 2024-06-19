@@ -34,13 +34,12 @@ export const ListingContextProvider: React.FC<{
   }
 
   function removeFilter(filterKey: string, filterCondition: string) {
-    if (filterKey == "manufacturers") {
-      const updatedManufacturers = filters.manufacturers?.filter(
-        (manufacturer) =>
-          manufacturer.toLowerCase() !== filterCondition.toLowerCase()
+    if (filterKey == "manufacturers" || filterKey == "condition") {
+      const updatedValues = filters[filterKey]?.filter(
+        (value) => value.toLowerCase() !== filterCondition.toLowerCase()
       );
       setFilters((prevFilters) => {
-        return { ...prevFilters, manufacturers: updatedManufacturers };
+        return { ...prevFilters, [filterKey]: updatedValues };
       });
     } else {
       const updateFilters = Object.fromEntries(
