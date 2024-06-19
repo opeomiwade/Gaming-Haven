@@ -17,7 +17,7 @@ const CheckBoxInput: React.FC<{
   const listings = queryClient.getQueryData<Listing[]>(["listings", filters]);
   const checkboxRef = useRef<HTMLInputElement>();
 
-  const [checked, setChecked] = useState<boolean>(() => {
+  const [checked, setChecked] = useState<boolean | undefined>(() => {
     if (sortChecked) {
       return sortChecked;
     } else if (filterKey == "manufacturers") {
@@ -29,14 +29,19 @@ const CheckBoxInput: React.FC<{
           )
         )
       );
-    } else {
-      return filterKey in filters;
+    } else if (filterKey == "condition") {
+      return (
+        filterKey in filters &&
+        filters[filterKey]!.length > 0 &&
+        filters.condition!.includes(option)
+      );
     }
   });
 
   useEffect(() => {
     // Synchronize the checked state of this checkbox with the current selected sort option.
     // This ensures that only one sort option can be checked at any given time.
+    setChecked(sortChecked!);
   }, [sortChecked]);
 
   return (
