@@ -9,15 +9,17 @@ import GoogleIcon from "@mui/icons-material/Google";
 import { motion } from "framer-motion";
 import { googleSignIn } from "@/lib/auth";
 import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
 
 const AuthForm = () => {
   const { push } = useRouter();
   const [state, formAction] = useFormState(loginUser, { message: null });
-  console.log(state)
   const [storedValue, setStoredValue] = useLocalStorage<string>("accessToken");
-  const [password, setPassword] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
   const [disabled, setDisabled] = useState<boolean>(true);
+  const { register, watch } = useForm({
+    defaultValues: { email: "", password: "" },
+  });
+  const { email, password } = watch();
 
   useEffect(() => {
     if (state.accessToken) {
@@ -41,21 +43,16 @@ const AuthForm = () => {
     <div>
       <form id="login" className="flex gap-7 flex-col" action={formAction}>
         <input
-          name="email"
-          id="email"
           className="p-4 rounded-md dark:bg-gray-500 bg-gray-300 md:w-[500px] focus:outline-none"
           placeholder="Enter your email"
           type="email"
-          value={email}
-          onChange={(event) => setEmail(event.currentTarget.value)}
+          {...register("email")}
         />
         <input
-          name="password"
-          id="password"
           className="p-4 rounded-md dark:bg-gray-500 bg-gray-300 md:w-[500px] focus:outline-none"
           placeholder="Enter your password"
           type="password"
-          onChange={(event) => setPassword(event.currentTarget.value)}
+          {...register("password")}
         />
         <Button disabled={disabled} />
       </form>
@@ -74,7 +71,9 @@ const AuthForm = () => {
         </p>
       </Link>
       {state.message && state.isError && (
-        <p className="text-red-500 font-bold text-center my-4">{state.message}</p>
+        <p className="text-red-500 font-bold text-center my-4">
+          {state.message}
+        </p>
       )}
     </div>
   );

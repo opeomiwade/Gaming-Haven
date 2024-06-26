@@ -3,6 +3,7 @@ import axios from "axios";
 import axiosInstance from "./axiosInstance";
 import { revalidatePath } from "next/cache";
 import { FilterQueryParams } from "@/types/types";
+import { FieldValues } from "react-hook-form";
 
 class CustomError extends Error {
   statusCode: number;
@@ -58,16 +59,19 @@ export async function signupUser(_prevState: any, formData: FormData) {
 }
 
 export async function postItem({
-  formData,
+  listingDetails,
   accessToken,
 }: {
-  formData: FormData;
+  listingDetails: FieldValues;
   accessToken: string;
 }) {
-  let fd = Object.fromEntries(formData.entries());
-  fd = { ...fd, imageUrls: JSON.parse(fd.images as string) };
+  listingDetails = {
+    ...listingDetails,
+    imageUrls: JSON.parse(listingDetails.imageUrls as string),
+  };
+
   try {
-    const response = await axiosInstance.post("/listings/add", fd, {
+    const response = await axiosInstance.post("/listings/add", listingDetails, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },

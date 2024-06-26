@@ -4,6 +4,7 @@ import { Listing } from "@/types/types";
 import { removeSavedListing, addSavedListing } from "@/lib/http";
 import queryClient from "@/lib/http";
 import { FilterQueryParams } from "@/types/types";
+import { useMutation } from "@tanstack/react-query";
 
 const ListingContext = createContext({
   removeSavedListingHandler: (_listingId: number) => {},
@@ -13,6 +14,8 @@ const ListingContext = createContext({
   filters: {} as FilterQueryParams,
   setFilters: (_newValue: React.SetStateAction<FilterQueryParams>) => {},
   removeFilter: (_filterKey: string, _filterCondition: string) => {},
+  editListing: () => {},
+  deleteListing: () => {},
 });
 
 export const ListingContextProvider: React.FC<{
@@ -55,6 +58,14 @@ export const ListingContextProvider: React.FC<{
     queryClient.invalidateQueries({ queryKey: ["dashboard-details"] });
   }
 
+  function editListing() {
+    console.log("ope");
+  }
+
+  function deleteListing() {
+    console.log("ope");
+  }
+
   const values = {
     removeSavedListingHandler,
     addSavedListingHandler,
@@ -63,6 +74,8 @@ export const ListingContextProvider: React.FC<{
     filters,
     setFilters,
     removeFilter,
+    editListing,
+    deleteListing,
   };
 
   return (

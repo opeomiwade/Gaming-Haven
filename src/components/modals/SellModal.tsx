@@ -1,7 +1,7 @@
 "use client";
 import classes from "@/CSS/modal.module.css";
 import { motion } from "framer-motion";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import Close from "@mui/icons-material/Close";
 import CancelIcon from "@mui/icons-material/Cancel";
@@ -14,11 +14,14 @@ import useLocalStorage from "@/hooks/useLocalStorage";
 import { sellModalActions } from "@/redux/store/redux-store";
 import { useMutation } from "@tanstack/react-query";
 import queryClient from "@/lib/http";
+import { useForm, FieldValues, Controller } from "react-hook-form";
+import Select from "react-select";
 
 const SellModal = () => {
   const [images, setImages] = useState<UploadedImage[]>([]);
   const [imageUrls, setImageUrls] = useState<string[]>([]);
   const inputRef = useRef<HTMLInputElement>();
+  const [submitAttempted, setSubmitAttempted] = useState<boolean>(false);
   const formRef = useRef<HTMLFormElement>();
   const dispatch = useDispatch();
   const [idToken, _setIdToken, _removeItem] =
@@ -27,6 +30,12 @@ const SellModal = () => {
     (state: { currentUser: { user: currentUserState } }) =>
       state.currentUser.user.username
   );
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    control,
+  } = useForm();
 
   const { mutate, error, isError, isPending, isSuccess } = useMutation({
     mutationFn: postItem,
@@ -37,7 +46,7 @@ const SellModal = () => {
       formRef.current?.reset();
       setImages([]);
       setImageUrls([]);
-      dispatch(sellModalActions.closeModal());
+      // dispatch(sellModalActions.closeModal());
     },
   });
 
@@ -54,10 +63,13 @@ const SellModal = () => {
     inputRef.current!.value = "";
   }
 
-  async function submitHandler(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-    mutate({ formData, accessToken: idToken! });
+  async function submitHandler(listingDetails: FieldValues) {
+    mutate({ listingDetails, accessToken: idToken! });
+  }
+
+  function onSubmit(formData: FieldValues) {
+    formData = { ...formData, imageUrls: JSON.stringify(imageUrls) };
+    submitHandler(formData);
   }
 
   function removeImage(event: React.MouseEvent<HTMLDivElement>) {
@@ -72,7 +84,7 @@ const SellModal = () => {
     >
       <form
         ref={formRef as React.Ref<HTMLFormElement>}
-        onSubmit={submitHandler}
+        onSubmit={handleSubmit(onSubmit)}
         className="dark:bg-zinc-800 dark:text-white bg-white rounded-lg h-[80%] lg:w-[60%] w-[80%] p-4 overflow-y-auto space-y-6 text-xs"
       >
         <section className="flex items-center justify-between">
@@ -118,100 +130,140 @@ const SellModal = () => {
               </button>
             )}
           </div>
+          {submitAttempted && imageUrls.length < 1 && (
+            <p className="text-red-500 text-xs">
+              Please upload pictures of item
+            </p>
+          )}
+
           <section className="flex gap-2 flex-col">
             <p className="text-lg text-left font-semibold">Description</p>
             <textarea
-              required
-              name="description"
+              {...register("description", {
+                required: "Description is required",
+              })}
               rows={10}
               maxLength={1500}
-              className="w-full dark:bg-zinc-800 border-[1px] border-solid p-2 text-sm rounded-md"
+              className="w-full dark:bg-zinc-800 border-[1px] border-solid p-2 text-sm rounded-md focus:outline-none"
               placeholder="e.g this is a used ps4 that come with both dualshock 4 controller"
             />
+            {errors.description?.message && (
+              <p className="text-red-500 text-xs">
+                {errors.description.message as string}
+              </p>
+            )}
           </section>
           <section className="flex flex-col gap-4">
             <p className="text-lg font-bold">Info</p>
             <label className="text-sm">Product Name</label>
             <input
-              name="productName"
               type="text"
-              required
               className="w-full dark:bg-zinc-800 focus:outline-none p-2 rounded-md border-[1px] border-solid dark:border-white"
-              placeholder="i.e dulashock 4, PS4, etc"
+              placeholder="i.e dualshock 4, PS4, etc"
+              {...register("productName", {
+                required: "Product name is required",
+              })}
             />
+            {errors.productName?.message && (
+              <p className="text-red-500 text-xs">
+                {errors.productName.message as string}
+              </p>
+            )}
             <label className="text-sm">Category </label>
-            <select
-              name="productType"
-              className="dark:bg-zinc-800 focus:outline-none border-[1px] border-solid p-2 rounded-md"
-              defaultValue={"Console"}
-              required
-            >
-              <option value="console">--Select a Category--</option>
-              <option value="consoles">Console</option>
-              <option value="controllers">Controller</option>
-              <option value="headphones">Headphones</option>
-              <option value="pcs">PCs</option>
-              <option value="keyboards">Keyboard</option>
-              <option value="mouse">Mouse</option>
-            </select>
+            <Controller
+              control={control}
+              {...register("category", { required: "Category is required" })}
+              render={({ field }) => (
+                <Select
+                  {...field}
+                  options={[
+                    { value: "Consoles", label: "Consoles" },
+                    { value: "Controllers", label: "Controllers" },
+                    { value: "Headphones", label: "Headphones" },
+                    { value: "PCs", label: "PCs" },
+                    { value: "Keyboards", label: "Keyboards" },
+                    { value: "Mouses", label: "Mouses" },
+                  ]}
+                />
+              )}
+            />
+            {errors.category?.message && (
+              <p className="text-red-500 text-xs">
+                {errors.category.message as string}
+              </p>
+            )}
             <label className="text-sm">Condition </label>
-            <select
-              className="dark:bg-zinc-800 w-full focus:outline-none border-[1px] border-solid p-2 rounded-md"
-              name="condition"
-              required
-            >
-              <option value="console">--Condition--</option>
-              <option value="brand new">Brand New</option>
-              <option value="like new">Like New</option>
-              <option value="used-good">Used - Good </option>
-              <option value="used-fair">Used - Fair</option>
-            </select>
+            <Controller
+              control={control}
+              {...register("condition", { required: "Condition is required" })}
+              render={({ field }) => (
+                <Select
+                  {...field}
+                  options={[
+                    { value: "brand-new", label: "Brand-New" },
+                    { value: "like-new", label: "Like-New" },
+                    { value: "used-fair", label: "Used-Fair" },
+                    { value: "used-good", label: "Used-Good" },
+                  ]}
+                />
+              )}
+            />
+            {errors.condition?.message && (
+              <p className="text-red-500 text-xs">
+                {errors.condition.message as string}
+              </p>
+            )}
             <label className="text-sm"> Manufacturer </label>
             <input
-              name="manufacturer"
               type="text"
-              required
               className="w-full dark:bg-zinc-800 focus:outline-none p-2 border-solid border-[1px] rounded-md"
               placeholder="i.e Sony, Microsoft, Namco, EA, etc"
+              {...register("manufacturer", {
+                required: "Manufacturer is required",
+              })}
             />
+            {errors.manufacturer?.message && (
+              <p className="text-red-500 text-xs">
+                {errors.manufacturer.message as string}
+              </p>
+            )}
             <label className="text-sm"> Price: </label>
             <div className="flex items-center p-2 border-solid border-[1px] rounded-md space-x-2">
               <span className="font-bold">£</span>
               <input
-                name="price"
                 type="number"
-                required
                 className="w-[95%] dark:bg-zinc-800 focus:outline-none"
                 placeholder="Enter price of the item"
+                {...register("price", { required: "Price is required" })}
               />
             </div>
+            {errors.price?.message && (
+              <p className="text-red-500 text-xs">
+                {errors.price.message as string}
+              </p>
+            )}
           </section>
         </div>
         {isError && error && (
-          <p className="text-red-500 text-center text-lg">
-            An error occured. Please try again
-          </p>
+          <p className="text-red-500 text-center text-lg">{error.message}</p>
         )}
         <motion.button
           whileHover={{ scale: 1.1 }}
           transition={{ stiffness: 500, type: "spring" }}
+          onClick={() => setSubmitAttempted(true)}
           type="submit"
           className="text-sm dark:bg-black bg-gray-300 dark:text-white rounded-lg font-bold p-2 w-[50%] focus:outline-none hover:cursor-pointer hover:bg-gray-500"
         >
           {isPending ? "Posting....." : "Post"}
         </motion.button>
+
+        {/* image file input element */}
         <input
           type="file"
           hidden
           ref={inputRef as React.Ref<HTMLInputElement>}
           onChange={inputChangeHandler}
           accept="image/jpeg image/png image/jpg image/heic"
-        />
-        <input
-          readOnly
-          hidden
-          value={JSON.stringify(imageUrls)}
-          name={`images`}
         />
       </form>
     </motion.dialog>
