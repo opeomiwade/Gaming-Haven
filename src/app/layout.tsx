@@ -19,6 +19,7 @@ export default function RootLayout({
       <body
         className={`${inter.className} dark:bg-black dark:text-white bg-white`}
       >
+        <div id="edit-listing"></div>
         {children}
       </body>
     </html>

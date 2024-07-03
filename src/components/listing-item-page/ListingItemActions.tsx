@@ -1,10 +1,16 @@
 "use client";
 import { Category, User, currentUserState } from "@/types/types";
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import Button from "@/components/listing-item-page/Button";
 import { MdDelete } from "react-icons/md";
 import Link from "next/link";
+import EditListingModal from "../modals/EditListingModal";
+import { deleteListing } from "@/lib/actions";
+import { usePathname } from "next/navigation";
+import useLocalStorage from "@/hooks/useLocalStorage";
+import { useRouter } from "next/navigation";
+import queryClient from "@/lib/http";
 
 const Actions: React.FC<{ seller: User; category: Category }> = ({
   seller,
@@ -15,14 +21,39 @@ const Actions: React.FC<{ seller: User; category: Category }> = ({
       state.currentUser.user
   );
   const isCurrentUser = seller.username === currentUser.username;
+  const [openModal, setOpen] = useState<boolean>(false);
+  const path = usePathname();
+  const [storedValue] = useLocalStorage<string>("accessToken");
+  const router = useRouter();
+
+  function clickHandler() {
+    setOpen(!openModal);
+  }
+
+  function deleteClickHandler() {
+    const listingId = path.split("/")[2];
+    deleteListing(parseInt(listingId), storedValue!).catch((error) =>
+      console.log(error)
+    );
+    router.push("/marketplace/consoles");
+    queryClient.invalidateQueries({ queryKey: ["listings"] });
+  }
+
   return (
     <>
+      {openModal && <EditListingModal setOpen={setOpen} />}
       {isCurrentUser ? (
         <>
-          <Button className="dark:bg-zinc-800 bg-black p-2 rounded-md text-white font-semibold">
+          <Button
+            className="dark:bg-zinc-800 bg-black p-2 rounded-md text-white font-semibold"
+            onClick={clickHandler}
+          >
             Edit
           </Button>
-          <Button className="flex hover:bg-red-500 hover:border-0 items-center gap-2 justify-center border-2 rounded-md border-black dark:border-white p-2 font-bold">
+          <Button
+            onClick={deleteClickHandler}
+            className="flex hover:bg-red-500 hover:border-0 items-center gap-2 justify-center border-2 rounded-md border-black dark:border-white p-2 font-bold"
+          >
             <MdDelete size={25} />
             Delete Listing
           </Button>

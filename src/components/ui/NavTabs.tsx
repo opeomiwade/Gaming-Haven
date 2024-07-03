@@ -36,7 +36,6 @@ const Tabs: React.FC<{
   setFilters: React.Dispatch<React.SetStateAction<FilterQueryParams>>;
   layoutId: string;
 }> = ({ tabs, filters, setFilters, layoutId }) => {
-  console.log(filters);
   return (
     <menu className="dark:bg-black bg-gray-300 px-4 py-2 flex gap-12 justify-center rounded-full mt-2 font-semibold items-center">
       {tabs.map((tab) => {

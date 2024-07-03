@@ -4,9 +4,10 @@ import ReduxProviderWrapper from "@/redux/ProviderWrapper";
 import MainHeader from "@/components/ui/MainHeader";
 import QueryClientProviderWrapper from "@/components/client-wrappers/QueryClientProviderWrapper";
 import { Toaster } from "react-hot-toast";
-import SellModal from "@/components/modals/SellModal";
 import { ListingContextProvider } from "@/context/ListingContext";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import SellModal from "@/components/modals/SellModal";
+import NoSSRWrapper from "@/components/client-wrappers/NoSSRWrapper";
 
 export default function RootLayout({
   children,
@@ -19,7 +20,9 @@ export default function RootLayout({
           <Sidebar />
           <div className="w-full">
             <ListingContextProvider>
-              <SellModal />
+              <NoSSRWrapper>
+                <SellModal />
+              </NoSSRWrapper>
               <MainHeader />
               {children}
             </ListingContextProvider>

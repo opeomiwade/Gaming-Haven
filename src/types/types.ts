@@ -112,7 +112,8 @@ export type Order = {
   totalPrice: number;
 };
 
-export type UploadedImage = {
+export type ImageFile = {
   dataUrl: string;
   id: string;
+  imageFile: File;
 };

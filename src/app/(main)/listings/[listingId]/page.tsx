@@ -7,10 +7,11 @@ import { GoDotFill } from "react-icons/go";
 import formatDateTime from "@/utils/formatDate";
 import Seller from "@/components/listing-item-page/SellerFooter";
 import Actions from "@/components/listing-item-page/ListingItemActions";
-import Link from "next/link";
 import { notFound } from "next/navigation";
+import SimilarItems from "@/components/listing-item-page/SimilarItems";
+import NoSSRWrapper from "@/components/client-wrappers/NoSSRWrapper";
 
-const StoreItem: React.FC<{ params: any }> = async ({ params }) => {
+const ListingPage: React.FC<{ params: any }> = async ({ params }) => {
   const listing = (await getListing(params.listingId).catch((error) => {
     if (error.statusCode === 404) {
       notFound();
@@ -49,55 +50,32 @@ const StoreItem: React.FC<{ params: any }> = async ({ params }) => {
               })}
             </ul>
           </div>
-          <div className="flex flex-col font-light gap-4 p-6 sticky top-[150px] h-full w-[40%]">
-            <h2 className="font-bold text-lg">£{listing.price}</h2>
-            <p className="flex items-center gap-2">
-              {listing.condition} <GoDotFill size={8} />{" "}
-              <span className="underline font-semibold">
-                {listing.listedProduct.manufacturer}
-              </span>
-            </p>
-            <p>{listing.description}</p>
-            <p className="text-gray-400 font-semibold text-xs">
-              Listed {formatDateTime(listing.createdAt)}
-            </p>
-            <Actions
-              seller={listing.seller}
-              category={listing.listedProduct.category}
-            />
-            <Seller listing={listing} />
-          </div>
+          <NoSSRWrapper>
+            <div className="flex flex-col font-light gap-4 p-6 sticky top-[150px] h-full w-[40%]">
+              <h2 className="font-bold text-lg">£{listing.price}</h2>
+              <p className="flex items-center gap-2">
+                {listing.condition} <GoDotFill size={8} />{" "}
+                <span className="underline font-semibold">
+                  {listing.listedProduct.manufacturer}
+                </span>
+              </p>
+              <p>{listing.description}</p>
+              <p className="text-gray-400 font-semibold text-xs">
+                Listed {formatDateTime(listing.createdAt)}
+              </p>
+
+              <Actions
+                seller={listing.seller}
+                category={listing.listedProduct.category}
+              />
+              <Seller listing={listing} />
+            </div>{" "}
+          </NoSSRWrapper>
         </section>
-        <section className="flex flex-col gap-2 w-full h-full">
-          <h3 className="font-bold text-xl">Similar Items</h3>
-          <div className="grid grid-cols-5 gap-6 h-full">
-            {similarItems
-              .filter((item) => item.listingId !== listing.listingId)
-              .map((item: Listing) => {
-                return (
-                  <Link
-                    href={`/listings/${item.listingId}`}
-                    key={item.listingId}
-                    className="flex flex-col justify-center relative h-full p-2 rounded-md gap-2"
-                  >
-                    <Image
-                      src={item.images[0].imageUrl}
-                      alt={item.listedProduct.productName}
-                      height={300}
-                      width={300}
-                    />
-                    <p className="text-sm">{item.listedProduct.productName}</p>
-                    <p className="font-semibold text-left text-green-500">
-                      £{listing.price}
-                    </p>
-                  </Link>
-                );
-              })}
-          </div>
-        </section>
+        <SimilarItems activeListing={listing} similarItems={similarItems} />
       </main>
     </Suspense>
   );
 };
 
-export default StoreItem;
+export default ListingPage;

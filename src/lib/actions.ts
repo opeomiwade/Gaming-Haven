@@ -2,7 +2,7 @@
 import axios from "axios";
 import axiosInstance from "./axiosInstance";
 import { revalidatePath } from "next/cache";
-import { FilterQueryParams } from "@/types/types";
+import { FilterQueryParams, Listing } from "@/types/types";
 import { FieldValues } from "react-hook-form";
 
 class CustomError extends Error {
@@ -69,14 +69,12 @@ export async function postItem({
     ...listingDetails,
     imageUrls: JSON.parse(listingDetails.imageUrls as string),
   };
-
   try {
     const response = await axiosInstance.post("/listings/add", listingDetails, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
     });
-    console.log(response.data);
     return response.data;
   } catch (error: any) {
     throw new CustomError({
@@ -90,6 +88,42 @@ export async function getListing(id: number) {
   try {
     const { data } = await axiosInstance.get(`/listings/${id}`);
     return data;
+  } catch (error: any) {
+    throw new CustomError({
+      message: error.response.data,
+      statusCode: error.response.status,
+    });
+  }
+}
+
+export async function editListing({
+  id,
+  updatedListingDetails,
+  accessToken,
+}: {
+  id: number;
+  updatedListingDetails: FieldValues;
+  accessToken: string;
+}) {
+  updatedListingDetails = {
+    ...updatedListingDetails,
+    imageUrls:
+      updatedListingDetails.imageUrls &&
+      JSON.parse(updatedListingDetails.imageUrls as string),
+  };
+  try {
+    const response = await axiosInstance.put(
+      "/listings/edit",
+      updatedListingDetails,
+      {
+        params: { listingId: id },
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+    revalidatePath(`/listings/${id}`);
+    return response.data;
   } catch (error: any) {
     throw new CustomError({
       message: error.response.data,
@@ -139,6 +173,20 @@ export async function getOrderItems(orderId: number) {
   try {
     const response = await axiosInstance.get(`/orders/${orderId}/items`);
     return response.data;
+  } catch (error: any) {
+    throw new CustomError({
+      message: error.response.data,
+      statusCode: error.response.status,
+    });
+  }
+}
+
+export async function deleteListing(listingId: number, accessToken: string) {
+  try {
+    axiosInstance.delete("/listings/delete", {
+      params: { listingId },
+      headers: { Authorization: `Bearer ${accessToken}` },
+    });
   } catch (error: any) {
     throw new CustomError({
       message: error.response.data,
