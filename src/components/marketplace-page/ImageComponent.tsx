@@ -17,7 +17,7 @@ const ListingImage: React.FC<{ images: Image[]; listingId: number }> = ({
     );
   }
 
-  return !imageHover ? (
+  return !imageHover && images.length > 0 ? (
     <Link href={`/listings/${listingId}`}>
       <div
         className="w-full h-full hover:cursor-pointer"
