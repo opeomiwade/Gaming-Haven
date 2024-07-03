@@ -5,6 +5,7 @@ import { MdOutlineBookmark } from "react-icons/md";
 import { MdBookmarkBorder } from "react-icons/md";
 import { useContext } from "react";
 import ListingContext from "@/context/ListingContext";
+import NoSSRWrapper from "../client-wrappers/NoSSRWrapper";
 
 const MarketListing: React.FC<{
   listing: Listing;
@@ -12,7 +13,9 @@ const MarketListing: React.FC<{
   const ctx = useContext(ListingContext);
   return (
     <div className="flex flex-col gap-2">
-      <ListingImage images={listing.images} listingId={listing.listingId} />
+      <NoSSRWrapper>
+        <ListingImage images={listing.images} listingId={listing.listingId} />
+      </NoSSRWrapper>
       <div className="w-full flex justify-between">
         <p className="text-sm">{listing.listedProduct.productName}</p>
         {ctx.savedListings &&

@@ -7,7 +7,7 @@ const ListingImage: React.FC<{ images: Image[]; listingId: number }> = ({
   listingId,
 }) => {
   const [imageHover, setHover] = useState<boolean>(false);
-  if (images.length < 2) {
+  if (images.length < 2 && images.length > 0) {
     return (
       <Link href={`/listings/${listingId}`}>
         <div className="w-full h-full hover:cursor-pointer">

@@ -267,19 +267,22 @@ const ModalForm = forwardRef<HTMLFormElement, ModalFormProps>(
                   label: defaultValues?.listedProduct.category.name,
                 },
               })}
-              render={({ field }) => (
-                <Select
-                  {...field}
-                  options={[
-                    { value: "Consoles", label: "Consoles" },
-                    { value: "Controllers", label: "Controllers" },
-                    { value: "Headphones", label: "Headphones" },
-                    { value: "PCs", label: "PCs" },
-                    { value: "Keyboards", label: "Keyboards" },
-                    { value: "Mouses", label: "Mouses" },
-                  ]}
-                />
-              )}
+              render={({ field }) => {
+                const { ref, ...fieldWithoutRef } = field; // Destructure `ref` out and keep the rest in `fieldWithoutRef`
+                return (
+                  <Select
+                    {...fieldWithoutRef}
+                    options={[
+                      { value: "Consoles", label: "Consoles" },
+                      { value: "Controllers", label: "Controllers" },
+                      { value: "Headphones", label: "Headphones" },
+                      { value: "PCs", label: "PCs" },
+                      { value: "Keyboards", label: "Keyboards" },
+                      { value: "Mouses", label: "Mouses" },
+                    ]}
+                  />
+                );
+              }}
             />
             {errors.categoryName?.message && (
               <p className="text-red-500 text-xs">
@@ -300,9 +303,10 @@ const ModalForm = forwardRef<HTMLFormElement, ModalFormProps>(
                   "",
               })}
               render={({ field }) => {
+                const { ref, ...fieldWithoutRef } = field; // Destructure `ref` out and keep the rest in `fieldWithoutRef`
                 return (
                   <Select
-                    {...field}
+                    {...fieldWithoutRef}
                     options={[
                       { value: "brand new", label: "Brand New" },
                       { value: "like new", label: "Like New" },
