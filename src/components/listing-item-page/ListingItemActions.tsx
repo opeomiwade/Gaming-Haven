@@ -35,8 +35,8 @@ const Actions: React.FC<{ seller: User; category: Category }> = ({
     deleteListing(parseInt(listingId), storedValue!).catch((error) =>
       console.log(error)
     );
-    router.push("/marketplace/consoles");
     queryClient.invalidateQueries({ queryKey: ["listings"] });
+    router.back();
   }
 
   return (
