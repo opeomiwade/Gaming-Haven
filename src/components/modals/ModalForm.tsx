@@ -93,7 +93,7 @@ const ModalForm = forwardRef<HTMLFormElement, ModalFormProps>(
             reset({ ...formDefaults });
           });
       }
-    }, []);
+    }, [editForm, path, reset]);
 
     function inputChangeHandler(event: React.ChangeEvent<HTMLInputElement>) {
       generateDataUrl(event, setImageFiles, null);
@@ -391,5 +391,7 @@ const ModalForm = forwardRef<HTMLFormElement, ModalFormProps>(
     );
   }
 );
+
+ModalForm.displayName = "ModalForm"; // Add displayName property here
 
 export default ModalForm;

@@ -33,7 +33,7 @@ const MarketPlaceGrid = () => {
     if (dashDetails) {
       ctx.setSavedListings(dashDetails.savedListings);
     }
-  }, [dashDetails]);
+  }, [dashDetails, ctx]);
 
   if (isError) {
     return (

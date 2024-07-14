@@ -32,21 +32,26 @@ export const Tab: React.FC<TabProps> = ({
 
 const Tabs: React.FC<{
   tabs: string[];
-  filters: FilterQueryParams;
-  setFilters: React.Dispatch<React.SetStateAction<FilterQueryParams>>;
+  filters?: FilterQueryParams;
+  selected?: string;
+  setSelected?: React.Dispatch<React.SetStateAction<string>>;
+  setFilters?: React.Dispatch<React.SetStateAction<FilterQueryParams>>;
   layoutId: string;
-}> = ({ tabs, filters, setFilters, layoutId }) => {
+}> = ({ tabs, filters, setFilters, layoutId, selected, setSelected }) => {
   return (
     <menu className="dark:bg-black bg-gray-300 px-4 py-2 flex gap-12 justify-center rounded-full mt-2 font-semibold items-center">
       {tabs.map((tab) => {
         return (
           <Tab
-            isSelected={filters && filters.categoryName == tab}
-            onSelect={() =>
-              setFilters((prevFilters) => {
-                return { ...prevFilters, categoryName: tab };
-              })
-            }
+            isSelected={filters ? filters.categoryName == tab : selected == tab}
+            onSelect={() => {
+              setFilters &&
+                setFilters((prevFilters) => {
+                  return { ...prevFilters, categoryName: tab };
+                });
+
+              setSelected && setSelected(tab);
+            }}
             layoutId={layoutId}
             key={tab}
           >

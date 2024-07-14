@@ -30,7 +30,7 @@ const ProfileModal: React.FC<{ open: boolean; closeModal: () => void }> = ({
       uploadImage(inputRef.current!.files![0], path, false).then((imageUrl) => {
         dispatch(currentUserActions.updateUserData({ imageUrl: imageUrl }));
       });
-      const { data, error } = await supabase
+      await supabase
         .from("users")
         .update({ image_url: currentUser.imageUrl })
         .eq("username", currentUser.username)

@@ -4,9 +4,10 @@ import { motion } from "framer-motion";
 import { getOrderItems } from "@/lib/actions";
 import { useQuery } from "@tanstack/react-query";
 
-const purchaseTableRow: React.FC<{
+const PurchaseTableRow: React.FC<{
   purchase: Order;
 }> = ({ purchase }) => {
+
   const { data: orderItems, isFetching } = useQuery<Listing[]>({
     queryKey: ["order-items"],
     queryFn: () => getOrderItems(purchase.orderId),
@@ -43,4 +44,4 @@ const purchaseTableRow: React.FC<{
   );
 };
 
-export default purchaseTableRow;
+export default PurchaseTableRow;
