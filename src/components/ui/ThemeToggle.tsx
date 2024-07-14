@@ -9,6 +9,7 @@ const ThemeToggle = () => {
 
   useEffect(() => {
     const theme = localStorage.getItem("theme");
+    console.log(theme)
     if (theme === "dark") setDarkMode(true);
   }, []);
 
@@ -16,10 +17,10 @@ const ThemeToggle = () => {
     // adds dark class to html root element
     if (darkMode) {
       document.documentElement.classList.remove("dark");
-      localStorage.setItem("theme", "light"); // stores theme settings
-    } else {
-      document.documentElement.classList.add("dark");
       localStorage.setItem("theme", "dark"); // stores theme settings
+    } else {
+      document.documentElement.classList.add("light");
+      localStorage.setItem("theme", "light"); // stores theme settings
     }
   }, [darkMode]);
 
