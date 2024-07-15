@@ -44,5 +44,5 @@ export async function googleSignIn() {
 }
 
 export async function logOut(){
-  await axios.get("http://localhost:8080/users/logout")
+  await axios.get("https://gaming-haven-backend.up.railway.app/users/logout")
 }

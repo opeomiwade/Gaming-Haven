@@ -32,7 +32,7 @@ export default async function loginUser(
   const details = Object.fromEntries(formData.entries());
   try {
     const response = await axios.post(
-      "http://localhost:8080/users/login",
+      "https://gaming-haven-backend.up.railway.app/users/login",
       details
     );
     return { ...response.data };
@@ -49,7 +49,7 @@ export async function signupUser(_prevState: any, formData: FormData) {
   const userDetails = Object.fromEntries(formData.entries());
   try {
     const response = await axios.post(
-      "http://localhost:8080/users/signup",
+      "https://gaming-haven-backend.up.railway.app/users/signup",
       userDetails
     );
     return { ...response.data };
