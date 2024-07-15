@@ -8,20 +8,13 @@ const ThemeToggle = () => {
   const [darkMode, setDarkMode] = useState<boolean>(false);
 
   useEffect(() => {
-    const theme = localStorage.getItem("theme");
-    console.log(theme)
-    if (theme === "dark") setDarkMode(true);
-  }, []);
-
-  useEffect(() => {
     // adds dark class to html root element
-    if (darkMode) {
-      document.documentElement.classList.remove("dark");
-      localStorage.setItem("theme", "dark"); // stores theme settings
-    } else {
-      document.documentElement.classList.add("light");
-      localStorage.setItem("theme", "light"); // stores theme settings
-    }
+    // Toggles between "dark" and "light" classes on the html root element
+    document.documentElement.classList.toggle("dark", darkMode);
+    document.documentElement.classList.toggle("light", !darkMode);
+
+    // Stores the current theme setting in localStorage
+    localStorage.setItem("theme", darkMode ? "dark" : "light");
   }, [darkMode]);
 
   return (
@@ -32,7 +25,7 @@ const ThemeToggle = () => {
       >
         <BsSunFill className="text-yellow-400" size={18} />
         <div
-          style={darkMode ? { left: "2px" } : { right: "2px" }}
+          style={darkMode ? { right: "2px" } : { left: "2px" }}
           className="absolute bg-gray-300 dark:bg-gray-400 w-6 h-6 rounded-full shadow-md transform transition-transform duration-300"
         ></div>
         <FaMoon className="ml-auto text-zinc-900" size={18} />
