@@ -2,7 +2,7 @@
 import axios from "axios";
 import axiosInstance from "./axiosInstance";
 import { revalidatePath } from "next/cache";
-import { FilterQueryParams, Listing } from "@/types/types";
+import { FilterQueryParams } from "@/types/types";
 import { FieldValues } from "react-hook-form";
 
 class CustomError extends Error {
@@ -32,7 +32,7 @@ export default async function loginUser(
   const details = Object.fromEntries(formData.entries());
   try {
     const response = await axios.post(
-      "https://gaming-haven-backend.up.railway.app/users/login",
+      "http://localhost:8080/users/login",
       details
     );
     return { ...response.data };
@@ -49,7 +49,7 @@ export async function signupUser(_prevState: any, formData: FormData) {
   const userDetails = Object.fromEntries(formData.entries());
   try {
     const response = await axios.post(
-      "https://gaming-haven-backend.up.railway.app/users/signup",
+      "http://localhost:8080/users/signup",
       userDetails
     );
     return { ...response.data };

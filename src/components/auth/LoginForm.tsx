@@ -7,9 +7,9 @@ import { useEffect, useState } from "react";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import GoogleIcon from "@mui/icons-material/Google";
 import { motion } from "framer-motion";
-import { googleSignIn } from "@/lib/auth";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { handleGoogleSignIn } from "@/lib/auth";
 
 const AuthForm = () => {
   const { push } = useRouter();
@@ -57,7 +57,12 @@ const AuthForm = () => {
         <Button disabled={disabled} />
       </form>
       <motion.button
-        onClick={googleSignIn}
+        onClick={async () => {
+          await handleGoogleSignIn();
+          setTimeout(() => {
+            push("/");
+          }, 5000);
+        }}
         whileHover={{ scale: 1.1 }}
         type="button"
         className="dark:bg-white border-2 dark:border-0 text-black font-bold p-4 rounded-lg w-full flex items-center gap-2 justify-center my-4 hover:bg-blue-400"

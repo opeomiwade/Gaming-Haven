@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "https://gaming-haven-backend.up.railway.app",
+  baseURL: "http://localhost:8080",
 });
 
 export default axiosInstance;

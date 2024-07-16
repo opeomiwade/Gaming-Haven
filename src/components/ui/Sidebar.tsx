@@ -12,12 +12,15 @@ import classes from "@/CSS/navbar.module.css";
 import { useRouter } from "next/navigation";
 import { MdOutlineKeyboardDoubleArrowRight as CollapseIcon } from "react-icons/md";
 import { usePathname } from "next/navigation";
+import { signOut } from "firebase/auth";
+import { auth } from "@/config/firebase";
 
 const Sidebar = () => {
   const { push } = useRouter();
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const [_storedValue, _setStoredValue, removeItem] =
     useLocalStorage("accessToken");
+  const [provider, _setProvider, removeProvider] = useLocalStorage("provider");
   const [bottomSidebar, setBottom] = useState<boolean>();
   const path = usePathname();
 
@@ -39,6 +42,12 @@ const Sidebar = () => {
 
   async function logOut() {
     removeItem();
+    if (provider === "google") {
+      removeProvider();
+      signOut(auth).catch((error) => {
+        console.log(error);
+      });
+    }
     push("/login");
   }
 

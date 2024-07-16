@@ -28,10 +28,10 @@ function MainHeader() {
   );
 
   useEffect(() => {
-    getUserDetails(idToken!).then((currentUserDetails) =>
-      dispatch(currentUserActions.setCurrentUser({ ...currentUserDetails }))
-    );
-
+      getUserDetails(idToken!).then((currentUserDetails) =>
+        dispatch(currentUserActions.setCurrentUser({ ...currentUserDetails }))
+      );
+    
     const resizeObserver = new ResizeObserver((entries) => {
       for (const entry of entries) {
         if (entry.contentRect.width < 768) {
@@ -42,7 +42,7 @@ function MainHeader() {
       }
     });
     resizeObserver.observe(document.documentElement);
-  }, []);
+  }, [idToken]);
 
   function closeModal() {
     setOpen(false);

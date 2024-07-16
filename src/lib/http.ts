@@ -18,7 +18,7 @@ export async function getDashDetails() {
 export async function getUserDetails(idToken: string) {
   const decodedToken = jwtDecode<MyJwtPayload>(idToken);
   const { data } = await axios.get(
-    `https://gaming-haven-backend.up.railway.app/users/user/${decodedToken.email}`
+    `http://localhost:8080/users/user/${decodedToken.email}`
   );
   return data;
 }
@@ -31,7 +31,6 @@ export async function getUserListings() {
       )}`,
     },
   });
-  console.log(data);
   return data;
 }
 
@@ -63,6 +62,15 @@ export async function addSavedListing(listingId: number) {
         params: { listingId },
       }
     );
+    return data;
+  } catch (error: any) {}
+}
+
+export async function getAccessToken(email: String, googleIdToken: string) {
+  try {
+    const { data } = await axiosInstance.get("/users/access-token", {
+      params: { email, googleIdToken },
+    });
     return data;
   } catch (error: any) {}
 }

@@ -38,7 +38,11 @@ export default function Home() {
         >
           <motion.div
             animate={{ y: [10, 0, -10, 0] }}
-            transition={{ repeat: Infinity, duration:4, repeatType: "reverse" }}
+            transition={{
+              repeat: Infinity,
+              duration: 4,
+              repeatType: "reverse",
+            }}
           >
             <BsController size={500} />
           </motion.div>
