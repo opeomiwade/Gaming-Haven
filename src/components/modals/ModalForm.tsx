@@ -131,6 +131,7 @@ const ModalForm = forwardRef<HTMLFormElement, ModalFormProps>(
           };
         }
       }
+      console.log(formData)
       submitHandler(formData);
     }
 
