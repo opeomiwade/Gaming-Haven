@@ -45,7 +45,7 @@ export async function uploadImages(images: ImageFile[], path: string) {
   const uuid = new ShortUniqueId({ length: 5 });
   const imageUploadPromises = images.map(async (image) => {
     const imageFileName = `${path}${uuid.rnd()}_${image.imageFile.name}`;
-    
+
     const { data, error } = await supabase.storage
       .from("gaming-haven-images")
       .upload(imageFileName, image.imageFile, {
@@ -55,7 +55,7 @@ export async function uploadImages(images: ImageFile[], path: string) {
 
     if (error) {
       console.error("Error uploading images:", error.message);
-      throw error;  // Rethrow to handle it in the calling function
+      throw error; // Rethrow to handle it in the calling function
     }
 
     const publicUrlData = supabase.storage
@@ -66,11 +66,9 @@ export async function uploadImages(images: ImageFile[], path: string) {
   });
   try {
     const imageUrls = await Promise.all(imageUploadPromises);
-    console.log(imageUrls); // This will print all the URLs after uploads are completed
     return imageUrls;
   } catch (error: any) {
-    console.error("Error in uploadImages:", error.message);
-    return [];
+    throw new Error(error);
   }
   // images.forEach(async (image) => {
   //   const imageFileName = `${path}${uuid.rnd()}_${image.imageFile.name}`;

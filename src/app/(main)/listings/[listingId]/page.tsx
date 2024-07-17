@@ -34,12 +34,12 @@ const ListingPage: React.FC<{ params: any }> = async ({ params }) => {
         {listing.listedProduct.productName}
       </h1>
       <main className="flex flex-col gap-2 p-6">
-        <section className="flex gap-4 w-full h-full">
-          <div className="w-[50%] p-6">
-            <ul className="flex flex-col gap-2 h-screen">
+        <section className="flex flex-col md:flex-row gap-4 w-full h-full">
+          <div className="md:w-[50%] w-full p-6">
+            <ul className="flex flex-col gap-2 h-full">
               {listing.images.map((image) => {
                 return (
-                  <div key={image.imageId} className="relative h-full">
+                  <div key={image.imageId} className="relative h-[400px]">
                     <Image
                       src={image.imageUrl}
                       fill
@@ -51,7 +51,7 @@ const ListingPage: React.FC<{ params: any }> = async ({ params }) => {
             </ul>
           </div>
           <NoSSRWrapper>
-            <div className="flex flex-col font-light gap-4 p-6 sticky top-[150px] h-full w-[40%]">
+            <div className="flex flex-col font-light gap-4 p-6 sticky top-[150px] h-full md:w-[40%] w-full">
               <h2 className="font-bold text-lg">£{listing.price}</h2>
               <p className="flex items-center gap-2">
                 {listing.condition} <GoDotFill size={8} />{" "}

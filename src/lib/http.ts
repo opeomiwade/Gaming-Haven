@@ -18,7 +18,7 @@ export async function getDashDetails() {
 export async function getUserDetails(idToken: string) {
   const decodedToken = jwtDecode<MyJwtPayload>(idToken);
   const { data } = await axios.get(
-    `http://localhost:8080/users/user/${decodedToken.email}`
+    `https://gaming-haven-backend.up.railway.app/users/user/${decodedToken.email}`
   );
   return data;
 }

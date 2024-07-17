@@ -40,7 +40,6 @@ const EditListingModal: React.FC<{
   });
 
   async function submitHandler(updatedListingDetails: FieldValues) {
-    console.log(updatedListingDetails)
     mutate({
       id: parseInt(listingId),
       updatedListingDetails,

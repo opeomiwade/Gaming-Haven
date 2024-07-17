@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { currentUserState, Listing, ImageFile } from "@/types/types";
 import { useForm, FieldValues, Controller } from "react-hook-form";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
@@ -15,6 +15,7 @@ import queryClient from "@/lib/http";
 import { usePathname } from "next/navigation";
 import { getListing } from "@/lib/actions";
 import { SingleValue } from "react-select";
+import { CircularProgress } from "@mui/material";
 
 interface ModalFormProps {
   formTitle: string;
@@ -46,6 +47,7 @@ const ModalForm = forwardRef<HTMLFormElement, ModalFormProps>(
     const inputRef = useRef<HTMLInputElement>();
     const [submitAttempted, setSubmitAttempted] = useState<boolean>(false);
     const dispatch = useDispatch();
+    const [deleteImages, setDeleteImages] = useState<number[]>([]);
     const username = useSelector(
       (state: { currentUser: { user: currentUserState } }) =>
         state.currentUser.user.username
@@ -108,6 +110,7 @@ const ModalForm = forwardRef<HTMLFormElement, ModalFormProps>(
         ...formData,
         condition: formData.condition.label,
         categoryName: formData.categoryName.label,
+        deleteImages,
       };
 
       // if there are images to upload
@@ -116,14 +119,11 @@ const ModalForm = forwardRef<HTMLFormElement, ModalFormProps>(
 
         // if an edit form, remember prev uploaded images
         if (editForm) {
-          const prevImageUrls = defaultValues?.images.map(
-            (image) => image.imageUrl
-          );
-
           formData = {
             ...formData,
-            imageUrls: JSON.stringify([imageUrls, ...prevImageUrls!]),
+            imageUrls: JSON.stringify([...imageUrls]),
           };
+          console.log(formData);
         } else {
           formData = {
             ...formData,
@@ -141,7 +141,18 @@ const ModalForm = forwardRef<HTMLFormElement, ModalFormProps>(
       );
     }
 
-    return (
+    function removeExistingListingImage(event: React.MouseEvent) {
+      const id = parseInt(event.currentTarget.id);
+      setDeleteImages((prev) => [...prev, id]);
+      setDefaults((prevDefaults) => {
+        return {
+          ...prevDefaults!,
+          images: defaultValues!.images.filter((image) => image.imageId !== id),
+        };
+      });
+    }
+
+    return defaultValues ? (
       <form
         ref={ref}
         onSubmit={handleSubmit(onSubmit)}
@@ -178,7 +189,7 @@ const ModalForm = forwardRef<HTMLFormElement, ModalFormProps>(
                   <div
                     className="absolute top-[-12px] right-[-5px] hover:cursor-pointer p-0"
                     id={image.imageId.toString()}
-                    onClick={removeImage}
+                    onClick={removeExistingListingImage}
                   >
                     <CancelIcon style={{ fill: "gray", fontSize: "20px" }} />
                   </div>
@@ -388,6 +399,8 @@ const ModalForm = forwardRef<HTMLFormElement, ModalFormProps>(
           accept="image/jpeg image/png image/jpg image/heic"
         />
       </form>
+    ) : (
+      <CircularProgress />
     );
   }
 );
