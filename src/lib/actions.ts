@@ -169,6 +169,18 @@ export async function getPurchases(accessToken: string) {
   }
 }
 
+export async function getOrder(orderId: number) {
+  try {
+    const response = await axiosInstance.get(`/orders/${orderId}`);
+    return response.data;
+  } catch (error: any) {
+    throw new CustomError({
+      message: error.response.data,
+      statusCode: error.response.status,
+    });
+  }
+}
+
 export async function getOrderItems(orderId: number) {
   try {
     const response = await axiosInstance.get(`/orders/${orderId}/items`);

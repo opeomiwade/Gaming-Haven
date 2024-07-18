@@ -17,22 +17,24 @@ const PurchasesPage = () => {
   });
 
   return (
-    <main className="h-screen w-full">
-      <div className="flex gap-2 items-center p-4">
-        <PoundCoin size={40} />{" "}
-        <h1 className="font-bold text-3xl">Purchases</h1>
-      </div>
-      <PurchaseTableHeader />
-      <ul className="w-full p-4">
-        {isFetching ? (
-          <p className="text-center text-black loading">Loading....</p>
-        ) : (
-          purchases?.map((purchase) => (
-            <PurchaseTableRow key={purchase.orderId} purchase={purchase} />
-          ))
-        )}
-      </ul>
-    </main>
+    <>
+      <main className="h-screen w-full">
+        <div className="flex gap-2 items-center p-4">
+          <PoundCoin size={40} />{" "}
+          <h1 className="font-bold text-3xl">Purchases</h1>
+        </div>
+        <PurchaseTableHeader />
+        <ul className="w-full p-4">
+          {isFetching ? (
+            <p className="text-center text-black loading">Loading....</p>
+          ) : (
+            purchases?.map((purchase) => (
+              <PurchaseTableRow key={purchase.orderId} purchase={purchase} />
+            ))
+          )}
+        </ul>
+      </main>
+    </>
   );
 };
 

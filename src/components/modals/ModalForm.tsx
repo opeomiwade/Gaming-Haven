@@ -131,7 +131,7 @@ const ModalForm = forwardRef<HTMLFormElement, ModalFormProps>(
           };
         }
       }
-      console.log(formData)
+      console.log(formData);
       submitHandler(formData);
     }
 
@@ -153,7 +153,7 @@ const ModalForm = forwardRef<HTMLFormElement, ModalFormProps>(
       });
     }
 
-    return defaultValues ? (
+    return (defaultValues && editForm) || !editForm ? (
       <form
         ref={ref}
         onSubmit={handleSubmit(onSubmit)}

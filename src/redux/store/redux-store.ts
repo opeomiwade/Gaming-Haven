@@ -1,5 +1,6 @@
 import { createSlice, configureStore } from "@reduxjs/toolkit";
 import { currentUserState } from "@/types/types";
+import { Listing } from "@/types/types";
 
 const currentUserSlice = createSlice({
   name: "currentUser",
@@ -29,13 +30,31 @@ const sellModalSlice = createSlice({
   },
 });
 
+const cartSlice = createSlice({
+  name: "cart",
+  initialState: { items: [] as Listing[] },
+  reducers: {
+    addToCart(state, action) {
+      state.items = [...state.items, action.payload];
+    },
+
+    removeCart(state, action) {
+      state.items = state.items.filter(
+        (item) => item.listingId !== action.payload.listingId
+      );
+    },
+  },
+});
+
 const store = configureStore({
   reducer: {
     currentUser: currentUserSlice.reducer,
     sellModal: sellModalSlice.reducer,
+    cart: cartSlice.reducer,
   },
 });
 
 export default store;
 export const currentUserActions = currentUserSlice.actions;
 export const sellModalActions = sellModalSlice.actions;
+export const cartActions = cartSlice.actions;

@@ -3,7 +3,7 @@ import { FaShoppingCart } from "react-icons/fa";
 import { IoMdSwap } from "react-icons/io";
 import { motion } from "framer-motion";
 import { useSelector } from "react-redux";
-import { currentUserState } from "@/types/types";
+import { currentUserState, Listing } from "@/types/types";
 import { useEffect, useState } from "react";
 import { getUserDetails } from "@/lib/http";
 import { useDispatch } from "react-redux";
@@ -14,6 +14,8 @@ import { FaMagnifyingGlass } from "react-icons/fa6";
 import ProfileModal from "../modals/ProfileModal";
 import { defaultImageUrl } from "@/utils/imageDataUrl";
 import { sellModalActions } from "@/redux/store/redux-store";
+import { useAnimate } from "framer-motion";
+import Link from "next/link";
 
 function MainHeader() {
   const dispatch = useDispatch();
@@ -21,17 +23,23 @@ function MainHeader() {
     useLocalStorage<string>("accessToken");
   const [mediumScreen, setMediumScreen] = useState<boolean>();
   const [open, setOpen] = useState<boolean>(false);
+  const [scope, animate] = useAnimate();
+  const [isInitialMount, setIsInitialMount] = useState<boolean>(true); // Flag to check if it's the initial mount
 
   const currentUser = useSelector(
     (state: { currentUser: { user: currentUserState } }) =>
       state.currentUser.user
   );
 
+  const cart = useSelector(
+    (state: { cart: { items: Listing[] } }) => state.cart.items
+  );
+
   useEffect(() => {
-      getUserDetails(idToken!).then((currentUserDetails) =>
-        dispatch(currentUserActions.setCurrentUser({ ...currentUserDetails }))
-      );
-    
+    getUserDetails(idToken!).then((currentUserDetails) =>
+      dispatch(currentUserActions.setCurrentUser({ ...currentUserDetails }))
+    );
+
     const resizeObserver = new ResizeObserver((entries) => {
       for (const entry of entries) {
         if (entry.contentRect.width < 768) {
@@ -43,6 +51,18 @@ function MainHeader() {
     });
     resizeObserver.observe(document.documentElement);
   }, [idToken]);
+
+  useEffect(() => {
+    if (!isInitialMount) {
+      animate(
+        scope.current,
+        { scale: [1.8, 1] },
+        { type: "spring", stiffness: 200, duration: 5 }
+      );
+    } else {
+      setIsInitialMount(false);
+    }
+  }, [cart.length]);
 
   function closeModal() {
     setOpen(false);
@@ -80,9 +100,12 @@ function MainHeader() {
           <motion.button whileHover={{ scale: 1.5 }}>
             <IoMdSwap size={30} />
           </motion.button>
-          <motion.button whileHover={{ scale: 1.5 }}>
-            <FaShoppingCart size={25} />
-          </motion.button>
+          <Link href="/cart">
+            <motion.button whileHover={{ scale: 1.5 }} ref={scope}>
+              <FaShoppingCart size={25} />
+            </motion.button>
+          </Link>
+
           <div className="flex gap-2 items-center">
             <img
               src={currentUser.imageUrl || defaultImageUrl}

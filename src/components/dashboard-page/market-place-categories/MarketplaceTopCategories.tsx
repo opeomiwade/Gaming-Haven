@@ -3,6 +3,7 @@ import { Listing, FilterQueryParams } from "@/types/types";
 import { useEffect, useState } from "react";
 import MarketPlaceCategoryItem from "./MarketPlaceCategoryItem";
 import { filterListings } from "@/lib/actions";
+import { CircularProgress } from "@mui/material";
 
 const MarketPlaceTopCategories = () => {
   const [filters, setFilters] = useState<FilterQueryParams>({
@@ -27,9 +28,16 @@ const MarketPlaceTopCategories = () => {
         setFilters={setFilters}
       />
       <ul className="mt-4 space-y-6 h-[60%] overflow-y-auto">
-        {listings.map((listing) => (
-          <MarketPlaceCategoryItem key={listing.listingId} listing={listing} />
-        ))}
+        {listings == undefined ? (
+          <CircularProgress />
+        ) : (
+          listings.map((listing) => (
+            <MarketPlaceCategoryItem
+              key={listing.listingId}
+              listing={listing}
+            />
+          ))
+        )}
       </ul>
     </>
   );

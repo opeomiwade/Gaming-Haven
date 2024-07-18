@@ -19,7 +19,7 @@ const ListingPage: React.FC<{ params: any }> = async ({ params }) => {
   })) as Listing;
 
   const similarItems = (await filterListings({
-    categoryName: listing.listedProduct.category.name,
+    categoryName: listing.listedProduct && listing.listedProduct.category.name,
   })) as Listing[];
 
   return (
