@@ -4,6 +4,22 @@ import { jwtDecode } from "jwt-decode";
 import { QueryClient } from "@tanstack/react-query";
 import axiosInstance from "./axiosInstance";
 
+class CustomError extends Error {
+  statusCode: number;
+  constructor({
+    message,
+    statusCode,
+  }: {
+    message: string;
+    statusCode: number;
+  }) {
+    super(message);
+    this.name = "CustomError";
+    this.message = message;
+    this.statusCode = statusCode;
+  }
+}
+
 export async function getDashDetails() {
   const { data } = await axiosInstance.get("/users/dashboard-details", {
     headers: {
@@ -45,7 +61,12 @@ export async function removeSavedListing(listingId: number) {
       params: { listingId },
     });
     return data;
-  } catch (error: any) {}
+  } catch (error: any) {
+    throw new CustomError({
+      message: error.response.message,
+      statusCode: error.response.status,
+    });
+  }
 }
 
 export async function addSavedListing(listingId: number) {
@@ -63,7 +84,12 @@ export async function addSavedListing(listingId: number) {
       }
     );
     return data;
-  } catch (error: any) {}
+  } catch (error: any) {
+    throw new CustomError({
+      message: error.response.message,
+      statusCode: error.response.status,
+    });
+  }
 }
 
 export async function getAccessToken(email: String, googleIdToken: string) {
@@ -72,7 +98,12 @@ export async function getAccessToken(email: String, googleIdToken: string) {
       params: { email, googleIdToken },
     });
     return data;
-  } catch (error: any) {}
+  } catch (error: any) {
+    throw new CustomError({
+      message: error.response.message,
+      statusCode: error.response.status,
+    });
+  }
 }
 
 const queryClient = new QueryClient();

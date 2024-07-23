@@ -4,6 +4,7 @@ import axiosInstance from "./axiosInstance";
 import { revalidatePath } from "next/cache";
 import { FilterQueryParams } from "@/types/types";
 import { FieldValues } from "react-hook-form";
+import { Listing } from "@/types/types";
 
 class CustomError extends Error {
   statusCode: number;
@@ -78,7 +79,7 @@ export async function postItem({
     return response.data;
   } catch (error: any) {
     throw new CustomError({
-      message: error.response.data,
+      message: error.response.data || "An error occured",
       statusCode: error.response.status,
     });
   }
@@ -90,7 +91,19 @@ export async function getListing(id: number) {
     return data;
   } catch (error: any) {
     throw new CustomError({
-      message: error.response.data,
+      message: error.response.data || "An error occured",
+      statusCode: error.response.status,
+    });
+  }
+}
+
+export async function getListingOffers(id: number) {
+  try {
+    const { data } = await axiosInstance.get(`/listings/${id}/offers`);
+    return data;
+  } catch (error: any) {
+    throw new CustomError({
+      message: error.response.data || "An error occured",
       statusCode: error.response.status,
     });
   }
@@ -126,7 +139,7 @@ export async function editListing({
     return response.data;
   } catch (error: any) {
     throw new CustomError({
-      message: error.response.data,
+      message: error.response.data || "An error occured",
       statusCode: error.response.status,
     });
   }
@@ -146,7 +159,7 @@ export async function filterListings(filters: FilterQueryParams) {
     return response.data;
   } catch (error: any) {
     throw new CustomError({
-      message: error.response.data,
+      message: error.response.data || "An error occured",
       statusCode: error.response.status,
     });
   }
@@ -163,7 +176,7 @@ export async function getPurchases(accessToken: string) {
   } catch (error: any) {
     console.log(error.response.data);
     throw new CustomError({
-      message: error.response.data,
+      message: error.response.data || "An error occured",
       statusCode: error.response.status,
     });
   }
@@ -175,7 +188,62 @@ export async function getOrder(orderId: number) {
     return response.data;
   } catch (error: any) {
     throw new CustomError({
-      message: error.response.data,
+      message: error.response.data || "An error occured",
+      statusCode: error.response.status,
+    });
+  }
+}
+
+export async function sendOffer(
+  listingId: number,
+  senderEmail: string,
+  cashOffer: string,
+  accessToken: string
+) {
+  try {
+    const response = await axiosInstance.post(
+      `/offers/${listingId}/send-offer`,
+      {
+        senderEmail,
+        offer: cashOffer,
+      },
+      { headers: { Authorization: `Bearer ${accessToken}` } }
+    );
+    console.log(response.data);
+    return response.data;
+  } catch (error: any) {
+    console.log(error);
+    throw new CustomError({
+      message: error.response.data || "An error occured",
+      statusCode: error.response.status,
+    });
+  }
+}
+export async function updateOffer(offerId: number, status: string) {
+  try {
+    const response = await axiosInstance.put(
+      `/offers/${offerId}/update-status`,
+      { status }
+    );
+    return response.data;
+  } catch (error: any) {
+    throw new CustomError({
+      message: error.response.data || "An error occured",
+      statusCode: error.response.status,
+    });
+  }
+}
+
+export async function updateTrade(tradeId: number, status: string) {
+  try {
+    const response = await axiosInstance.put(
+      `/trades/${tradeId}/update-status`,
+      { status }
+    );
+    return response.data;
+  } catch (error: any) {
+    throw new CustomError({
+      message: error.response.data || "An error occured",
       statusCode: error.response.status,
     });
   }
@@ -201,7 +269,7 @@ export async function deleteListing(listingId: number, accessToken: string) {
     });
   } catch (error: any) {
     throw new CustomError({
-      message: error.response.data,
+      message: error.response.data || "An error occured",
       statusCode: error.response.status,
     });
   }
@@ -217,7 +285,7 @@ export async function getUserSales(accessToken: string) {
     return response.data;
   } catch (error: any) {
     throw new CustomError({
-      message: error.response.data,
+      message: error.response.data || "An error occured",
       statusCode: error.response.status,
     });
   }
@@ -229,7 +297,28 @@ export async function getManufacturers() {
     return response.data;
   } catch (error: any) {
     throw new CustomError({
-      message: error.response.data,
+      message: error.response.data || "An error occured",
+      statusCode: error.response.status,
+    });
+  }
+}
+
+export async function initiateTrade({
+  listingId,
+  offeredItems,
+}: {
+  listingId: number;
+  offeredItems: Listing[];
+}) {
+  try {
+    const response = await axiosInstance.post("/trades/add", {
+      listingId,
+      offeredItems,
+    });
+    return response.data;
+  } catch (error: any) {
+    throw new CustomError({
+      message: error.response.data || "An error occured",
       statusCode: error.response.status,
     });
   }

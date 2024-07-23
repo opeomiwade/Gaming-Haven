@@ -20,15 +20,16 @@ function SimilarItems({
               key={item.listingId}
               className="flex flex-col justify-center relative h-full p-2 rounded-md gap-2"
             >
-              <Image
-                src={item.images[0].imageUrl}
-                alt={item.listedProduct.productName}
-                height={300}
-                width={300}
-              />
+              <div className="relative h-[150px]">
+                <Image
+                  src={item.images[0].imageUrl}
+                  alt={item.listedProduct.productName}
+                  fill
+                />
+              </div>
               <p className="text-sm">{item.listedProduct.productName}</p>
               <p className="font-semibold text-left text-green-500">
-                £{item.price}
+                £{item.price.toFixed(2)}
               </p>
             </Link>
           );

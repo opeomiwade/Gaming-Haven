@@ -1,6 +1,6 @@
 "use client";
 import { Category, User, currentUserState } from "@/types/types";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Button from "@/components/listing-item-page/Button";
 import { MdDelete } from "react-icons/md";
@@ -14,6 +14,11 @@ import queryClient from "@/lib/http";
 import { useDispatch } from "react-redux";
 import { cartActions } from "@/redux/store/redux-store";
 import { Listing } from "@/types/types";
+import { motion } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
+import toast from "react-hot-toast";
+import { sendOffer } from "@/lib/actions";
+import TradeModal from "../modals/TradeModal";
 
 const Actions: React.FC<{ seller: User; category: Category }> = ({
   seller,
@@ -28,8 +33,11 @@ const Actions: React.FC<{ seller: User; category: Category }> = ({
   );
   const isCurrentUser = seller.username === currentUser.username;
   const [openModal, setOpen] = useState<boolean>(false);
+  const [openTradeModal, setOpenTradeModal] = useState<boolean>(false);
+  const [openOfferForm, setOpenOfferForm] = useState<boolean>();
+  const [listing, setListing] = useState<Listing>();
   const path = usePathname();
-  const [storedValue] = useLocalStorage<string>("accessToken");
+  const [accessToken] = useLocalStorage<string>("accessToken");
   const router = useRouter();
   const listingId = path.split("/")[2];
   const dispatch = useDispatch();
@@ -40,22 +48,60 @@ const Actions: React.FC<{ seller: User; category: Category }> = ({
     setOpen(!openModal);
   }
 
+  useEffect(() => {
+    getListing(parseInt(listingId))
+      .then((listing) => {
+        setListing(listing);
+      })
+      .catch((error) => console.log(error.message));
+  }, []);
+
   function deleteClickHandler() {
-    deleteListing(parseInt(listingId), storedValue!).catch((error) =>
+    deleteListing(parseInt(listingId), accessToken!).catch((error) =>
       console.log(error)
     );
     queryClient.invalidateQueries({ queryKey: ["listings"] });
     router.back();
   }
 
+  function closeOfferTradeModal() {
+    setOpenTradeModal(false);
+  }
+
   async function addToCartHandler() {
-    const listing = await getListing(parseInt(listingId));
     dispatch(cartActions.addToCart(listing));
+  }
+
+  async function cashOfferSubmitHandler(
+    event: React.FormEvent<HTMLFormElement>
+  ) {
+    event.preventDefault();
+    setOpenOfferForm(false);
+    const fd = new FormData(event.currentTarget);
+    const { cashOffer } = Object.fromEntries(fd.entries());
+    try {
+      sendOffer(
+        parseInt(listingId),
+        currentUser.email,
+        cashOffer as string,
+        accessToken!
+      );
+      toast.success("Your offer has been sent", {
+        icon: <span style={{ fontSize: "24px" }}>💷</span>,
+      });
+    } catch (error: any) {
+      console.log(error.message);
+      toast.error("An error occured:" + error.message);
+    }
+    event.currentTarget.reset();
   }
 
   return (
     <>
       {openModal && <EditListingModal setOpen={setOpen} />}
+      {openTradeModal && (
+        <TradeModal closeModal={closeOfferTradeModal} listing={listing!} />
+      )}
       {isCurrentUser ? (
         <>
           <Button
@@ -95,10 +141,42 @@ const Actions: React.FC<{ seller: User; category: Category }> = ({
           >
             {notInCart ? "Add to Bag" : "Remove From Bag"}
           </Button>
-          <Button className="flex hover:bg-gray-300 hover:border-0 items-center gap-2 justify-center border-2 rounded-md border-black dark:border-white p-2 font-bold">
+          <Button
+            onClick={() => setOpenOfferForm(!openOfferForm)}
+            className="flex hover:bg-gray-300 hover:border-0 items-center gap-2 justify-center border-2 rounded-md border-black dark:border-white p-2 font-bold"
+          >
             Make Offer
           </Button>
-          <Button className="flex hover:bg-gray-300 hover:border-0 items-center gap-2 justify-center border-2 rounded-md border-black dark:border-white p-2 font-bold">
+          <AnimatePresence>
+            {openOfferForm && (
+              <motion.form
+                onSubmit={cashOfferSubmitHandler}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.2 }}
+                exit={{ opacity: 0 }}
+              >
+                <div className="flex p-2 items-center gap-2">
+                  <span className="font-semibold">£</span>
+                  <input
+                    className="rounded-md focus:outline-none w-full dark:bg-black"
+                    placeholder="Enter your offer"
+                    required
+                    name="cashOffer"
+                    type="number"
+                  />
+                  <Button className="rounded-md text-sm text-white bg-green-500 p-2 font-semibold">
+                    Send
+                  </Button>
+                </div>
+              </motion.form>
+            )}
+          </AnimatePresence>
+
+          <Button
+            onClick={() => setOpenTradeModal(true)}
+            className="flex hover:bg-gray-300 hover:border-0 items-center gap-2 justify-center border-2 rounded-md border-black dark:border-white p-2 font-bold"
+          >
             Offer Trade
           </Button>
           {category.name.toLowerCase() == "consoles" && (

@@ -36,7 +36,7 @@ export type DashDetails = {
   savedListings: Listing[];
   listedProducts: Listing[];
   sentTrades: TradeDetails[];
-  receivedTrades: [];
+  receivedTrades: TradeDetails[];
   totalIncome: number;
   totalExpenses: number;
   marketplaceTotalSales: number;
@@ -97,10 +97,9 @@ export type Listing = {
 
 export type TradeDetails = {
   id: number;
-  user1: User;
-  user2: User;
-  listing1: Listing;
-  listing2: Listing;
+  sender: User;
+  recipient: User;
+  requestedItem: Listing;
   tradeStatus: string;
   createdAt: string;
 };

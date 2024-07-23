@@ -1,8 +1,8 @@
-import { getListing, filterListings } from "@/lib/actions";
+import { getListing, filterListings, getListingOffers } from "@/lib/actions";
 import { CircularProgress } from "@mui/material";
 import { Suspense } from "react";
 import Image from "next/image";
-import { Listing } from "@/types/types";
+import { Listing, Offer } from "@/types/types";
 import { GoDotFill } from "react-icons/go";
 import formatDateTime from "@/utils/formatDate";
 import Seller from "@/components/listing-item-page/SellerFooter";
@@ -17,6 +17,12 @@ const ListingPage: React.FC<{ params: any }> = async ({ params }) => {
       notFound();
     }
   })) as Listing;
+
+  const offers = (await getListingOffers(params.listingId).catch((error) => {
+    if (error.statusCode === 404) {
+      notFound();
+    }
+  })) as Offer[];
 
   const similarItems = (await filterListings({
     categoryName: listing.listedProduct && listing.listedProduct.category.name,
@@ -52,7 +58,15 @@ const ListingPage: React.FC<{ params: any }> = async ({ params }) => {
           </div>
           <NoSSRWrapper>
             <div className="flex flex-col font-light gap-4 p-6 sticky top-[150px] h-full md:w-[40%] w-full">
-              <h2 className="font-bold text-lg">£{listing.price}</h2>
+              <header className="flex gap-4 items-center">
+                <h2 className="font-bold text-lg">£{listing.price}</h2>
+                {offers.length > 0 && (
+                  <div className="bg-green-100 rounded-md text-black text-xs p-1 font-semibold flex items-center gap-2">
+                    <span style={{ fontSize: "20px" }}>💷</span>
+                    {offers.length} offer(s)
+                  </div>
+                )}
+              </header>
               <p className="flex items-center gap-2">
                 {listing.condition} <GoDotFill size={8} />{" "}
                 <span className="underline font-semibold">

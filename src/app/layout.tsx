@@ -21,6 +21,8 @@ export default function RootLayout({
       >
         <div id="edit-listing"></div>
         <div id="receipt"></div>
+        <div id="trade-modal"></div>
+
         {children}
       </body>
     </html>

@@ -28,15 +28,18 @@ const MarketPlaceTopCategories = () => {
         setFilters={setFilters}
       />
       <ul className="mt-4 space-y-6 h-[60%] overflow-y-auto">
-        {listings == undefined ? (
-          <CircularProgress />
-        ) : (
+        {listings.length > 0 &&
+        listings[0].listedProduct.category.name == filters.categoryName ? (
           listings.map((listing) => (
             <MarketPlaceCategoryItem
               key={listing.listingId}
               listing={listing}
             />
           ))
+        ) : (
+          <div className="flex items-center justify-center h-full">
+            <CircularProgress />
+          </div>
         )}
       </ul>
     </>

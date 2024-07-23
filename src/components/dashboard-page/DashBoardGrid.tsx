@@ -25,6 +25,16 @@ const DashBoardGrid: React.FC<{ dashDetails: DashDetails }> = ({
 }) => {
   const [smallScreen, setSmallScreen] = useState<boolean>();
   const dispatch = useDispatch();
+  const completedSentTrades =
+    dashDetails &&
+    dashDetails.sentTrades.filter((trade) => trade.tradeStatus === "completed")
+      .length;
+
+  const completedReceivedTrades =
+    dashDetails &&
+    dashDetails.receivedTrades.filter(
+      (trade) => trade.tradeStatus === "completed"
+    ).length;
 
   useEffect(() => {
     const resizeObserver = new ResizeObserver((entries) => {
@@ -67,10 +77,9 @@ const DashBoardGrid: React.FC<{ dashDetails: DashDetails }> = ({
           <div className="dark:bg-black rounded-full w-fit h-git p-2">
             <IoMdSwap size={30} />
           </div>
-          <p className="font-bold text-center">Total Trades</p>
+          <p className="font-bold text-center">Completed Trades</p>
           <p className="text-white-300 text-lg">
-            {dashDetails &&
-              dashDetails.sentTrades.length + dashDetails.receivedTrades.length}
+            {completedReceivedTrades + completedSentTrades}
           </p>
         </div>
         <div className="dark:bg-zinc-800 bg-white rounded-lg p-4 flex flex-col items-center shadow-xl dark:shadow-none shadow-gray-400">

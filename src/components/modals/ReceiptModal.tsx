@@ -32,7 +32,6 @@ const ReceiptModal: React.FC<{
             <IoIosClose size={50} />
           </motion.button>
         </header>
-
         <hr />
         <div className="my-6">
           <p className="text-sm font-semibold">Order ID: {purchase.orderId}</p>

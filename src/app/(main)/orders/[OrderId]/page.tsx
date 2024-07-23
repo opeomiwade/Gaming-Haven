@@ -10,14 +10,12 @@ import { IoMdMail } from "react-icons/io";
 import ReturnButton from "@/components/ui/ReturnButton";
 
 const OrderPage: React.FC<{ params: any }> = async ({ params }) => {
-  console.log(params.orderId);
-  console.log(params)
-  const purchase = await getOrder(params.orderId).catch((error) =>
+  const purchase = await getOrder(parseInt(params.orderId)).catch((error) =>
     console.log(error.message)
   );
-  const orderItems: Listing[] = await getOrderItems(params.orderId).catch(
-    (error) => console.log(error.message)
-  );
+  const orderItems: Listing[] = await getOrderItems(
+    parseInt(params.orderId)
+  ).catch((error) => console.log(error.message));
   return (
     <Suspense
       fallback={

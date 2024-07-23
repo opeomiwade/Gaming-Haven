@@ -28,8 +28,8 @@ const Trades: React.FC<{ dashDetails: DashDetails }> = ({ dashDetails }) => {
           emptyPlaceHolderText="You  have received no trade offers"
         />
       )}
-      {(selected === "Sent" && dashDetails.orders.length > 0) ||
-      (selected === "Received" && dashDetails.soldListings.length > 0) ? (
+      {(selected === "Sent" && dashDetails.sentTrades.length > 0) ||
+      (selected === "Received" && dashDetails.receivedTrades.length > 0) ? (
         <div className="relative bottom-0">
           <hr className="my-4" />
           <Link href="/trades">
