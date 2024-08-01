@@ -12,6 +12,7 @@ const CategoryHeader: React.FC<{}> = () => {
       <motion.button
         onClick={() => {
           setFilters({ categoryName: "consoles" });
+          console.log(filters)
           router.push("/marketplace/consoles");
         }}
         className={`text-md font-semibold p-2 hover:bg-gray-300 hover:dark:bg-zinc-800 rounded-md ${

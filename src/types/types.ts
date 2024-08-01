@@ -116,3 +116,33 @@ export type ImageFile = {
   id: string;
   imageFile: File;
 };
+
+export type RawgResponse = {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: any;
+};
+
+export type Platform = {
+  id: number;
+  name: string;
+  slug: string;
+  platform: { [key: string]: any };
+};
+
+export type Store = {
+  game_id: number;
+  id: number;
+  url: string;
+  store_id: number;
+};
+
+export type YoutubeAPIResponse = {
+  kind: string;
+  eTag: string;
+  nextPageToken: string;
+  regionCode: string;
+  pageInfo: Object;
+  items: Array<{ [key: string]: any }>;
+};

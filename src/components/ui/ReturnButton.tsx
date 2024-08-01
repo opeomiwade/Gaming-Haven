@@ -8,7 +8,7 @@ function ReturnButton() {
   return (
     <motion.button
       whileHover={{ scale: 1.1 }}
-      className="flex items-center text-sm text-md w-fit"
+      className="flex items-center text-sm text-md w-fit text-green-500"
       onClick={() => router.back()}
     >
       <IoIosArrowRoundBack size={30} />

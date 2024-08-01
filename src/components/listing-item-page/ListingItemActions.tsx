@@ -180,7 +180,7 @@ const Actions: React.FC<{ seller: User; category: Category }> = ({
             Offer Trade
           </Button>
           {category.name.toLowerCase() == "consoles" && (
-            <Link href={"/"}>
+            <Link href={`${listingId}/games`}>
               <Button className="flex hover:bg-blue-500 w-full items-center gap-2 justify-center text-white rounded-md bg-blue-400  p-2 font-bold">
                 View Available Games
               </Button>

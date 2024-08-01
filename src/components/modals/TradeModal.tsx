@@ -14,6 +14,7 @@ import { defaultImageUrl } from "@/utils/imageDataUrl";
 import { initiateTrade } from "@/lib/actions";
 import toast from "react-hot-toast";
 import { CircularProgress } from "@mui/material";
+import Image from "next/image";
 
 const TradeModal: React.FC<{ closeModal: () => void; listing: Listing }> = ({
   closeModal,
@@ -47,8 +48,8 @@ const TradeModal: React.FC<{ closeModal: () => void; listing: Listing }> = ({
         offeredItems: selectedListings,
       });
       toast.success("Trade sent successfully");
-      closeModal()
-      setSelectedListings([])
+      closeModal();
+      setSelectedListings([]);
     } catch (error: any) {
       console.log(error.message);
       toast.error(error.message);
@@ -94,10 +95,13 @@ const TradeModal: React.FC<{ closeModal: () => void; listing: Listing }> = ({
                     }`}
                   >
                     <header className="flex items-center gap-4">
-                      <img
-                        src={listing.images[0].imageUrl}
-                        className="h-[100px] w-[100px rounded-full]"
-                      />
+                      <div className="h-[100px] w-[100px] relative">
+                        <Image
+                          src={listing.images[0].imageUrl}
+                          fill
+                          alt={listing.listedProduct.productName}
+                        />
+                      </div>
                       <div className="flex flex-col">
                         <p className="text-sm">{listing.description}</p>
                         <p className="text-xs text-gray-300">
@@ -120,20 +124,28 @@ const TradeModal: React.FC<{ closeModal: () => void; listing: Listing }> = ({
           </div>
           <div className="flex flex-col gap-2 justify-center h-fit sticky top-[50px]">
             <header className="flex items-center justify-center gap-2">
-              {" "}
-              <img
-                src={listing.seller.imageUrl || defaultImageUrl}
-                className="h-[40px] w-[40px] rounded-full"
-              />
+              <div className="h-[40px] w-[40px] rounded-full relative">
+                {" "}
+                <Image
+                  src={listing.seller.imageUrl || defaultImageUrl}
+                  alt={listing.seller.username}
+                  fill
+                />
+              </div>
+
               <h3 className="text-sm text-center">
                 @{listing.seller.username}
               </h3>
             </header>
+            <div className="h-[300px] w-[300px] rounded-md mx-auto relative">
+              {" "}
+              <Image
+                src={listing.images[0].imageUrl}
+                fill
+                alt={listing.listedProduct.productName}
+              />
+            </div>
 
-            <img
-              src={listing.images[0].imageUrl}
-              className="h-[300px] w-[300px] rounded-md mx-auto"
-            />
             <p className="flex gap-2 justify-center items-center text-md text-center font-semibold">
               {listing.listedProduct.productName} <GoDotFill size={8} />{" "}
               <span className="text-xs font-extralight">

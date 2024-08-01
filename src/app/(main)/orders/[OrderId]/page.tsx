@@ -1,6 +1,6 @@
 import { getOrder, getOrderItems } from "@/lib/actions";
 import formatDateTime from "@/utils/formatDate";
-import { Listing } from "@/types/types";
+import { Listing, Order } from "@/types/types";
 import MotionButton from "@/components/ui/MotionButton";
 import { Suspense } from "react";
 import { CircularProgress } from "@mui/material";
@@ -8,11 +8,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { IoMdMail } from "react-icons/io";
 import ReturnButton from "@/components/ui/ReturnButton";
+import { defaultImageUrl } from "@/utils/imageDataUrl";
 
 const OrderPage: React.FC<{ params: any }> = async ({ params }) => {
-  const purchase = await getOrder(parseInt(params.orderId)).catch((error) =>
+  const purchase = (await getOrder(parseInt(params.orderId)).catch((error) =>
     console.log(error.message)
-  );
+  )) as Order;
   const orderItems: Listing[] = await getOrderItems(
     parseInt(params.orderId)
   ).catch((error) => console.log(error.message));
@@ -44,10 +45,14 @@ const OrderPage: React.FC<{ params: any }> = async ({ params }) => {
           <div className="mb-6">
             <h3 className="text-lg font-semibold">Buyer Information</h3>
             <div className="flex items-center gap-2 my-4">
-              <img
-                src={purchase.buyer.imageUrl}
-                className="rounded-full h-[60px] w-[60px]"
-              />
+              <div className="h-[60px] w-[60px] rounded-full relative">
+                <Image
+                  src={purchase.buyer.imageUrl || defaultImageUrl}
+                  fill
+                  className="rounded-full"
+                  alt={purchase.buyer.username}
+                />
+              </div>
               <div className="font-semibold text-md">
                 <p className="text-sm">{purchase.buyer.username}</p>
                 <p className="text-sm">{purchase.buyer.email}</p>

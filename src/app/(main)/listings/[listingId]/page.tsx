@@ -10,6 +10,7 @@ import Actions from "@/components/listing-item-page/ListingItemActions";
 import { notFound } from "next/navigation";
 import SimilarItems from "@/components/listing-item-page/SimilarItems";
 import NoSSRWrapper from "@/components/client-wrappers/NoSSRWrapper";
+import ReturnButton from "@/components/ui/ReturnButton";
 
 const ListingPage: React.FC<{ params: any }> = async ({ params }) => {
   const listing = (await getListing(params.listingId).catch((error) => {
@@ -36,9 +37,13 @@ const ListingPage: React.FC<{ params: any }> = async ({ params }) => {
         </div>
       }
     >
-      <h1 className="text-2xl font-bold px-6 py-4">
-        {listing.listedProduct.productName}
-      </h1>
+      <header className="px-6 py-4">
+        <h1 className="text-2xl font-bold">
+          {listing.listedProduct.productName}
+        </h1>
+        <ReturnButton />
+      </header>
+
       <main className="flex flex-col gap-2 p-6">
         <section className="flex flex-col md:flex-row gap-4 w-full h-full">
           <div className="md:w-[50%] w-full p-6">

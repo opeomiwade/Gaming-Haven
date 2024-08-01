@@ -5,6 +5,7 @@ import formatDateTime from "@/utils/formatDate";
 import { Listing } from "@/types/types";
 import { motion } from "framer-motion";
 import { IoIosClose } from "react-icons/io";
+import Image from "next/image";
 
 const ReceiptModal: React.FC<{
   purchase: Order;
@@ -40,10 +41,14 @@ const ReceiptModal: React.FC<{
         <div className="mb-6">
           <h3 className="text-lg font-semibold">Buyer Information</h3>
           <div className="flex items-center gap-2 my-4">
-            <img
-              src={purchase.buyer.imageUrl}
-              className="rounded-full h-[60px] w-[60px]"
-            />
+            <div className="rounded-full h-[60px] w-[60px] relative">
+              <Image
+                src={purchase.buyer.imageUrl}
+                fill
+                alt={purchase.buyer.username}
+              />
+            </div>
+
             <div className="font-semibold text-md">
               <p className="text-sm">{purchase.buyer.username}</p>
               <p className="text-sm">{purchase.buyer.email}</p>

@@ -2,9 +2,12 @@
 import axios from "axios";
 import axiosInstance from "./axiosInstance";
 import { revalidatePath } from "next/cache";
-import { FilterQueryParams } from "@/types/types";
+import { FilterQueryParams, RawgResponse } from "@/types/types";
 import { FieldValues } from "react-hook-form";
 import { Listing } from "@/types/types";
+import { rawgInstance } from "./axiosInstance";
+import { googleApiInstance } from "./axiosInstance";
+import { YoutubeAPIResponse } from "@/types/types";
 
 class CustomError extends Error {
   statusCode: number;
@@ -219,6 +222,7 @@ export async function sendOffer(
     });
   }
 }
+
 export async function updateOffer(offerId: number, status: string) {
   try {
     const response = await axiosInstance.put(
@@ -321,5 +325,66 @@ export async function initiateTrade({
       message: error.response.data || "An error occured",
       statusCode: error.response.status,
     });
+  }
+}
+
+export async function getPlatforms() {
+  try {
+    const response = await rawgInstance.get<RawgResponse>("/platforms", {
+      params: { key: process.env.NEXT_RAWG_API_KEY },
+    });
+    return response.data.results;
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+}
+
+export async function getGameStores(gameId: string) {
+  try {
+    const response = await rawgInstance.get<RawgResponse>(
+      `/games/${gameId}/stores`,
+      { params: { key: process.env.NEXT_RAWG_API_KEY } }
+    );
+    return response.data.results;
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+}
+
+export async function getPlatformGames(platformName: string, page: number = 1) {
+  const platforms = await getPlatforms();
+  const [platform] = platforms.filter((platform: any) =>
+    platform.slug
+      .replace(/[^a-zA-Z]/g, " ")
+      .includes(platformName.toLowerCase())
+  );
+  try {
+    const response = await rawgInstance.get<RawgResponse>("/games", {
+      params: {
+        key: process.env.NEXT_RAWG_API_KEY,
+        platforms: platform.id,
+        ordering: "-rating -ratings_count",
+        page,
+      },
+    });
+    return response.data;
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+}
+
+export async function getGameTrailerVideo(gameName: string) {
+  try {
+    const response = await googleApiInstance.get<YoutubeAPIResponse>("/search", {
+      params: {
+        key: process.env.NEXT_GOOGLE_API_KEY,
+        q: gameName + " trailer",
+        part: "snippet",
+        type: "video",
+      },
+    });
+    return response.data.items[0]
+  } catch (error: any) {
+    throw new Error(error.message);
   }
 }

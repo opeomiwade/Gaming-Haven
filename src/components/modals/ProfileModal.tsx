@@ -9,6 +9,7 @@ import { currentUserActions } from "@/redux/store/redux-store";
 import { IoIosClose } from "react-icons/io";
 import supabase from "@/config/supabase";
 import { defaultImageUrl } from "@/utils/imageDataUrl";
+import Image from "next/image";
 
 const ProfileModal: React.FC<{ open: boolean; closeModal: () => void }> = ({
   open,
@@ -85,11 +86,13 @@ const ProfileModal: React.FC<{ open: boolean; closeModal: () => void }> = ({
           }}
           className="w-full mx-auto"
         >
-          <img
-            className="rounded-full w-[70px] h-[70px] mx-auto my-2"
-            src={(image.trim().length > 0 && image) || currentUser.imageUrl}
-            alt="profile picture"
-          />
+          <div className="rounded-full w-[70px] h-[70px] mx-auto my-2 relative">
+            <Image
+              src={(image.trim().length > 0 && image) || currentUser.imageUrl}
+              alt="profile picture"
+              fill
+            />
+          </div>
         </motion.button>
 
         <div className="flex flex-col gap-2 items-center text-md">

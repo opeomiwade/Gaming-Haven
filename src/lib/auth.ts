@@ -1,4 +1,4 @@
-import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "@/config/firebase";
 import supabase from "@/config/supabase";
 import axios from "axios";

@@ -2,17 +2,21 @@ import { Listing } from "@/types/types";
 import formatDateTime from "@/utils/formatDate";
 import { IoMdMail } from "react-icons/io";
 import Link from "next/link";
+import Image from "next/image";
 
 const SalesTableRow: React.FC<{ sale: Listing }> = ({ sale }) => {
   return (
     <li className="flex p-4 justify-between items-center border-b-[1px] font-light text-sm">
       <p className="font-bold w-[10%]">{sale.listingId}</p>
       <div className="flex w-[60%] items-center gap-4">
-        <img
-          src={sale.images[0].imageUrl}
-          alt={sale.listedProduct.productName}
-          className="h-[100px] w-[100px]"
-        />
+        <div className="h-[100px] w-[100px] relative">
+          <Image
+            src={sale.images[0].imageUrl}
+            alt={sale.listedProduct.productName}
+            fill
+          />
+        </div>
+
         <div>
           <p>
             Item sold to:{" "}

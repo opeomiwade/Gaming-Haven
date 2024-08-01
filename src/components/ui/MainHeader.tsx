@@ -16,6 +16,7 @@ import { defaultImageUrl } from "@/utils/imageDataUrl";
 import { sellModalActions } from "@/redux/store/redux-store";
 import { useAnimate } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 
 function MainHeader() {
   const dispatch = useDispatch();
@@ -107,11 +108,17 @@ function MainHeader() {
           </Link>
 
           <div className="flex gap-2 items-center">
-            <img
-              src={currentUser.imageUrl || defaultImageUrl}
-              className="rounded-full h-[40px] w-[40px] hover:cursor-pointer"
+            <div
+              className="relative h-[40px] w-[40px]"
               onClick={() => setOpen(true)}
-            />{" "}
+            >
+              <Image
+                src={currentUser.imageUrl || defaultImageUrl}
+                className="rounded-full h-[40px] w-[40px] hover:cursor-pointer"
+                fill
+                alt={currentUser.username}
+              />
+            </div>{" "}
             <p>Welcome {currentUser.username}!</p>
           </div>
         </div>

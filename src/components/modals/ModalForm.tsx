@@ -16,6 +16,7 @@ import { usePathname } from "next/navigation";
 import { getListing } from "@/lib/actions";
 import { SingleValue } from "react-select";
 import { CircularProgress } from "@mui/material";
+import Image from "next/image";
 
 interface ModalFormProps {
   formTitle: string;
@@ -194,7 +195,10 @@ const ModalForm = forwardRef<HTMLFormElement, ModalFormProps>(
                   >
                     <CancelIcon style={{ fill: "gray", fontSize: "20px" }} />
                   </div>
-                  <img src={image.imageUrl} className="h-[60px] w-[65px]" />
+                  <div className="h-[60px] w-[65px] relative">
+                    {" "}
+                    <Image src={image.imageUrl} fill alt="" />
+                  </div>
                 </div>
               );
             })}
@@ -209,10 +213,10 @@ const ModalForm = forwardRef<HTMLFormElement, ModalFormProps>(
                     >
                       <CancelIcon style={{ fill: "gray", fontSize: "20px" }} />
                     </div>
-                    <img
-                      src={imageFile.dataUrl}
-                      className="h-[60px] w-[65px]"
-                    />
+                    <div className="h-[60px] w-[65px]">
+                      {" "}
+                      <Image src={imageFile.dataUrl} fill alt="" />
+                    </div>
                   </div>
                 );
               })}
