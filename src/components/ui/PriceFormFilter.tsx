@@ -15,7 +15,7 @@ const PriceFormFilter: React.FC<{
             type="number"
             defaultValue={1}
             min={1}
-            className="border p-1 rounded focus:outline-none w-[80px] text-center font-semibold"
+            className="border p-1 rounded focus:outline-none w-[80px] text-center font-semibold dark:text-black"
           />
         </label>
         <label className="flex flex-col items-center">
@@ -24,11 +24,11 @@ const PriceFormFilter: React.FC<{
           <input
             name="max"
             type="number"
-            className="border p-1 rounded focus:outline-none w-[80px] text-center font-semibold"
+            className="border p-1 rounded focus:outline-none w-[80px] text-center font-semibold dark:text-black"
           />
         </label>
       </div>
-      <button className="bg-gray-300 p-1 font-bold rounded-lg w-20 mx-auto">
+      <button className="bg-gray-300 dark:bg-white text-black p-1 font-bold rounded-lg w-20 mx-auto">
         Done
       </button>
     </form>

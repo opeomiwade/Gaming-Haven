@@ -60,7 +60,7 @@ const FilterButton: React.FC<{
         </motion.div>
       </button>
       {isExpanded && (
-        <div className="flex flex-col gap-2 dark:bg-zinc-800 bg-white rounded-md z-10 absolute top-[100%] shadow-lg border-[1px] mt-2 p-2 max-h-[250px] overflow-y-auto overflow-x-hidden max-w-[220px]">
+        <div className="flex flex-col gap-2 dark:bg-zinc-800 bg-white rounded-md z-10 absolute top-[100%] shadow-lg mt-2 p-2 max-h-[250px] overflow-y-auto overflow-x-hidden max-w-[220px]">
           {filterOptions ? (
             filterOptions?.map((option) => (
               <CheckBoxInput
